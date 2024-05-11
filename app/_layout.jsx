@@ -1,9 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from "expo-font"
 import { Slot } from "expo-router"
 
-export default function RootLayout() {
+const RootLayout = () => {
+  const[fontsLoaded, error] = useFonts({
+    "Alata-Regular": require("../assets/fonts/Alata-Regular.ttf"),
+    "Inter-Bold": require("../assets/fonts/Inter-Bold.ttf"),
+    "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
+  });
+
   return (
     <Slot />
   );
 }
+
+export default RootLayout;
