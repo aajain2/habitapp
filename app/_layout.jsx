@@ -1,5 +1,5 @@
 import { useFonts } from "expo-font"
-import { Slot } from "expo-router"
+import { Stack } from "expo-router"
 
 const RootLayout = () => {
   const[fontsLoaded, error] = useFonts({
@@ -9,7 +9,10 @@ const RootLayout = () => {
   });
 
   return (
-    <Slot />
+    <Stack>
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+    </Stack>
   );
 }
 
