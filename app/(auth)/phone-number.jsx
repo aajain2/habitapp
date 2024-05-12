@@ -20,7 +20,7 @@ const PhoneNumberSignUp = () => {
             </View>
 
             <SignUpInput 
-              containerStyles="my-2 mt-12"
+              containerStyles="mt-12"
               caption="Message & data rates may apply."
             />
 

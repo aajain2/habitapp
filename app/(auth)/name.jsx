@@ -4,7 +4,13 @@ import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 
+import { useSignUpContext } from '../../context/SignUpProvider';
+
 const NameSignUp = () => {
+  const { name, setName } = useSignUpContext();
+
+  console.log(name);
+
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -20,7 +26,7 @@ const NameSignUp = () => {
             </View>
 
             <SignUpInput 
-              containerStyles="my-2 mt-12"
+              containerStyles="mt-12"
             />
 
             <SignUpButton

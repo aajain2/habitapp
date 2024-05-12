@@ -1,5 +1,8 @@
 import { useFonts } from "expo-font"
 import { Stack } from "expo-router"
+import 'react-native-reanimated'
+
+import SignUpProvider from "../context/SignUpProvider"
 
 const RootLayout = () => {
   const[fontsLoaded, error] = useFonts({
@@ -9,10 +12,13 @@ const RootLayout = () => {
   });
 
   return (
-    <Stack>
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-    </Stack>
+    <SignUpProvider>
+      <Stack>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="home" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+      </Stack>
+    </SignUpProvider>
   );
 }
 

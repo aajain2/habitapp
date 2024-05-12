@@ -4,7 +4,7 @@ import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 
-const BirthdaySignUp = () => {
+const Account = () => {
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -15,26 +15,37 @@ const BirthdaySignUp = () => {
 
           <View className="flex items-center justify-center h-full">
             <View className="h-20 flex items-center">
-              <Text className="font-inter-bold text-lg">When’s your birthday?</Text>
-              <Text className="font-inter-regular text-xs w-48 text-center">Just checking you’re old enough for Trabit.</Text>
+              <Text className="font-inter-bold text-lg">Let’s create an account.</Text>
+              <Text className="font-inter-regular text-xs">Use it for future log ins!</Text>
             </View>
 
             <SignUpInput 
               containerStyles="mt-12"
+              placeholder="Username"
             />
 
-            <SignUpButton 
+            <SignUpInput 
+              containerStyles="mt-12"
+              placeholder="Password"
+            />
+
+            <SignUpInput
+              containerStyles=""
+              placeholder="Verify Password"
+            />
+
+            <SignUpButton
               handlePress={() => {
-                router.push("phone-number")
+                
               }}
               title="Next"
-              containerStyles="mt-32"
+              containerStyles="mt-16"
             />
           </View>
         </View>
       </SafeAreaView>
     </DismissKeyboard>
-  );
+  )
 }
 
-export default BirthdaySignUp
+export default Account

@@ -1,4 +1,4 @@
-import { router } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
@@ -20,7 +20,7 @@ const VerificationSignUp = () => {
             </View>
 
             <SignUpInput 
-              containerStyles="my-2 mt-12"
+              containerStyles="mt-12"
             />
 
             <CustomLink 
@@ -29,10 +29,9 @@ const VerificationSignUp = () => {
 
             <SignUpButton 
               handlePress={() => {
-                router.push("/verification")
+                router.push("/account")
               }}
               title="Verify"
-              isLoading={true}
               containerStyles="mt-32"
             />
 
@@ -40,7 +39,7 @@ const VerificationSignUp = () => {
               containerStyles="mt-4"
               title="Change Phone Number"
               handlePress={() => {
-                router.push("phone-number")
+                router.back()
               }}
             />
           </View>

@@ -5,12 +5,12 @@ const CustomLink = ({
   title,
   textStyles,
   containerStyles,
-  handleClick
+  handlePress
 }) => {
   return (
     <TouchableOpacity
       className={containerStyles}
-      handleClick={handleClick}
+      onPress={handlePress}
     >
       <Text
         className={`${textStyles}`}
