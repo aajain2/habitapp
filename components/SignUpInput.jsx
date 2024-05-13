@@ -14,6 +14,7 @@ const SignUpInput = ({
           className="border-b-2 w-44 text-center text-xs py-2"
           placeholder={placeholder}
           value={value}
+          onChangeText={handleChangeText}
         />
 
         <Text className="text-[10px] font-inter-regular mt-1">

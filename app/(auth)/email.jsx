@@ -4,7 +4,11 @@ import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 
-const PhoneNumberSignUp = () => {
+import { useSignUpContext } from '../../context/SignUpProvider';
+
+const EmailSignUp = () => {
+  const { email, setEmail } = useSignUpContext()
+
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -15,13 +19,14 @@ const PhoneNumberSignUp = () => {
 
           <View className="flex items-center justify-center h-full">
             <View className="h-20 flex items-center">
-              <Text className="font-inter-bold text-lg">What’s your phone number?</Text>
-              <Text className="font-inter-regular text-xs w-48 text-center">Let’s create your account using your phone number.</Text>
+              <Text className="font-inter-bold text-lg">What’s your email?</Text>
+              <Text className="font-inter-regular text-xs w-48 text-center">Let’s create your account using your email.</Text>
             </View>
 
             <SignUpInput 
               containerStyles="mt-12"
-              caption="Message & data rates may apply."
+              handleChangeText={(e) => setEmail(e)}
+              value={email}
             />
 
             <SignUpButton 
@@ -31,11 +36,6 @@ const PhoneNumberSignUp = () => {
               title="Send Verification Code"
               containerStyles="mt-32"
             />
-
-            <Text className="mt-8 w-80 text-center text-xs">
-              By tapping “Send verification code”, you consent to receive text messages from us. 
-              Text HELP for help and STOP to opt out.
-            </Text>
           </View>
         </View>
       </SafeAreaView>
@@ -43,4 +43,4 @@ const PhoneNumberSignUp = () => {
   );
 }
 
-export default PhoneNumberSignUp
+export default EmailSignUp

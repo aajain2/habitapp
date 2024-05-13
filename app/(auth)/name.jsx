@@ -9,8 +9,6 @@ import { useSignUpContext } from '../../context/SignUpProvider';
 const NameSignUp = () => {
   const { name, setName } = useSignUpContext();
 
-  console.log(name);
-
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -27,6 +25,8 @@ const NameSignUp = () => {
 
             <SignUpInput 
               containerStyles="mt-12"
+              handleChangeText={(e) => setName(e)}
+              value={name}
             />
 
             <SignUpButton

@@ -4,7 +4,16 @@ import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 
+import { useSignUpContext } from '../../context/SignUpProvider';
+
 const Account = () => {
+  const { name,
+          birthday, 
+          email, 
+          username, setUsername, 
+          password, setPassword
+        } = useSignUpContext()
+
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -21,12 +30,16 @@ const Account = () => {
 
             <SignUpInput 
               containerStyles="mt-12"
+              handleChangeText={(e) => setUsername(e)}
               placeholder="Username"
+              value={username}
             />
 
             <SignUpInput 
               containerStyles="mt-12"
+              handleChangeText={(e) => setPassword(e)}
               placeholder="Password"
+              value={password}
             />
 
             <SignUpInput
@@ -35,11 +48,11 @@ const Account = () => {
             />
 
             <SignUpButton
-              handlePress={() => {
-                
-              }}
-              title="Next"
               containerStyles="mt-16"
+              handlePress={() => 
+                console.log(`Name: ${name}, Birthday: ${birthday}, Email: ${email}, Username: ${username}, Password: ${password}`)
+              }
+              title="Next"
             />
           </View>
         </View>

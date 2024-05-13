@@ -4,7 +4,11 @@ import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 
+import { useSignUpContext } from '../../context/SignUpProvider';
+
 const BirthdaySignUp = () => {
+  const { birthday, setBirthday } = useSignUpContext();
+
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -21,11 +25,13 @@ const BirthdaySignUp = () => {
 
             <SignUpInput 
               containerStyles="mt-12"
+              handleChangeText={(e) => setBirthday(e)}
+              value={birthday}
             />
 
             <SignUpButton 
               handlePress={() => {
-                router.push("phone-number")
+                router.push("email")
               }}
               title="Next"
               containerStyles="mt-32"

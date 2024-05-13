@@ -37,7 +37,7 @@ const VerificationSignUp = () => {
 
             <CustomLink
               containerStyles="mt-4"
-              title="Change Phone Number"
+              title="Change Email"
               handlePress={() => {
                 router.back()
               }}
