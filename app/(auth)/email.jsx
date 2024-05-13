@@ -24,8 +24,10 @@ const EmailSignUp = () => {
             </View>
 
             <SignUpInput 
+              autoCapitalize="none"
               containerStyles="mt-12"
               handleChangeText={(e) => setEmail(e)}
+              keyboardType="email-address"
               value={email}
             />
 

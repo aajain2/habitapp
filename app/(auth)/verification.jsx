@@ -21,9 +21,11 @@ const VerificationSignUp = () => {
 
             <SignUpInput 
               containerStyles="mt-12"
+              keyboardType="number-pad"
             />
 
             <CustomLink 
+              containerStyles="mt-4"
               title="Resend code..."
             />
 

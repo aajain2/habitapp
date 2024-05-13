@@ -29,21 +29,32 @@ const Account = () => {
             </View>
 
             <SignUpInput 
+              autoCapitalize="none"
+              autoComplete="off"
+              autoCorrect="off"
               containerStyles="mt-12"
               handleChangeText={(e) => setUsername(e)}
               placeholder="Username"
               value={username}
             />
 
-            <SignUpInput 
-              containerStyles="mt-12"
+            <SignUpInput
+              autoCapitalize="none"
+              autoComplete="off"
+              autoCorrect="off"
+              containerStyles="mt-20"
               handleChangeText={(e) => setPassword(e)}
+              password={true}
               placeholder="Password"
               value={password}
             />
 
             <SignUpInput
-              containerStyles=""
+              autoCapitalize="none"
+              autoComplete="off"
+              autoCorrect="off"
+              containerStyles="mt-4"
+              password={true}
               placeholder="Verify Password"
             />
 

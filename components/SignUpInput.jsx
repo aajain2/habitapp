@@ -6,7 +6,10 @@ const SignUpInput = ({
   placeholder,
   handleChangeText,
   containerStyles,
-  caption,
+  error,
+  errorMessage = "Error!",
+  password = false,
+  ...props
 }) => {
   return (
     <View className={containerStyles}>
@@ -15,11 +18,15 @@ const SignUpInput = ({
           placeholder={placeholder}
           value={value}
           onChangeText={handleChangeText}
+          secureTextEntry={password}
+          {...props}
         />
 
-        <Text className="text-[10px] font-inter-regular mt-1">
-          {caption}
-        </Text>
+        {error && 
+          <Text className="text-[10px] text-red-500 font-inter-bold mt-1">
+            {errorMessage}
+          </Text>
+        }
     </View>
   )
 }

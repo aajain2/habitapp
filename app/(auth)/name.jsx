@@ -30,9 +30,7 @@ const NameSignUp = () => {
             />
 
             <SignUpButton
-              handlePress={() => {
-                router.push("/birthday")
-              }}
+              handlePress={() => router.push("/birthday")}
               title="Next"
               containerStyles="mt-32"
             />
