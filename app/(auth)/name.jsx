@@ -3,7 +3,6 @@ import { SafeAreaView, Text, View } from 'react-native';
 import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
-
 import BackButton from '../../components/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 

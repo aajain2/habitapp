@@ -22,8 +22,8 @@ const Account = () => {
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
 
   const accountSubmit = () => {
-    if ((verifyPassword === password) && !passwordStrengthError) {
-      router.push("home")
+    if ((verifyPassword === password) && validator.isStrongPassword(password)) {
+      router.push("permissions")
     }
   }
 
