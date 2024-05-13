@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       colors: {
         "orange": "#FF6B35",
-        "blue": "#43A4C6"
+        "blue": "#43A4C6",
+        "beige": "#F9F0E6"
       },
       fontFamily: {
         "alata-regular": ["Alata-Regular", "sans-serif"],

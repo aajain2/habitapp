@@ -4,6 +4,7 @@ import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 
+import BackButton from '../../components/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 
 const BirthdaySignUp = () => {
@@ -16,6 +17,11 @@ const BirthdaySignUp = () => {
           <View className="absolute w-full">
             <Text className="text-3xl text-orange font-alata-regular text-center">TRABIT</Text>
           </View>
+
+          <BackButton 
+            containerStyles="absolute pl-4 h-10 justify-center"
+            handlePress={() => router.back()}
+          />
 
           <View className="flex items-center justify-center h-full">
             <View className="h-20 flex items-center">
