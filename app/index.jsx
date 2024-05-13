@@ -5,9 +5,9 @@ import React from 'react';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LandingScreen from './components/Landing.js';
 
-import Register from './components/auth/Register'; // Make sure this path is correct
+import LandingScreen from '../components/Landing';
+import Register from '../components/Register';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -20,11 +20,9 @@ const firebaseConfig = {
   measurementId: "G-RPT6V0G1BV"
 };
 
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-
 const Stack = createStackNavigator();
-export default function App() {
+
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
@@ -34,3 +32,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+export default App;
