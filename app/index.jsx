@@ -6,8 +6,8 @@ import { initializeApp, getApps, getApp } from 'firebase/app';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import LandingScreen from '../components/Landing';
-import Register from '../components/Register';
+import LandingScreen from '../components/auth/Landing';
+import Register from '../components/auth/Register';
 
 // Firebase configuration
 const firebaseConfig = {
