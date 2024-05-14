@@ -1,0 +1,40 @@
+import { View, Text } from 'react-native'
+import React from 'react'
+import BackgroundVideo from '../../components/BackgroundVideo'
+import videos from '../../constants/videos'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import SearchBar from '../../components/search/SearchBar'
+import DismissKeyboard from '../../components/DismissKeyboard'
+
+const FriendSetup = () => {
+  return (
+    <DismissKeyboard>
+      <View className="w-full h-full">
+        <BackgroundVideo
+          source={videos.blueOrangeBackground}
+        />
+
+        <SafeAreaView>
+          <View>
+            <View className="absolute w-full h-10 justify-center z-10">
+              <Text className="text-3xl text-white font-alata-regular text-center">TRABIT</Text>
+            </View>
+
+            <View className="flex items-center justify-center h-full">
+              <View className="h-20 flex items-center">
+                <Text className="text-white font-inter-bold text-lg">Let’s add some friends now</Text>
+                <Text className="text-white font-inter-regular text-xs w-52 text-center">Search up your friends’ names or usernames</Text>
+              </View>
+
+              <SearchBar 
+                placeholder="Search by username"
+              />
+            </View>
+          </View>
+        </SafeAreaView>
+      </View>
+    </DismissKeyboard>
+  )
+}
+
+export default FriendSetup
