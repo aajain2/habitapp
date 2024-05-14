@@ -14,7 +14,9 @@ module.exports = {
       fontFamily: {
         "alata-regular": ["Alata-Regular", "sans-serif"],
         "inter-bold": ["Inter-Bold", "sans-serif"],
+        "inter-medium": ["Inter-Medium", "sans-serif"],
         "inter-regular": ["Inter-Regular", "sans-serif"],
+        "poppins-medium": ["Poppins-Medium", "sans-serif"],
       }
     },
   },

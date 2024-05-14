@@ -7,6 +7,7 @@ import HabitSelector from '../../components/habit-selector/HabitSelector';
 import { useState } from 'react';
 import SignUpButton from '../../components/SignUpButton';
 import { router } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 const habitOptions = [
   {
@@ -64,6 +65,8 @@ const HabitSetup = () => {
           </View>
         </View>
       </SafeAreaView>
+
+      <StatusBar style="light" />
     </View>
   )
 }

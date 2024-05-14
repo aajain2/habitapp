@@ -5,6 +5,9 @@ import videos from '../../constants/videos'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import SearchBar from '../../components/search/SearchBar'
 import DismissKeyboard from '../../components/DismissKeyboard'
+import { StatusBar } from 'expo-status-bar'
+import BackButton from '../../components/BackButton'
+import { router } from 'expo-router'
 
 const FriendSetup = () => {
   return (
@@ -20,6 +23,12 @@ const FriendSetup = () => {
               <Text className="text-3xl text-white font-alata-regular text-center">TRABIT</Text>
             </View>
 
+            <BackButton 
+              containerStyles="absolute pl-4 h-10 justify-center"
+              handlePress={() => router.back()}
+              iconColor="white"
+            />
+
             <View className="flex items-center justify-center h-full">
               <View className="h-20 flex items-center">
                 <Text className="text-white font-inter-bold text-lg">Let’s add some friends now</Text>
@@ -32,6 +41,8 @@ const FriendSetup = () => {
             </View>
           </View>
         </SafeAreaView>
+
+        <StatusBar style="light" />
       </View>
     </DismissKeyboard>
   )

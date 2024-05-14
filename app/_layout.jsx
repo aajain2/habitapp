@@ -8,7 +8,9 @@ const RootLayout = () => {
   const[fontsLoaded, error] = useFonts({
     "Alata-Regular": require("../assets/fonts/Alata-Regular.ttf"),
     "Inter-Bold": require("../assets/fonts/Inter-Bold.ttf"),
+    "Inter-Medium": require("../assets/fonts/Inter-Medium.ttf"),
     "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
+    "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf")
   });
 
   return (
