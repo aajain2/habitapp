@@ -8,7 +8,6 @@ admin.initializeApp({
 const db = admin.firestore();
 
 async function initializeFirestore() {
-  // Habits with associated prompts
   const habitsData = [
     { id: 'drinkWater', name: 'Drink Water', prompts: ['Take a photo of your filled water bottle', 'Snap your glass as you drink the last sip'] },
     { id: 'readBooks', name: 'Read Books', prompts: ['Capture your current reading spot', 'Show off the book you are currently reading'] },
@@ -22,14 +21,14 @@ async function initializeFirestore() {
     { id: 'bikeRiding', name: 'Bike Riding', prompts: ['Capture a scene from your bike ride', 'Photo with your bicycle after the ride'] }
   ];
 
+  // Start batch write
   const batch = db.batch();
 
-  // Populate habits and prompts
+  // Populate Habits and Prompts
   habitsData.forEach(habit => {
     const habitRef = db.collection('Habits').doc(habit.id);
     batch.set(habitRef, {
-      name: habit.name,
-      description: habit.description
+      name: habit.name
     });
 
     habit.prompts.forEach((prompt, index) => {
@@ -40,7 +39,7 @@ async function initializeFirestore() {
     });
   });
 
-  // Sample users
+  // Sample Users with Friends and Habits
   const users = [
     { id: 'user1', username: 'Alice', email: 'alice@example.com', profilePicUrl: '' },
     { id: 'user2', username: 'Bob', email: 'bob@example.com', profilePicUrl: '' }
@@ -55,7 +54,7 @@ async function initializeFirestore() {
     });
 
     // Adding friend relationship
-    const friendRef = userRef.collection('Friends').doc('user2'); // Assuming both are friends for the sake of example
+    const friendRef = userRef.collection('Friends').doc(users.find(u => u.id !== user.id).id); // Assume each user is friends with the other
     batch.set(friendRef, {
       status: 'confirmed',
       addedOn: admin.firestore.FieldValue.serverTimestamp()
@@ -71,7 +70,7 @@ async function initializeFirestore() {
     });
   });
 
-  // Execute the batch
+  // Execute the batch write
   try {
     await batch.commit();
     console.log('Firestore has been fully initialized with initial data.');
