@@ -1,15 +1,17 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 const AddFriendButton = ({
-  state,
+  friendStatus,
+  handleAdd
 }) => {
   return (
     <TouchableOpacity 
-      className={`w-20 h-6 rounded-full justify-center items-center ${state === "add" ? "bg-blue/80" : "bg-blue"}`}
+      className={`w-24 h-6 rounded-full justify-center items-center ${friendStatus === "add" ? "bg-blue/80" : "bg-blue"}`}
+      onPress={handleAdd}
     >
       <Text className="font-poppins-medium text-white text-xs">
-        {state === "add" ? "ADD" : state === "requested" ? "REQUESTED" : "FRIENDS"}
+        {friendStatus === "add" ? "ADD" : friendStatus === "requested" ? "REQUESTED" : "FRIENDS"}
       </Text>
     </TouchableOpacity>
   )

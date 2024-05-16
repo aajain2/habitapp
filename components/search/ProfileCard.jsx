@@ -2,21 +2,27 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import AddFriendButton from '../AddFriendButton'
 
-const ProfileCard = () => {
+const ProfileCard = ({
+  name,
+  username,
+  profilePicture,
+  handleAdd,
+  friendStatus,
+}) => {
   return (
-    <View className="flex-row">
+    <View className="flex-row my-1">
       <Image 
         className="w-[40] h-[40] rounded-full"
         source={{
-          uri: "https://picsum.photos/200"
+          uri: profilePicture
         }}
       />
       <View className="justify-center ml-2">
-        <Text className="font-inter-medium text-sm">Profile Name</Text>
-        <Text className="font-inter-regular text-xs">@meow</Text>
+        <Text className="font-inter-medium text-sm">{name}</Text>
+        <Text className="font-inter-regular text-xs">{username}</Text>
       </View>
       <View className="ml-auto justify-center">
-        <AddFriendButton state="add" />
+        <AddFriendButton friendStatus={friendStatus} handleAdd={handleAdd} />
       </View>
     </View>
   )

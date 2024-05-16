@@ -8,6 +8,7 @@ import DismissKeyboard from '../../components/DismissKeyboard'
 import { StatusBar } from 'expo-status-bar'
 import BackButton from '../../components/BackButton'
 import { router } from 'expo-router'
+import SignUpButton from '../../components/SignUpButton'
 
 const FriendSetup = () => {
   return (
@@ -37,6 +38,14 @@ const FriendSetup = () => {
 
               <SearchBar 
                 placeholder="Search by username"
+                seeMore
+                containerStyles="h-64"
+              />
+
+              <SignUpButton 
+                title="Next"
+                containerStyles="bg-white/30 border-white mt-8"
+                handlePress={() => router.push("home")}
               />
             </View>
           </View>

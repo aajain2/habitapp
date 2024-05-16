@@ -14,19 +14,22 @@ const habitOptions = [
     name: "gym",
     title: "Going to the Gym",
     subtitle: "In our fitness era",
-    imageSource: images.gymWeights
+    imageSource: images.gymWeights,
+    id: 0
   }, 
   {
     name: "veggies",
     title: "Eating More Vegetables",
     subtitle: "A little a day goes a long way",
-    imageSource: images.carrot
+    imageSource: images.carrot,
+    id: 1
   }, 
   {
     name: "showering",
     title: "Showering",
     subtitle: "Hey, life gets busy we get it",
-    imageSource: images.shower
+    imageSource: images.shower,
+    id: 2
   }
 ]
 

@@ -9,7 +9,7 @@ const HabitSelector = ({
 }) => {
   const renderCards = (options) => options.map((option) => {
     return (
-      <View>
+      <View key={option.id}>
         <HabitCard
           title={option.title}
           subtitle={option.subtitle}
@@ -17,9 +17,9 @@ const HabitSelector = ({
           name={option.name}
           selected={selected}
           setSelected={setSelected}
+          key={option.id}
         />
       </View>
-      
     )
   })
 

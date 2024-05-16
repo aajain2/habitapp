@@ -25,11 +25,11 @@ const HabitCard = ({
       <View className="flex-row w-[90vw] h-20 items-center justify-center">
         <View>
           <Text className="text-white font-inter-bold text-lg">{title}</Text>
-          <Text className="text-white font-inter-regular text-xs w-52">{subtitle}</Text>
+          <Text className="text-white font-inter-regular text-xs w-52 mb-1">{subtitle}</Text>
         </View>
 
         <Image 
-          className="w-[68px] h-[36px]"
+          className="w-[76px] h-[40px]"
           source={imageSource}
           resizeMode="contain"
         />

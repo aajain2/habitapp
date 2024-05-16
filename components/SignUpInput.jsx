@@ -31,7 +31,7 @@ const SignUpInput = ({
             onPress={() => setShowPassword(!showPassword)}
           >
             <MaterialCommunityIcons 
-              name={showPassword ? "eye-off" : "eye"} 
+              name={showPassword ? "eye" : "eye-off"}
               size={24} 
               color="black" 
             />
