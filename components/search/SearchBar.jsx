@@ -1,8 +1,9 @@
 import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import ProfileCard from './ProfileCard'
-import { useState } from 'react';
 import CustomLink from '../CustomLink'
+import { router } from 'expo-router';
+import { useQueryContext } from '../../context/QueryProvider';
 
 const dummyData = [
   {
@@ -91,14 +92,16 @@ const SearchBar = ({
   seeMore = false,
   placeholder,
   containerStyles,
+  styles
 }) => {
-  const [query, setQuery] = useState("")
+  const {query, setQuery } = useQueryContext()
 
   return (
     <View className={containerStyles}>
       <View 
         className={`w-[90vw] border-2 p-4 border-white bg-white/30 
-                    ${query !== "" ? "rounded-3xl" : "rounded-full"}`
+                    ${query !== "" ? "rounded-3xl" : "rounded-full"} 
+                    ${styles}`
                   }
       >
         <View className="flex-row w-full gap-1">
@@ -114,14 +117,20 @@ const SearchBar = ({
             value={query}
             onChangeText={(e) => setQuery(e)}
           />
+
+          {query !== "" && 
+            <TouchableOpacity onPress={() => setQuery("")}>
+              <AntDesign name="close" size={24} color="black" />
+            </TouchableOpacity>
+          }
         </View>
 
         {query !== "" && 
-          <View className="">
-            <View className="border-white border-b-2 my-2"></View>
+          <View>
+            <View className="border-white border-b-2 my-4"></View>
 
             <FlatList 
-              className="h-36"
+              className={seeMore ? "h-36" : "h-full"}
               data={dummyData}
               renderItem={({ item }) => 
                 <TouchableOpacity activeOpacity={1}>
@@ -145,7 +154,7 @@ const SearchBar = ({
                   </View>
                 }
                 containerStyles="mt-1 w-fit ml-auto"
-                handlePress={() => console.log("Pressed")}
+                handlePress={() => router.push("friend-search")}
               />
             }
           </View>

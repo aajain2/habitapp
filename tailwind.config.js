@@ -9,7 +9,8 @@ module.exports = {
       colors: {
         "orange": "#FF6B35",
         "blue": "#43A4C6",
-        "beige": "#F9F0E6"
+        "beige": "#F9F0E6",
+        "searchbar-gray": "#EBF1F3"
       },
       fontFamily: {
         "alata-regular": ["Alata-Regular", "sans-serif"],
