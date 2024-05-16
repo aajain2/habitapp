@@ -1,8 +1,10 @@
 import { Stack } from 'expo-router'
-import React from 'react'
 import QueryProvider from '../../context/QueryProvider'
+import { useAssets } from 'expo-asset'
 
 const SetupLayout = () => {
+  const [assets, error] = useAssets([require("../../assets/videos/blue-orange-background.mov")]);
+
   return (
     <QueryProvider>
       <Stack>
