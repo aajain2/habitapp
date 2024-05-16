@@ -6,6 +6,7 @@ import DismissKeyboard from '../../components/DismissKeyboard';
 
 import BackButton from '../../components/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
+import TrabitHeader from '../../components/TrabitHeader';
 
 const BirthdaySignUp = () => {
   const { birthday, setBirthday } = useSignUpContext();
@@ -14,9 +15,9 @@ const BirthdaySignUp = () => {
     <DismissKeyboard>
       <SafeAreaView>
         <View className="h-full">
-          <View className="absolute w-full">
-            <Text className="text-3xl text-orange font-alata-regular text-center">TRABIT</Text>
-          </View>
+          <TrabitHeader 
+            color="orange"
+          />
 
           <BackButton 
             containerStyles="absolute pl-4 h-10 justify-center"

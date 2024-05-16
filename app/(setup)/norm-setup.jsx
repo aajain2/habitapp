@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import BackButton from '../../components/BackButton'
 import SignUpButton from '../../components/SignUpButton'
 import { router } from 'expo-router'
+import TrabitHeader from '../../components/TrabitHeader'
 
 const NormSetup = () => {
   return (
@@ -18,9 +19,7 @@ const NormSetup = () => {
         
         <SafeAreaView>
           <View>
-            <View className="absolute w-full h-10 justify-center z-10">
-              <Text className="text-3xl text-white font-alata-regular text-center">TRABIT</Text>
-            </View>
+          <TrabitHeader color="white" />
 
             <BackButton 
               containerStyles="absolute pl-4 h-10 justify-center"

@@ -3,14 +3,15 @@ import { Image, SafeAreaView, Text, View } from 'react-native';
 import SignUpButton from '../../components/SignUpButton';
 import BackButton from '../../components/BackButton';
 import images from '../../constants/images';
+import TrabitHeader from '../../components/TrabitHeader';
 
 const Permissions = () => {
   return (
     <SafeAreaView>
       <View className="h-full">
-        <View className="absolute w-full h-10 justify-center">
-          <Text className="text-3xl text-orange font-alata-regular text-center">TRABIT</Text>
-        </View>
+        <TrabitHeader 
+          color="orange"
+        />
 
         <BackButton 
           containerStyles="absolute pl-4 h-10 justify-center"

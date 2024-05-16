@@ -10,6 +10,7 @@ import BackButton from '../../components/BackButton'
 import { router } from 'expo-router'
 import SignUpButton from '../../components/SignUpButton'
 import { useQueryContext } from '../../context/QueryProvider'
+import TrabitHeader from '../../components/TrabitHeader'
 
 const FriendSetup = () => {
   const { setQuery } = useQueryContext()
@@ -23,9 +24,7 @@ const FriendSetup = () => {
 
         <SafeAreaView>
           <View>
-            <View className="absolute w-full h-10 justify-center z-10">
-              <Text className="text-3xl text-white font-alata-regular text-center">TRABIT</Text>
-            </View>
+            <TrabitHeader color="white" />
 
             <BackButton 
               containerStyles="absolute pl-4 h-10 justify-center"

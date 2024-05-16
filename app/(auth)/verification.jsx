@@ -1,20 +1,20 @@
 import { router } from 'expo-router'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import SignUpButton from '../../components/SignUpButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import CustomLink from '../../components/CustomLink';
-
 import BackButton from '../../components/BackButton';
+import TrabitHeader from '../../components/TrabitHeader'
 
 const VerificationSignUp = () => {
   return (
     <DismissKeyboard>
       <SafeAreaView>
         <View className="h-full">
-          <View className="absolute w-full">
-            <Text className="text-3xl text-orange font-alata-regular text-center">TRABIT</Text>
-          </View>
+          <TrabitHeader 
+            color="orange"
+          />
 
           <BackButton 
             containerStyles="absolute pl-4 h-10 justify-center"

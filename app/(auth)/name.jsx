@@ -5,6 +5,7 @@ import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import BackButton from '../../components/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
+import TrabitHeader from '../../components/TrabitHeader';
 
 const NameSignUp = () => {
   const { name, setName } = useSignUpContext();
@@ -13,9 +14,9 @@ const NameSignUp = () => {
     <DismissKeyboard>
       <SafeAreaView>
         <View className="h-full">
-          <View className="absolute w-full h-10 justify-center">
-            <Text className="text-3xl text-orange font-alata-regular text-center">TRABIT</Text>
-          </View>
+          <TrabitHeader 
+            color="orange"
+          />
 
           <BackButton 
             containerStyles="absolute pl-4 h-10 justify-center"

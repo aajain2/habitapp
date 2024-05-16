@@ -8,6 +8,7 @@ import DismissKeyboard from '../../components/DismissKeyboard';
 import BackButton from '../../components/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import { useState } from 'react';
+import TrabitHeader from '../../components/TrabitHeader';
 
 const EmailSignUp = () => {
   const { email, setEmail } = useSignUpContext()
@@ -26,9 +27,9 @@ const EmailSignUp = () => {
     <DismissKeyboard>
       <SafeAreaView>
         <View className="h-full">
-          <View className="absolute w-full">
-            <Text className="text-3xl text-orange font-alata-regular text-center">TRABIT</Text>
-          </View>
+          <TrabitHeader 
+            color="orange"
+          />
 
           <BackButton 
             containerStyles="absolute pl-4 h-10 justify-center"
