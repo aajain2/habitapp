@@ -5,7 +5,7 @@ import BackgroundVideo from '../../components/BackgroundVideo';
 import images from '../../constants/images';
 import HabitSelector from '../../components/habit-selector/HabitSelector';
 import { useState } from 'react';
-import SignUpButton from '../../components/SignUpButton';
+import CustomButton from '../../components/CustomButton';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import TrabitHeader from '../../components/TrabitHeader';
@@ -59,7 +59,7 @@ const HabitSetup = () => {
               habitOptions={habitOptions}
             />
 
-            <SignUpButton 
+            <CustomButton 
               title="Next"
               containerStyles="bg-white/30 border-white mt-8"
               handlePress={() => router.push("friend-setup")}

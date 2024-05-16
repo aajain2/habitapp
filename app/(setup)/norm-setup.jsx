@@ -5,9 +5,10 @@ import BackgroundVideo from '../../components/BackgroundVideo'
 import videos from '../../constants/videos'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import BackButton from '../../components/BackButton'
-import SignUpButton from '../../components/SignUpButton'
+import CustomButton from '../../components/CustomButton'
 import { router } from 'expo-router'
 import TrabitHeader from '../../components/TrabitHeader'
+import { StatusBar } from 'expo-status-bar'
 
 const NormSetup = () => {
   return (
@@ -19,7 +20,7 @@ const NormSetup = () => {
         
         <SafeAreaView>
           <View>
-          <TrabitHeader color="white" />
+            <TrabitHeader color="white" />
 
             <BackButton 
               containerStyles="absolute pl-4 h-10 justify-center"
@@ -33,7 +34,7 @@ const NormSetup = () => {
                 <Text className="text-white font-inter-regular text-xs w-52 text-center">WIP</Text>
               </View>
 
-              <SignUpButton 
+              <CustomButton 
                 title="Next"
                 containerStyles="bg-white/30 border-white mt-8"
                 handlePress={() => router.push("home")}
@@ -41,6 +42,8 @@ const NormSetup = () => {
             </View>
           </View>
         </SafeAreaView>
+
+        <StatusBar style="light" />
       </View>
     </DismissKeyboard>
   )

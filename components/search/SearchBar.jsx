@@ -134,7 +134,7 @@ const SearchBar = ({
 
             <FlatList 
               className={seeMore ? "h-36" : "h-full"}
-              data={dummyEmpty}
+              data={dummyData}
               renderItem={({ item }) => 
                 <TouchableOpacity activeOpacity={1}>
                   <ProfileCard

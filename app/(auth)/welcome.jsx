@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
 import { Image, SafeAreaView, Text, View } from 'react-native';
-import SignUpButton from '../../components/SignUpButton';
+import CustomButton from '../../components/CustomButton';
 import BackButton from '../../components/BackButton';
 import images from '../../constants/images';
 
@@ -23,7 +23,7 @@ const Welcome = () => {
 
           <Text className="text-3xl text-orange font-alata-regular text-center mt-2">TRABIT</Text>
 
-          <SignUpButton
+          <CustomButton
             handlePress={() => router.replace("/habit-setup")}
             title="Get started"
             containerStyles="mt-14"

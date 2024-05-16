@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
 import { SafeAreaView, Text, View } from 'react-native';
-import SignUpButton from '../../components/SignUpButton';
+import CustomButton from '../../components/CustomButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import CustomLink from '../../components/CustomLink';
@@ -36,7 +36,7 @@ const VerificationSignUp = () => {
               title="Resend code..."
             />
 
-            <SignUpButton 
+            <CustomButton 
               handlePress={() => {
                 router.push("/account")
               }}

@@ -8,7 +8,7 @@ import DismissKeyboard from '../../components/DismissKeyboard'
 import { StatusBar } from 'expo-status-bar'
 import BackButton from '../../components/BackButton'
 import { router } from 'expo-router'
-import SignUpButton from '../../components/SignUpButton'
+import CustomButton from '../../components/CustomButton'
 import { useQueryContext } from '../../context/QueryProvider'
 import TrabitHeader from '../../components/TrabitHeader'
 
@@ -44,7 +44,7 @@ const FriendSetup = () => {
                 containerStyles="h-64"
               />
 
-              <SignUpButton 
+              <CustomButton 
                 title="Next"
                 containerStyles="bg-white/30 border-white mt-8"
                 handlePress={() => {

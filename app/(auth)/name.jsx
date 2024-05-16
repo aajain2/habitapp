@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
 import { SafeAreaView, Text, View } from 'react-native';
-import SignUpButton from '../../components/SignUpButton';
+import CustomButton from '../../components/CustomButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import BackButton from '../../components/BackButton';
@@ -35,7 +35,7 @@ const NameSignUp = () => {
               value={name}
             />
 
-            <SignUpButton
+            <CustomButton
               handlePress={() => router.push("/birthday")}
               title="Next"
               containerStyles="mt-32"

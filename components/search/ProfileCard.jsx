@@ -1,6 +1,7 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
 import AddFriendButton from '../AddFriendButton'
+import ProfilePicture from '../ProfilePicture'
 
 const ProfileCard = ({
   name,
@@ -11,12 +12,10 @@ const ProfileCard = ({
 }) => {
   return (
     <View className="flex-row my-1">
-      <Image 
-        className="w-[40] h-[40] rounded-full"
-        source={{
-          uri: profilePicture
-        }}
+      <ProfilePicture 
+        source={profilePicture}
       />
+      
       <View className="justify-center ml-2">
         <Text className="font-inter-medium text-sm">{name}</Text>
         <Text className="font-inter-regular text-xs">{username}</Text>

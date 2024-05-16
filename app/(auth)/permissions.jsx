@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
 import { Image, SafeAreaView, Text, View } from 'react-native';
-import SignUpButton from '../../components/SignUpButton';
+import CustomButton from '../../components/CustomButton';
 import BackButton from '../../components/BackButton';
 import images from '../../constants/images';
 import TrabitHeader from '../../components/TrabitHeader';
@@ -37,7 +37,7 @@ const Permissions = () => {
             </View>
           </View>
 
-          <SignUpButton
+          <CustomButton
             handlePress={() => router.push("/welcome")}
             title="Allow notifications"
             containerStyles="mt-10"

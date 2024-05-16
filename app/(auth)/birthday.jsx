@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
 import { SafeAreaView, Text, View } from 'react-native';
-import SignUpButton from '../../components/SignUpButton';
+import CustomButton from '../../components/CustomButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 
@@ -36,7 +36,7 @@ const BirthdaySignUp = () => {
               value={birthday}
             />
 
-            <SignUpButton 
+            <CustomButton 
               handlePress={() => {
                 router.push("email")
               }}
