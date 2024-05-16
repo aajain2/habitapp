@@ -4,6 +4,7 @@ import ProfileCard from './ProfileCard'
 import CustomLink from '../CustomLink'
 import { router } from 'expo-router';
 import { useQueryContext } from '../../context/QueryProvider';
+import EmptyResults from './EmptyResults';
 
 const dummyData = [
   {
@@ -88,6 +89,8 @@ const dummyData = [
   }
 ]
 
+const dummyEmpty = []
+
 const SearchBar = ({
   seeMore = false,
   placeholder,
@@ -131,7 +134,7 @@ const SearchBar = ({
 
             <FlatList 
               className={seeMore ? "h-36" : "h-full"}
-              data={dummyData}
+              data={dummyEmpty}
               renderItem={({ item }) => 
                 <TouchableOpacity activeOpacity={1}>
                   <ProfileCard
@@ -144,6 +147,9 @@ const SearchBar = ({
                 </TouchableOpacity>
               }
               keyExtractor={(item) => item.id}
+              ListEmptyComponent={
+                <EmptyResults />
+              }
             />
 
             {seeMore && 
