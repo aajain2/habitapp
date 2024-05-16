@@ -9,8 +9,11 @@ import { StatusBar } from 'expo-status-bar'
 import BackButton from '../../components/BackButton'
 import { router } from 'expo-router'
 import SignUpButton from '../../components/SignUpButton'
+import { useQueryContext } from '../../context/QueryProvider'
 
 const FriendSetup = () => {
+  const { setQuery } = useQueryContext()
+
   return (
     <DismissKeyboard>
       <View className="w-full h-full">
@@ -45,7 +48,10 @@ const FriendSetup = () => {
               <SignUpButton 
                 title="Next"
                 containerStyles="bg-white/30 border-white mt-8"
-                handlePress={() => router.push("home")}
+                handlePress={() => {
+                  setQuery("")
+                  router.push("norm-setup")
+                }}
               />
             </View>
           </View>
