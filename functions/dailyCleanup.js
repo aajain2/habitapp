@@ -1,18 +1,56 @@
-// /functions/dailyCleanup.js
-/**
- * Handles scheduled maintenance tasks for the Trabit app,
- * particularly focusing on daily cleanup routines.
- * This file defines functions that are executed on a schedule to clean up or archive data,
- * ensuring the app's data remains fresh and relevant.
- *
- * Functions:
- * - scheduledDailyCleanup: Runs daily to perform necessary data cleanup tasks,
- *   such as deleting old posts or archiving data as required by the app's logic.
- */
+const { getFirestore } = require('firebase-admin/firestore');
 const { schedule } = require('firebase-functions/v2/pubsub');
-const firestoreHelper = require('./lib/firestoreHelper');
 
-exports.scheduledDailyCleanup = schedule('every 24 hours').onRun(async (context) => {
-  console.log("Running daily cleanup of posts...");
-  return firestoreHelper.deletePosts();
+/**
+ * Manages scheduled maintenance tasks such as cleaning up old posts and checking habit streaks.
+ * Ensures that the application's data remains fresh and relevant.
+ */
+const db = getFirestore();
+
+exports.scheduledDailyCleanup = async (context) => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+  try {
+    const postsSnapshot = await db.collection('Posts').where('createdAt', '<', yesterday).get();
+    postsSnapshot.forEach((doc) => {
+      doc.ref.delete();
+    });
+    console.log("Daily cleanup executed successfully.");
+  } catch (error) {
+    console.error("Error during daily cleanup:", error);
+  }
+
+  // Reset streak if not completed
+  try {
+    const usersSnapshot = await db.collection('Users').get();
+    usersSnapshot.forEach(async (userDoc) => {
+      const userId = userDoc.id;
+      const habitDoc = await db.collection('Users').doc(userId).collection('Habits').doc(yesterdayStr).get();
+      if (!habitDoc.exists || !habitDoc.data().completed) {
+        await db.collection('Users').doc(userId).update({ streak: 0 });
+      }
+    });
+    console.log("Streaks checked and updated successfully.");
+  } catch (error) {
+    console.error("Error checking and updating streaks:", error);
+  }
+};
+
+exports.generateDailyPrompts = schedule('every 24 hours').onRun(async (context) => {
+  const usersRef = db.collection('Users');
+  try {
+    const usersSnapshot = await usersRef.get();
+    usersSnapshot.forEach(async (doc) => {
+      const userHabit = doc.data().selectedHabit;
+      const prompts = await db.collection('Habits').doc(userHabit).collection('Prompts').get();
+      const allPrompts = prompts.docs.map(doc => doc.data());
+      const randomPrompt = allPrompts[Math.floor(Math.random() * allPrompts.length)];
+      await db.collection('Users').doc(doc.id).collection('DailyPrompts').add(randomPrompt);
+      console.log("Daily prompts generated for user:", doc.id);
+    });
+  } catch (error) {
+    console.error("Error generating daily prompts:", error);
+  }
 });

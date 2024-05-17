@@ -1,19 +1,27 @@
-// /functions/posts.js
-/**
- * This module manages interactions with post-related data for the Trabit app.
- * It includes functions to handle post creation, updates, and potentially deletion,
- * allowing users to interact with their and others' posts.
- *
- * Functions:
- * - createPost: Allows authenticated users to create a new post. It handles data validation
- *   and updates Firestore accordingly.
- */
-const { onCall } = require('firebase-functions/v2/https');
-const firestoreHelper = require('./lib/firestoreHelper');
+const { getFirestore } = require('firebase-admin/firestore');
 
-exports.createPost = onCall(async (data, context) => {
+/**
+ * Handles all post-related functionalities, ensuring that posts are created properly
+ * and managing any interactions with post data.
+ */
+const db = getFirestore();
+
+exports.createPost = async (data, context) => {
   if (!context.auth) {
-    throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated.');
+    throw new Error('Authentication required.');
   }
-  return firestoreHelper.createPost(context.auth.uid, data.promptId, data.photoUrl);
-});
+  try {
+    const postData = {
+      userId: context.auth.uid,
+      promptId: data.promptId,
+      photoUrl: data.photoUrl,
+      createdAt: new Date()
+    };
+    const postRef = await db.collection('Posts').add(postData);
+    console.log("Post created with ID:", postRef.id);
+    return postRef;
+  } catch (error) {
+    console.error("Error creating post:", error);
+    throw new Error('Failed to create post');
+  }
+};

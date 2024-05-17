@@ -41,8 +41,8 @@ async function initializeFirestore() {
 
   // Sample Users with Friends and Habits
   const users = [
-    { id: 'user1', username: 'Alice', email: 'alice@example.com', profilePicUrl: '' },
-    { id: 'user2', username: 'Bob', email: 'bob@example.com', profilePicUrl: '' }
+    { id: 'user1', username: 'Alice', email: 'alice@example.com', profilePicUrl: '', selectedHabit: 'drinkWater' },
+    { id: 'user2', username: 'Bob', email: 'bob@example.com', profilePicUrl: '', selectedHabit: 'readBooks' }
   ];
 
   users.forEach(user => {
@@ -50,23 +50,30 @@ async function initializeFirestore() {
     batch.set(userRef, {
       username: user.username,
       email: user.email,
-      profilePicUrl: user.profilePicUrl
+      profilePicUrl: user.profilePicUrl,
+      selectedHabit: user.selectedHabit
     });
 
-    // Adding friend relationship
-    const friendRef = userRef.collection('Friends').doc(users.find(u => u.id !== user.id).id); // Assume each user is friends with the other
-    batch.set(friendRef, {
-      status: 'confirmed',
-      addedOn: admin.firestore.FieldValue.serverTimestamp()
+    // Adding friend relationships
+    users.forEach(friend => {
+      if (friend.id !== user.id) {
+        const friendRef = userRef.collection('Friends').doc(friend.id);
+        batch.set(friendRef, {
+          status: 'pending', // Initially set to pending
+          addedOn: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
     });
 
     // Sample daily habit tracking
-    const habitsTrackingRef = userRef.collection('Habits').doc('2023-01-01'); // Example date
+    const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
+    const habitsTrackingRef = userRef.collection('Habits').doc(today);
     batch.set(habitsTrackingRef, {
-      habitId: 'drinkWater',
+      habitId: user.selectedHabit,
       completed: false,
       promptId: 'prompt1',
-      photoUrl: ''
+      photoUrl: '',
+      streak: 0
     });
   });
 
