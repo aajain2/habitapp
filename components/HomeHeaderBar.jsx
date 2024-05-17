@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import TrabitHeader from './TrabitHeader'
 import { FontAwesome5 } from '@expo/vector-icons';
 import ProfilePicture from './ProfilePicture';
+import icons from '../constants/icons';
 
 const HomeHeaderBar = ({
   profilePicture
@@ -17,7 +18,11 @@ const HomeHeaderBar = ({
 
         <View className="pl-4 h-10 justify-center">
           <TouchableOpacity>
-            <FontAwesome5 name="user-friends" size={24} color="white" />
+            <Image 
+              className="h-9 w-9"
+              resizeMethod="stretch"
+              source={icons.addFriends}
+            />
           </TouchableOpacity>
         </View>
 

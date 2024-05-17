@@ -15,7 +15,7 @@ const HomeLanding = ({
         <SafeAreaView>
           <HomeHeaderBar 
             profilePicture={profile.profilePicture}
-          />          
+          />
         </SafeAreaView>
       </View>
 
