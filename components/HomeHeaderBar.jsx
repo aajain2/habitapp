@@ -19,8 +19,8 @@ const HomeHeaderBar = ({
         <View className="pl-4 h-10 justify-center">
           <TouchableOpacity>
             <Image 
-              className="h-9 w-9"
-              resizeMethod="stretch"
+              className="h-8 w-8"
+              resizeMode="contain"
               source={icons.addFriends}
             />
           </TouchableOpacity>
@@ -28,9 +28,13 @@ const HomeHeaderBar = ({
 
         <View className="flex-auto"></View>
 
-        <View className="h-10 pr-8 justify-center">
+        <View className="h-10 pr-4 justify-center">
           <TouchableOpacity>
-            <FontAwesome5 name="calendar" size={24} color="white" />
+            <Image 
+              className="h-8 w-8"
+              resizeMode="contain"
+              source={icons.calendar}
+            />
           </TouchableOpacity>
         </View>
 
