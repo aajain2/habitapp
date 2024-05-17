@@ -1,9 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Slot } from "expo-router"
+import { useFonts } from "expo-font"
+import { Stack } from "expo-router"
+import 'react-native-reanimated'
 
-export default function RootLayout() {
+import SignUpProvider from "../context/SignUpProvider"
+
+const RootLayout = () => {
+  const[fontsLoaded, error] = useFonts({
+    "Alata-Regular": require("../assets/fonts/Alata-Regular.ttf"),
+    "Inter-Bold": require("../assets/fonts/Inter-Bold.ttf"),
+    "Inter-Medium": require("../assets/fonts/Inter-Medium.ttf"),
+    "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
+    "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf")
+  });
+
   return (
-    <Slot />
+    <SignUpProvider>
+      <Stack>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(setup)" options={{ headerShown: false }} />
+        <Stack.Screen name="home" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+      </Stack>
+    </SignUpProvider>
   );
 }
+
+export default RootLayout;
