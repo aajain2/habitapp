@@ -24,7 +24,6 @@ const HomeHeaderBar = ({
           <TouchableOpacity className="border" onPress={() => console.log("Pressed")}>
             <ProfilePicture
               source={profilePicture}
-              dimensions={32}
             />
           </TouchableOpacity>
         </View>
