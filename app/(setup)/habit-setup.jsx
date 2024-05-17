@@ -5,7 +5,7 @@ import BackgroundVideo from '../../components/BackgroundVideo';
 import images from '../../constants/images';
 import HabitSelector from '../../components/habit-selector/HabitSelector';
 import { useState } from 'react';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '../../components/buttons/CustomButton';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import TrabitHeader from '../../components/TrabitHeader';

@@ -1,7 +1,7 @@
 import { router } from 'expo-router'
 import { Image, SafeAreaView, Text, View } from 'react-native';
-import CustomButton from '../../components/CustomButton';
-import BackButton from '../../components/BackButton';
+import CustomButton from '../../components/buttons/CustomButton';
+import BackButton from '../../components/buttons/BackButton';
 import images from '../../constants/images';
 
 const Welcome = () => {

@@ -3,7 +3,7 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import { StatusBar } from 'expo-status-bar'
-import BackButton from '../../components/BackButton'
+import BackButton from '../../components/buttons/BackButton'
 import { router } from 'expo-router'
 import SearchBar from '../../components/search/SearchBar'
 
