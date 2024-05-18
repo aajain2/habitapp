@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import { Video, ResizeMode } from 'expo-av'
 import videos from '../constants/videos'

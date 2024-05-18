@@ -12,7 +12,7 @@ const HabitPrompt = ({
         source={gifs.exclaim}
       />
 
-      <Text className="text-white text-base w-52 text-center">{prompt}</Text>
+      <Text className="text-white text-base w-52 text-center font-inter-regular">{prompt}</Text>
 
       <CustomButton 
         containerStyles="w-52 h-16 bg-white/50 border-2 border-white mt-6"
