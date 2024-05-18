@@ -22,7 +22,6 @@ const HomeLanding = ({
                 profilePicture={profile.profilePicture}
               />
             </View>
-            
 
             <View className="flex-row mt-2 absolute top-14">
               <Countdown 
@@ -38,8 +37,6 @@ const HomeLanding = ({
               prompt="Take a photo of any vegetable with a fork 🥦🍴"
             />
           </View>
-          
-          
         </SafeAreaView>
       </View>
 
@@ -54,7 +51,6 @@ const HomeLanding = ({
           shouldPlay
         />
       </View>
-      
     </View>
   )
 }
