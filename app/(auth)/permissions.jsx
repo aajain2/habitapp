@@ -28,6 +28,8 @@ const Permissions = () => {
 
           <View className="mt-10 flex-row">
             <Image 
+              className="w-[50] h-[70]"
+              resizeMode="contain"
               source={images.footstepsEmpty}
             />
 
