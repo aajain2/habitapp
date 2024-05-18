@@ -4,6 +4,7 @@ import MenuButton from '../buttons/MenuButton'
 import PictureCard from './PictureCard'
 
 const PostCard = ({
+  completed,
   username,
   image,
   profilePicture,
@@ -38,7 +39,7 @@ const PostCard = ({
 
       <PictureCard 
         caption={caption}
-        completed={true}
+        completed={completed}
         prompt={prompt}
         image={image}
       />

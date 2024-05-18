@@ -62,6 +62,8 @@ const dummyProfile = {
   profilePicture: "https://picsum.photos/200"
 }
 
+const completed = true
+
 const Home = () => {
   return (
     <View className="w-full h-full">
@@ -71,13 +73,14 @@ const Home = () => {
         ListHeaderComponent={() => {
           return (
             <View>
-              <HomeLanding 
+              <HomeLanding
+                completed={completed}
                 prompt={prompt}
                 profile={dummyProfile}
               />
-
+              
               <YesterdayReport 
-                blurred={true}
+                blurred={!completed}
               />
 
               <Text className="text-xl font-inter-bold ml-4 mb-4">Today's Habit Complete</Text>
@@ -87,6 +90,7 @@ const Home = () => {
         renderItem={({ item }) => {
           return (
             <PostCard 
+              completed={completed}
               username={item.username}
               image={item.image}
               profilePicture={item.profilePicture}

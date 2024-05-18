@@ -21,9 +21,11 @@ const PictureCard = ({
           }}
         />
 
-        <View className="absolute bottom-2 left-2">
-          <Text className="text-white font-inter-regular">{caption}</Text>
-        </View>
+        {completed && 
+          <View className="absolute bottom-2 left-2">
+            <Text className="text-white font-inter-regular">{caption}</Text>
+          </View>
+        }
 
         {!completed &&
           <View className="items-center">

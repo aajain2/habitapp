@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 const Countdown = ({
+  completed,
   containerStyles
 }) => {
   const calculateTimeLeft = () => {
@@ -32,7 +33,9 @@ const Countdown = ({
         {`${String(timeLeft.hours).padStart(2, '0')}:${String(timeLeft.minutes).padStart(2, '0')}:${String(timeLeft.seconds).padStart(2, '0')}`}
       </Text>
 
-      <Text className="text-white font-inter-medium text-xs w-52">Left to complete habit</Text>
+      <Text className="text-white font-inter-medium text-xs w-52">
+        {completed ? "Until next prompt" : "Left to complete habit"}
+      </Text>
     </View>
   )
 }
