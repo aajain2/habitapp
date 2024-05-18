@@ -6,12 +6,15 @@ const { getFirestore } = require('firebase-admin/firestore');
  */
 const db = getFirestore();
 
-exports.handleNewUserRegistration = async (user) => {
+exports.handleNewUserRegistration = async (user, data) => {
+  const { firstName, lastName, username } = data;
   const defaultHabit = 'drinkWater'; // Default habit if not specified
   try {
     await db.collection('Users').doc(user.uid).set({
       email: user.email,
-      username: user.displayName || 'New User',
+      firstName: firstName || '',
+      lastName: lastName || '',
+      username: username || 'New User',
       profilePicUrl: user.photoURL || '',
       selectedHabit: defaultHabit
     });

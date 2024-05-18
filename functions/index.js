@@ -1,5 +1,6 @@
 // Using Firebase Functions v2 API
 const { onCall, onCreate, schedule } = require("firebase-functions/v2/https");
+const { onRun } = require("firebase-functions/v2/pubsub");
 
 // Import custom function handlers from domain-specific files
 const authHandlers = require("./auth");
@@ -10,12 +11,22 @@ const socialHandlers = require("./social");
 
 // User registration function triggered on creation of a new user
 exports.registerUser = onCreate((user) => {
-  return authHandlers.handleNewUserRegistration(user);
+  const data = {
+    firstName: user.displayName ? user.displayName.split(' ')[0] : '',
+    lastName: user.displayName ? user.displayName.split(' ')[1] : '',
+    username: user.email.split('@')[0]  // Example username generation
+  };
+  return authHandlers.handleNewUserRegistration(user, data);
 });
 
 // Post creation and management functions
 exports.createPost = onCall((data, context) => {
   return postHandlers.createPost(data, context);
+});
+
+// Flag post function
+exports.flagPost = onCall((data, context) => {
+  return postHandlers.flagPost(data, context);
 });
 
 // Scheduled functions for daily maintenance and cleanup

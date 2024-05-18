@@ -41,13 +41,15 @@ async function initializeFirestore() {
 
   // Sample Users with Friends and Habits
   const users = [
-    { id: 'user1', username: 'Alice', email: 'alice@example.com', profilePicUrl: '', selectedHabit: 'drinkWater' },
-    { id: 'user2', username: 'Bob', email: 'bob@example.com', profilePicUrl: '', selectedHabit: 'readBooks' }
+    { id: 'user1', firstName: 'Alice', lastName: 'Smith', username: 'alice', email: 'alice@example.com', profilePicUrl: '', selectedHabit: 'drinkWater' },
+    { id: 'user2', firstName: 'Bob', lastName: 'Johnson', username: 'bob', email: 'bob@example.com', profilePicUrl: '', selectedHabit: 'readBooks' }
   ];
 
   users.forEach(user => {
     const userRef = db.collection('Users').doc(user.id);
     batch.set(userRef, {
+      firstName: user.firstName,
+      lastName: user.lastName,
       username: user.username,
       email: user.email,
       profilePicUrl: user.profilePicUrl,
