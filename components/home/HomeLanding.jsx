@@ -26,11 +26,13 @@ const HomeLanding = ({
             </View>
 
             <View className={`flex-row mt-2 absolute top-14`}>
-              <Countdown 
+              <Countdown
+                smaller={completed}
                 completed={completed}
                 containerStyles="ml-4"
               />
               <Streak
+                smaller={completed}
                 containerStyles="flex-grow mr-4"
                 days={10}
               />

@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 const Countdown = ({
+  smaller,
   completed,
   containerStyles
 }) => {
@@ -29,11 +30,11 @@ const Countdown = ({
   
   return (
     <View className={containerStyles}>
-      <Text className="text-white text-3xl font-inter-regular">
+      <Text className={`text-white text-3xl font-inter-regular ${smaller && "text-2xl"}`}>
         {`${String(timeLeft.hours).padStart(2, '0')}:${String(timeLeft.minutes).padStart(2, '0')}:${String(timeLeft.seconds).padStart(2, '0')}`}
       </Text>
 
-      <Text className="text-white font-inter-medium text-xs w-52">
+      <Text className={`text-white font-inter-medium w-52 ${smaller && "text-xs"}`}>
         {completed ? "Until next prompt" : "Left to complete habit"}
       </Text>
     </View>

@@ -4,6 +4,7 @@ import HomeLanding from '../components/home/HomeLanding'
 import { StatusBar } from 'expo-status-bar'
 import YesterdayReport from '../components/home/YesterdayReport'
 import PostCard from '../components/home/PostCard'
+import CurrentPost from '../components/home/CurrentPost'
 
 const dummyData = [
   {
@@ -78,6 +79,12 @@ const Home = () => {
                 prompt={prompt}
                 profile={dummyProfile}
               />
+
+              {completed && 
+                <CurrentPost 
+                  picture="https://picsum.photos/540/720"
+                />
+              }
               
               <YesterdayReport 
                 blurred={!completed}
