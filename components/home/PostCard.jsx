@@ -9,7 +9,8 @@ const PostCard = ({
   profilePicture,
   habit,
   timestamp,
-  prompt
+  prompt,
+  caption
 }) => {
   return (
     <View className="mx-4 mb-6">
@@ -36,6 +37,7 @@ const PostCard = ({
       </View>
 
       <PictureCard 
+        caption={caption}
         completed={true}
         prompt={prompt}
         image={image}

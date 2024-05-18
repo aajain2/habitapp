@@ -12,7 +12,8 @@ const dummyData = [
     "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Going to the gym everyday",
-    "timestamp": "10:00"
+    "timestamp": "10:00",
+    "caption": "lets get these gains"
   },
   {
     "id": 1,
@@ -20,7 +21,8 @@ const dummyData = [
     "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Reading a book every night",
-    "timestamp": "21:00"
+    "timestamp": "21:00",
+    "caption": ""
   },
   {
     "id": 2,
@@ -28,7 +30,8 @@ const dummyData = [
     "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Meditating every morning",
-    "timestamp": "06:30"
+    "timestamp": "06:30",
+    "caption": "meditating"
   },
   {
     "id": 3,
@@ -36,7 +39,8 @@ const dummyData = [
     "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Taking a walk after lunch",
-    "timestamp": "13:00"
+    "timestamp": "13:00",
+    "caption": ""
   },
   {
     "id": 4,
@@ -44,7 +48,8 @@ const dummyData = [
     "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Journaling before bed",
-    "timestamp": "22:30"
+    "timestamp": "22:30",
+    "caption": ""
   }
 ]  
 
@@ -88,6 +93,7 @@ const Home = () => {
               habit={item.habit}
               timestamp={item.timestamp}
               prompt={prompt}
+              caption={item.caption}
             />
           )
         }}

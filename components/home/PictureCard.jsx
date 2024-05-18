@@ -6,7 +6,8 @@ import CustomLink from '../CustomLink'
 const PictureCard = ({
   prompt,
   image,
-  completed
+  completed,
+  caption
 }) => {
   return (
     <View>
@@ -19,6 +20,10 @@ const PictureCard = ({
             uri: image
           }}
         />
+
+        <View className="absolute bottom-2 left-2">
+          <Text className="text-white font-inter-regular">{caption}</Text>
+        </View>
 
         {!completed &&
           <View className="items-center">
