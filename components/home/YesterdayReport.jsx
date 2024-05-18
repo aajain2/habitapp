@@ -84,9 +84,11 @@ const dummyData = [
   }
 ]
 
-const YesterdayReport = () => {
+const YesterdayReport = ({
+  blurred
+}) => {
   return (
-    <View className="my-4 px-4">
+    <View className="my-4 mx-4">
       <Text className="text-xl font-inter-bold">
         Yesterday’s Report
       </Text>
@@ -102,6 +104,7 @@ const YesterdayReport = () => {
         renderItem={({ item }) => 
           <View className="mx-2">
             <Image 
+              blurRadius={blurred ? 10 : 0}
               className="w-16 h-16 rounded-full"
               source={{
                 uri: item.profilePicture

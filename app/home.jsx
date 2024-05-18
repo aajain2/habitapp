@@ -1,49 +1,37 @@
 import { View, Text, FlatList } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import HomeLanding from '../components/HomeLanding'
+import HomeLanding from '../components/home/HomeLanding'
 import { StatusBar } from 'expo-status-bar'
-import YesterdayReport from '../components/YesterdayReport'
+import YesterdayReport from '../components/home/YesterdayReport'
 
 const dummyData = [
   {
     id: 0,
-    landing: true,
-    report: false,
-    text: ""
-  }, 
-  {
-    id: 1,
-    landing: false,
-    report: true,
-    text: ""
-  }, 
-  {
-    id: 2,
     landing: false,
     report: false,
     text: "Testing 1"
   }, 
   {
-    id: 3,
+    id: 1,
     landing: false,
     report: false,
     text: "Testing 2"
   }, 
   {
-    id: 4,
+    id: 2,
     landing: false,
     report: false,
     text: "Testing 3"
   }, 
   {
-    id: 5,
+    id: 3,
     landing: false,
     report: false,
     text: "Testing 4"
   },
   {
-    id: 6,
+    id: 4,
     landing: false,
     report: false,
     text: "Testing 5"
@@ -61,24 +49,27 @@ const Home = () => {
   return (
     <View className="w-full h-full">
       <FlatList 
-        className="h-full border"
+        className="h-full"
         data={dummyData}
-        renderItem={({ item }) => {
-          if (item.landing) {
-            return (
+        ListHeaderComponent={() => {
+          return (
+            <View>
               <HomeLanding 
                 profile={dummyProfile}
               />
-            )
-          } else if (item.report) {
-            return (
-              <YesterdayReport />
-            )
-          } else {
-            return (
-              <Text>{item.text}</Text>
-            )
-          }
+
+              <YesterdayReport 
+                blurred={true}
+              />
+
+              <Text className="text-xl font-inter-bold ml-4 mb-4">Today's Habit Complete</Text>
+            </View>
+          )
+        }}
+        renderItem={({ item }) => {
+          return (
+            <Text>{item.text}</Text>
+          )
         }}
       />
 

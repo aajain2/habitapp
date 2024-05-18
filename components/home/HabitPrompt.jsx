@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'react-native'
-import CustomButton from './buttons/CustomButton'
-import gifs from '../constants/gifs'
+import CustomButton from '../buttons/CustomButton'
+import gifs from '../../constants/gifs'
 
 const HabitPrompt = ({
   prompt
