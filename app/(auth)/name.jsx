@@ -8,7 +8,7 @@ import { useSignUpContext } from '../../context/SignUpProvider';
 import TrabitHeader from '../../components/TrabitHeader';
 
 const NameSignUp = () => {
-  const { name, setName } = useSignUpContext();
+  const { firstName, setFirstName, lastName, setLastName } = useSignUpContext();
 
   return (
     <DismissKeyboard>
@@ -31,8 +31,16 @@ const NameSignUp = () => {
 
             <SignUpInput 
               containerStyles="mt-12"
-              handleChangeText={(e) => setName(e)}
-              value={name}
+              handleChangeText={(e) => setFirstName(e)}
+              placeholder="First Name"
+              value={firstName}
+            />
+
+            <SignUpInput 
+              containerStyles="mt-12"
+              handleChangeText={(e) => setLastName(e)}
+              placeholder="Last Name"
+              value={lastName}
             />
 
             <CustomButton

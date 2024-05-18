@@ -4,7 +4,8 @@ const SignUpContext = createContext()
 export const useSignUpContext = () => useContext(SignUpContext)
 
 const SignUpProvider = ({ children }) => {
-  const [name, setName] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const [birthday, setBirthday] = useState("")
   const [email, setEmail] = useState("")
   const [username, setUsername] = useState("")
@@ -13,8 +14,10 @@ const SignUpProvider = ({ children }) => {
   return (
     <SignUpContext.Provider
       value={{
-        name,
-        setName,
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
         birthday,
         setBirthday,
         email,
