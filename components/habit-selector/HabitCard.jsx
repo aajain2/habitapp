@@ -34,7 +34,6 @@ const HabitCard = ({
           resizeMode="contain"
         />
       </View>
-      
     </TouchableOpacity>
   )
 }

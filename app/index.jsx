@@ -8,7 +8,7 @@ const App = () => {
       <CustomButton 
         title="Sign Up"
         handlePress={() => {
-          router.push("/habit-setup")
+          router.push("/home")
         }}
       />
     </SafeAreaView>

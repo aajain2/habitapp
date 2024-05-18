@@ -1,10 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { Entypo } from '@expo/vector-icons';
 
-const MenuButton = () => {
+const MenuButton = ({
+  size,
+  containerStyles,
+  handleClick
+}) => {
   return (
-    <View>
-      <Text>MenuButton</Text>
+    <View className="items-end">
+      <TouchableOpacity className={`justify-center ${containerStyles}`} onPress={handleClick}>
+        <Entypo name="dots-three-horizontal" size={size} color="black" />
+      </TouchableOpacity>
     </View>
   )
 }

@@ -3,13 +3,13 @@ import React from 'react'
 import HomeLanding from '../components/home/HomeLanding'
 import { StatusBar } from 'expo-status-bar'
 import YesterdayReport from '../components/home/YesterdayReport'
-import PostCard from '../components/PostCard'
+import PostCard from '../components/home/PostCard'
 
 const dummyData = [
   {
     "id": 0,
     "username": "johnnyappleseed",
-    "image": "https://picsum.photos/1080/1920",
+    "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Going to the gym everyday",
     "timestamp": "10:00"
@@ -17,7 +17,7 @@ const dummyData = [
   {
     "id": 1,
     "username": "janedoe",
-    "image": "https://picsum.photos/1080/1920",
+    "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Reading a book every night",
     "timestamp": "21:00"
@@ -25,7 +25,7 @@ const dummyData = [
   {
     "id": 2,
     "username": "bobbuilder",
-    "image": "https://picsum.photos/1080/1920",
+    "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Meditating every morning",
     "timestamp": "06:30"
@@ -33,7 +33,7 @@ const dummyData = [
   {
     "id": 3,
     "username": "alicewonderland",
-    "image": "https://picsum.photos/1080/1920",
+    "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Taking a walk after lunch",
     "timestamp": "13:00"
@@ -41,13 +41,14 @@ const dummyData = [
   {
     "id": 4,
     "username": "charlietuna",
-    "image": "https://picsum.photos/1080/1920",
+    "image": "https://picsum.photos/1080/1440",
     "profilePicture": "https://picsum.photos/200",
     "habit": "Journaling before bed",
     "timestamp": "22:30"
   }
 ]  
 
+const prompt = "Take a photo of any vegetable with a fork 🥦🍴"
 
 const dummyProfile = {
   username: "abe",
@@ -66,6 +67,7 @@ const Home = () => {
           return (
             <View>
               <HomeLanding 
+                prompt={prompt}
                 profile={dummyProfile}
               />
 
@@ -73,7 +75,7 @@ const Home = () => {
                 blurred={true}
               />
 
-              <Text className="text-xl font-inter-bold ml-4">Today's Habit Complete</Text>
+              <Text className="text-xl font-inter-bold ml-4 mb-4">Today's Habit Complete</Text>
             </View>
           )
         }}
@@ -85,6 +87,7 @@ const Home = () => {
               profilePicture={item.profilePicture}
               habit={item.habit}
               timestamp={item.timestamp}
+              prompt={prompt}
             />
           )
         }}

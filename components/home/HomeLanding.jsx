@@ -10,7 +10,8 @@ import Streak from './Streak'
 import HabitPrompt from './HabitPrompt'
 
 const HomeLanding = ({
-  profile
+  profile,
+  prompt
 }) => {
   return (
     <View className="w-full h-[100vh]">
@@ -34,7 +35,7 @@ const HomeLanding = ({
             </View>
 
             <HabitPrompt 
-              prompt="Take a photo of any vegetable with a fork 🥦🍴"
+              prompt={prompt}
             />
           </View>
         </SafeAreaView>

@@ -11,7 +11,9 @@ module.exports = {
         "blue": "#43A4C6",
         "beige": "#F9F0E6",
         "searchbar-gray": "#EBF1F3",
-        "gray": "#696969"
+        "gray": "#696969",
+        "dark-blue": "#004A63",
+        "light-gray": "#ABABAB"
       },
       fontFamily: {
         "alata-regular": ["Alata-Regular", "sans-serif"],

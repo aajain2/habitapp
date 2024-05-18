@@ -104,7 +104,7 @@ const YesterdayReport = ({
         renderItem={({ item }) => 
           <View className="mx-2">
             <Image 
-              blurRadius={blurred ? 10 : 0}
+              blurRadius={blurred ? 20 : 0}
               className="w-16 h-16 rounded-full"
               source={{
                 uri: item.profilePicture
