@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import HomeHeaderBar from './HomeHeaderBar'
 import Countdown from './Countdown'
 import Streak from './Streak'
+import HabitPrompt from './HabitPrompt'
 
 const HomeLanding = ({
   profile
@@ -15,20 +16,29 @@ const HomeLanding = ({
     <View className="w-full h-[100vh]">
       <View className="absolute z-10 w-full h-[100vh]">
         <SafeAreaView>
-          <HomeHeaderBar 
-            profilePicture={profile.profilePicture}
-          />
+          <View className="h-full flex justify-center">
+            <View className="absolute w-full top-0">
+              <HomeHeaderBar 
+                profilePicture={profile.profilePicture}
+              />
+            </View>
+            
 
-          <View className="flex-row mt-4">
-            <Countdown 
-              containerStyles="ml-4"
-            />
-            <Streak 
-              containerStyles="flex-grow mr-4"
-              days={10}
+            <View className="flex-row mt-2 absolute top-14">
+              <Countdown 
+                containerStyles="ml-4"
+              />
+              <Streak 
+                containerStyles="flex-grow mr-4"
+                days={10}
+              />
+            </View>
+
+            <HabitPrompt 
+              prompt="Take a photo of any vegetable with a fork 🥦🍴"
             />
           </View>
-
+          
           
         </SafeAreaView>
       </View>

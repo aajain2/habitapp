@@ -9,42 +9,39 @@ const HomeHeaderBar = ({
   profilePicture
 }) => {
   return (
-    <View>
-      <View className="flex-row">
+    <View className="flex-row">
+      <TrabitHeader 
+        color="white"
+      />
 
-        <TrabitHeader 
-          color="white"
-        />
+      <View className="pl-4 h-10 justify-center">
+        <TouchableOpacity>
+          <Image 
+            className="h-8 w-8"
+            resizeMode="contain"
+            source={icons.addFriends}
+          />
+        </TouchableOpacity>
+      </View>
 
-        <View className="pl-4 h-10 justify-center">
-          <TouchableOpacity>
-            <Image 
-              className="h-8 w-8"
-              resizeMode="contain"
-              source={icons.addFriends}
-            />
-          </TouchableOpacity>
-        </View>
+      <View className="flex-auto"></View>
 
-        <View className="flex-auto"></View>
+      <View className="h-10 pr-4 justify-center">
+        <TouchableOpacity>
+          <Image 
+            className="h-8 w-8"
+            resizeMode="contain"
+            source={icons.calendar}
+          />
+        </TouchableOpacity>
+      </View>
 
-        <View className="h-10 pr-4 justify-center">
-          <TouchableOpacity>
-            <Image 
-              className="h-8 w-8"
-              resizeMode="contain"
-              source={icons.calendar}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View className="pr-4 h-10 justify-center">
-          <TouchableOpacity>
-            <ProfilePicture
-              source={profilePicture}
-            />
-          </TouchableOpacity>
-        </View>
+      <View className="pr-4 h-10 justify-center">
+        <TouchableOpacity>
+          <ProfilePicture
+            source={profilePicture}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   )
