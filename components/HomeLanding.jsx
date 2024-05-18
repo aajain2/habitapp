@@ -5,6 +5,8 @@ import videos from '../constants/videos'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import HomeHeaderBar from './HomeHeaderBar'
+import Countdown from './Countdown'
+import Streak from './Streak'
 
 const HomeLanding = ({
   profile
@@ -16,6 +18,16 @@ const HomeLanding = ({
           <HomeHeaderBar 
             profilePicture={profile.profilePicture}
           />
+
+          <View className="flex-row mt-4">
+            <Countdown 
+              containerStyles="ml-4"
+            />
+            <Streak 
+              containerStyles="flex-grow mr-4"
+              days={10}
+            />
+          </View>
 
           
         </SafeAreaView>
