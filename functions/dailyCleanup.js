@@ -1,10 +1,6 @@
 const { getFirestore } = require('firebase-admin/firestore');
 const { schedule } = require('firebase-functions/v2/pubsub');
 
-/**
- * Manages scheduled maintenance tasks such as cleaning up old posts and checking habit streaks.
- * Ensures that the application's data remains fresh and relevant.
- */
 const db = getFirestore();
 
 exports.scheduledDailyCleanup = async (context) => {
@@ -22,7 +18,6 @@ exports.scheduledDailyCleanup = async (context) => {
     console.error("Error during daily cleanup:", error);
   }
 
-  // Reset streak if not completed
   try {
     const usersSnapshot = await db.collection('Users').get();
     usersSnapshot.forEach(async (userDoc) => {
