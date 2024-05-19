@@ -1,16 +1,15 @@
+// This file contains scheduled functions for daily maintenance tasks using Firebase functions.
+// It includes cleanup of old posts and resetting user streaks based on activity logs.
 const { getFirestore } = require('firebase-admin/firestore');
 const { schedule } = require('firebase-functions/v2/pubsub');
 
-/**
- * Manages scheduled maintenance tasks such as cleaning up old posts and checking habit streaks.
- * Ensures that the application's data remains fresh and relevant.
- */
 const db = getFirestore();
 
+// Performs daily cleanup tasks such as deleting old posts and checking user streaks
 exports.scheduledDailyCleanup = async (context) => {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayStr = yesterday.toISOString().split('T')[0]; // Format YYYY-MM-DD
+  const yesterdayStr = yesterday.toISOString().split('T')[0];
 
   try {
     const postsSnapshot = await db.collection('Posts').where('createdAt', '<', yesterday).get();
@@ -22,7 +21,6 @@ exports.scheduledDailyCleanup = async (context) => {
     console.error("Error during daily cleanup:", error);
   }
 
-  // Reset streak if not completed
   try {
     const usersSnapshot = await db.collection('Users').get();
     usersSnapshot.forEach(async (userDoc) => {
@@ -38,6 +36,7 @@ exports.scheduledDailyCleanup = async (context) => {
   }
 };
 
+// Generates daily prompts for users based on their selected habits
 exports.generateDailyPrompts = schedule('every 24 hours').onRun(async (context) => {
   const usersRef = db.collection('Users');
   try {

@@ -1,14 +1,14 @@
+// This file manages post-related functionalities within the application, including creating posts
+// and managing post visibility through flagging mechanisms.
+
 const { getFirestore } = require('firebase-admin/firestore');
 
-/**
- * Handles all post-related functionalities, ensuring that posts are created properly
- * and managing any interactions with post data, including flagging for moderation.
- */
 const db = getFirestore();
 
+// Creates a new post with the given data from the user
 exports.createPost = async (data, context) => {
   if (!context.auth) {
-    throw new Error('Authentication required.');
+    throw new Error('Authentication required.'); // Ensures the user is authenticated
   }
   try {
     const postData = {
@@ -27,9 +27,10 @@ exports.createPost = async (data, context) => {
   }
 };
 
+// Flags a post for inappropriate content, deletes if flags exceed a limit
 exports.flagPost = async (data, context) => {
   if (!context.auth) {
-    throw new Error('Authentication required.');
+    throw new Error('Authentication required.'); // Ensures the user is authenticated
   }
   const { postId } = data;
   try {
@@ -37,6 +38,7 @@ exports.flagPost = async (data, context) => {
     const postDoc = await postRef.get();
 
     if (!postDoc.exists) {
+      console.log("Post not found:", postId);
       throw new Error('Post not found');
     }
 
