@@ -1,5 +1,9 @@
 const { getFirestore } = require('firebase-admin/firestore');
 
+/**
+ * Handles all post-related functionalities, ensuring that posts are created properly
+ * and managing any interactions with post data, including flagging for moderation.
+ */
 const db = getFirestore();
 
 exports.createPost = async (data, context) => {
@@ -33,7 +37,6 @@ exports.flagPost = async (data, context) => {
     const postDoc = await postRef.get();
 
     if (!postDoc.exists) {
-      console.log("Post not found:", postId);
       throw new Error('Post not found');
     }
 
