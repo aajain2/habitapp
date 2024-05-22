@@ -10,7 +10,8 @@ import { useState } from 'react';
 import TrabitHeader from '../../components/TrabitHeader';
 
 const Account = () => {
-  const { name,
+  const { firstName,
+          lastName,
           birthday, 
           email, 
           username, setUsername, 

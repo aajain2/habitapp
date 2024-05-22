@@ -1,13 +1,13 @@
+// This file is responsible for managing social interactions within the application, such as
+// adding and removing friends, and handling friend requests.
+
 const { getFirestore } = require('firebase-admin/firestore');
 
-/**
- * Manages social features such as adding and removing friends, handling friend requests,
- * and maintaining the social graph of the application.
- */
 const db = getFirestore();
 
+// Sends a friend request from the authenticated user to another user
 exports.addFriend = async (data, context) => {
-  if (!context.auth) throw new Error('Authentication required.');
+  if (!context.auth) throw new Error('Authentication required.'); // Ensures the user is authenticated
   const { targetUserId } = data;
   const userId = context.auth.uid;
 
@@ -24,8 +24,9 @@ exports.addFriend = async (data, context) => {
   return { message: "Friend request sent successfully." };
 };
 
+// Removes a friend from the user's friend list
 exports.removeFriend = async (data, context) => {
-  if (!context.auth) throw new Error('Authentication required.');
+  if (!context.auth) throw new Error('Authentication required.'); // Ensures the user is authenticated
   const { targetUserId } = data;
   const userId = context.auth.uid;
 
@@ -35,8 +36,9 @@ exports.removeFriend = async (data, context) => {
   return { message: "Friend removed successfully." };
 };
 
+// Accepts a friend request
 exports.acceptFriendRequest = async (data, context) => {
-  if (!context.auth) throw new Error('Authentication required.');
+  if (!context.auth) throw new Error('Authentication required.'); // Ensures the user is authenticated
   const { requesterId } = data;
   const targetUserId = context.auth.uid;
 
@@ -51,8 +53,9 @@ exports.acceptFriendRequest = async (data, context) => {
   return { message: "Friend request accepted successfully." };
 };
 
+// Rejects a friend request
 exports.rejectFriendRequest = async (data, context) => {
-  if (!context.auth) throw new Error('Authentication required.');
+  if (!context.auth) throw new Error('Authentication required.'); // Ensures the user is authenticated
   const { requesterId } = data;
   const targetUserId = context.auth.uid;
 
