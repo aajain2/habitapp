@@ -29,12 +29,11 @@ const HabitCard = ({
         </View>
 
         <Image 
-          className="w-[76px] h-[40px]"
+          className="w-[76px] h-[50px]"
           source={imageSource}
           resizeMode="contain"
         />
       </View>
-      
     </TouchableOpacity>
   )
 }

@@ -1,10 +1,10 @@
 import { router } from 'expo-router'
 import { SafeAreaView, Text, View } from 'react-native';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '../../components/buttons/CustomButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 
-import BackButton from '../../components/BackButton';
+import BackButton from '../../components/buttons/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import TrabitHeader from '../../components/TrabitHeader';
 

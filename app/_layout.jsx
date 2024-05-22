@@ -1,11 +1,17 @@
 import { useFonts } from "expo-font"
 import { Stack } from "expo-router"
 import 'react-native-reanimated'
+import { useAssets } from 'expo-asset'
 
 import SignUpProvider from "../context/SignUpProvider"
 
 const RootLayout = () => {
-  const[fontsLoaded, error] = useFonts({
+  const [assets, assetsError] = useAssets([
+                                            require("../assets/videos/blue-orange-background.mov"),
+                                            require("../assets/videos/green-background.mov")
+                                          ]);
+
+  const[fontsLoaded, fontsError] = useFonts({
     "Alata-Regular": require("../assets/fonts/Alata-Regular.ttf"),
     "Inter-Bold": require("../assets/fonts/Inter-Bold.ttf"),
     "Inter-Medium": require("../assets/fonts/Inter-Medium.ttf"),

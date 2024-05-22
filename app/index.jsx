@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native';
-import CustomButton from '../components/CustomButton';
+import CustomButton from '../components/buttons/CustomButton';
 
 const App = () => {
   return (

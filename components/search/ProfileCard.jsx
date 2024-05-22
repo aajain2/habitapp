@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
-import AddFriendButton from '../AddFriendButton'
+import AddFriendButton from '../buttons/AddFriendButton'
 import ProfilePicture from '../ProfilePicture'
 
 const ProfileCard = ({

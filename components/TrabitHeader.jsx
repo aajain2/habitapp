@@ -7,7 +7,7 @@ const TrabitHeader = ({
   containerStyles
 }) => {
   return (
-    <View className={`w-full h-10 justify-center z-10 ${absolute && "absolute"} ${containerStyles}`}>
+    <View className={`w-full h-10 justify-center ${absolute && "absolute"} ${containerStyles}`}>
       <Text className={`text-3xl font-alata-regular text-center text-${color}`}>TRABIT</Text>
     </View>
   )
