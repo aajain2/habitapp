@@ -15,8 +15,8 @@ const HabitPrompt = ({
       <Text className="text-white text-base w-52 text-center font-inter-regular">{prompt}</Text>
 
       <CustomButton 
-        containerStyles="w-52 h-16 bg-white/50 border-2 border-white mt-6"
-        textStyles="w-32 text-center"
+        containerStyles="w-52 h-16 bg-white/50 border-2 border-white mt-6 rounded-xl"
+        textStyles="w-32 text-center text-black"
         title="Complete your habit for today"
       />
     </View>

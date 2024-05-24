@@ -48,8 +48,6 @@ const HomeLanding = ({
                 prompt={prompt}
               />
             }
-
-            
           </View>
         </SafeAreaView>
       </View>

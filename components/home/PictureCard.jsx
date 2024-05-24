@@ -34,7 +34,7 @@ const PictureCard = ({
             </Text>
 
             <CustomButton
-              containerStyles="bg-transparent border-white border w-64 h-16 px-4 mb-4"
+              containerStyles="bg-transparent border-white border w-64 h-16 px-4 mb-4 rounded-xl"
               textStyles="text-white font-inter-regular text-center"
               title={prompt}
             />
@@ -44,7 +44,7 @@ const PictureCard = ({
             </Text>
 
             <CustomButton
-              containerStyles="w-36 h-8 border-transparent bg-dark-blue"
+              containerStyles="w-36 h-8 border-transparent bg-dark-blue "
               textStyles="text-xs text-white font-inter-regular"
               title="Complete Habit."
             />
@@ -61,7 +61,6 @@ const PictureCard = ({
             textStyles="text-light-gray font-inter-medium"
           />
         }
-        
       </View>
     </View>
   )
