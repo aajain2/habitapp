@@ -11,11 +11,11 @@ const CustomButton = ({
   return (
     <TouchableOpacity 
       activeOpacity={0.7}
-      className={`border-2 border-black bg-blue rounded-xl w-52 h-11 flex justify-center items-center ${containerStyles}`}
+      className={`bg-blue rounded-full w-52 h-11 flex justify-center items-center ${containerStyles}`}
       disabled={isLoading}
       onPress={handlePress}
     >
-      <Text className={`font-inter-bold text-sm ${textStyles}`}>
+      <Text className={`font-inter-bold text-sm text-white ${textStyles}`}>
         {title}
       </Text>
     </TouchableOpacity>
