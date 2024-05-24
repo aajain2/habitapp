@@ -32,7 +32,6 @@ const FriendSearch = () => {
         <StatusBar style="dark" />
       </View>  
     </DismissKeyboard>
-    
   )
 }
 
