@@ -31,7 +31,7 @@ const App = () => {
       <CustomButton 
         title="Login"
         handlePress={() => {
-          router.push("/home")
+          router.push("/login")
         }}
       />
 
