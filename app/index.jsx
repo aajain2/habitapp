@@ -36,7 +36,6 @@ const App = () => {
       />
 
       <CustomButton
-        
         containerStyles="mt-4 border-2 border-blue bg-white"
         textStyles="text-blue"
         title="Sign Up"
