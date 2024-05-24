@@ -23,7 +23,6 @@ const Camera = () => {
   const takePicture = async () => {
     if (camera && cameraReady) {
       camera.takePictureAsync({ onPictureSaved: (data) => {
-                                                            console.log(data)
                                                             setPhotoURI(data.uri)
                                                             setPhotoTaken(true)
                                                           } 
