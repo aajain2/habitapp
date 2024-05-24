@@ -35,7 +35,6 @@ const ProfileCard = ({
             <AcceptFriendButton accepted={accepted} handleAccept={handleAccept} /> : 
             <AddFriendButton friendStatus={friendStatus} handleAdd={handleAdd} />
           }
-          
         </View>
       }
 
