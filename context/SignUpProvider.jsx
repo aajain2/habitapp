@@ -6,7 +6,7 @@ export const useSignUpContext = () => useContext(SignUpContext)
 const SignUpProvider = ({ children }) => {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
-  const [birthday, setBirthday] = useState("")
+  const [birthday, setBirthday] = useState(new Date())
   const [email, setEmail] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
