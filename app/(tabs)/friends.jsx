@@ -6,6 +6,7 @@ import SearchBar from '../../components/search/SearchBar'
 import { StatusBar } from 'expo-status-bar'
 import TrabitHeader from '../../components/TrabitHeader'
 import ProfileCard from '../../components/search/ProfileCard'
+import { router } from 'expo-router'
 
 const dummyData = [
   {
