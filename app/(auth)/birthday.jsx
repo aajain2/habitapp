@@ -9,9 +9,16 @@ import TrabitHeader from '../../components/TrabitHeader';
 
 import { useState } from 'react';
 
+const isOver18YearsOld = (birthday) => {
+  const currentDate = new Date();
+  const eighteenYearsAgo = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+  return birthday < eighteenYearsAgo;
+};
+
 const BirthdaySignUp = () => {
   const { birthday, setBirthday } = useSignUpContext();
   const [showBirthdayPicker, setShowBirthdayPicker] = useState(false)
+  const [ageError, setAgeError] = useState(false)
 
   return (
     <DismissKeyboard>
@@ -41,10 +48,19 @@ const BirthdaySignUp = () => {
               <Text className="font-inter-regular text-center text-lg">{birthday.toLocaleDateString()}</Text>
             </TouchableOpacity>
 
+            {ageError && 
+              <Text className="text-[10px] text-red-500 font-inter-bold mt-1 w-44">
+                You must be of 18 years of age to use this app.
+              </Text>
+            }
+
             <DateTimePickerModal 
               date={birthday}
               isVisible={showBirthdayPicker}
               mode="date"
+              onChange={(date) => {
+                setBirthday(date)
+              }}
               onConfirm={(date) => {
                 setBirthday(date)
                 setShowBirthdayPicker(false)
@@ -56,6 +72,12 @@ const BirthdaySignUp = () => {
 
             <CustomButton 
               handlePress={() => {
+                if (!isOver18YearsOld(birthday)) {
+                  setAgeError(true)
+                  return
+                }
+                
+                setAgeError(false)
                 router.push("email")
               }}
               title="Next"
