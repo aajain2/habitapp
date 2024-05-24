@@ -1,17 +1,22 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import AddFriendButton from '../buttons/AddFriendButton'
 import ProfilePicture from '../ProfilePicture'
 import { AntDesign } from '@expo/vector-icons'
+import AcceptFriendButton from '../buttons/AcceptFriendButton'
 
 const ProfileCard = ({
+  isAcceptRequestCard,
+  accepted,
+  handleAccept,
   name,
   username,
   profilePicture,
   handleAdd,
   friendStatus,
   hasRemoveButton,
-  handleRemoveFriend
+  handleRemoveFriend,
+  hideActionButton
 }) => {
   return (
     <View className="flex-row my-1">
@@ -19,13 +24,20 @@ const ProfileCard = ({
         source={profilePicture}
       />
       
-      <View className="justify-center ml-2">
+      <View className="justify-center ml-2 mr-auto">
         <Text className="font-inter-medium text-sm">{name}</Text>
         <Text className="font-inter-regular text-xs">@{username}</Text>
       </View>
-      <View className="ml-auto justify-center">
-        <AddFriendButton friendStatus={friendStatus} handleAdd={handleAdd} />
-      </View>
+
+      {!hideActionButton && 
+        <View className="justify-center">
+          {isAcceptRequestCard ? 
+            <AcceptFriendButton accepted={accepted} handleAccept={handleAccept} /> : 
+            <AddFriendButton friendStatus={friendStatus} handleAdd={handleAdd} />
+          }
+          
+        </View>
+      }
 
       {hasRemoveButton && 
         <TouchableOpacity 

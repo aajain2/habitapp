@@ -14,7 +14,8 @@ const dummyData = [
     username: "joestar",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: false,
   },
   {
     id: 1,
@@ -22,7 +23,8 @@ const dummyData = [
     username: "kylinator",
     profilePicture: "https://picsum.photos/200",
     friends : true,
-    requested: false
+    requested: false,
+    accepted: true,
   },
   {
     id: 2,
@@ -30,7 +32,8 @@ const dummyData = [
     username: "arf",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: true,
   },
   {
     id: 3,
@@ -38,7 +41,8 @@ const dummyData = [
     username: "bowwow",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: true,
   },
   {
     id: 4,
@@ -46,7 +50,8 @@ const dummyData = [
     username: "Joestar",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: true,
   },
   {
     id: 5,
@@ -54,7 +59,8 @@ const dummyData = [
     username: "Joestar",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: true,
   },
   {
     id: 6,
@@ -62,7 +68,8 @@ const dummyData = [
     username: "Joestar",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: true,
   },
   {
     id: 7,
@@ -70,7 +77,8 @@ const dummyData = [
     username: "Joestar",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: true,
   },
   {
     id: 8,
@@ -78,7 +86,8 @@ const dummyData = [
     username: "Joestar",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: true,
   },
   {
     id: 9,
@@ -86,7 +95,8 @@ const dummyData = [
     username: "Joestar",
     profilePicture: "https://picsum.photos/200",
     friends : false,
-    requested: true
+    requested: true,
+    accepted: true,
   }
 ]
 
@@ -119,10 +129,11 @@ const FriendList = () => {
                 renderItem={({ item }) => 
                   <TouchableOpacity activeOpacity={1}>
                     <ProfileCard
+                      isAcceptRequestCard
+                      accepted={item.accepted}
                       name={item.name}
                       username={item.username}
-                      friendStatus={item.friends ? "friends" : item.requested ? "requested" : "add"}
-                      handleAdd={() => {}}
+                      handleAcceptFriend={() => {}}
                       handleRemoveFriend={() => {}}
                       profilePicture={item.profilePicture}
                       hasRemoveButton
@@ -149,6 +160,7 @@ const FriendList = () => {
                       handleRemoveFriend={() => {}}
                       profilePicture={item.profilePicture}
                       hasRemoveButton
+                      hideActionButton
                     />
                   </TouchableOpacity>
                 }

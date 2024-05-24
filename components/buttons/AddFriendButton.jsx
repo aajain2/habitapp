@@ -3,7 +3,7 @@ import React from 'react'
 
 const AddFriendButton = ({
   friendStatus,
-  handleAdd
+  handleAdd,
 }) => {
   return (
     <TouchableOpacity 
@@ -11,7 +11,8 @@ const AddFriendButton = ({
       onPress={handleAdd}
     >
       <Text className="font-poppins-medium text-white text-xs">
-        {friendStatus === "add" ? "ADD" : friendStatus === "requested" ? "REQUESTED" : "FRIENDS"}
+        {friendStatus === "add" ? "ADD" : 
+         friendStatus === "requested" ? "REQUESTED" : "FRIENDS"}
       </Text>
     </TouchableOpacity>
   )
