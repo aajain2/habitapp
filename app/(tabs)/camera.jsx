@@ -7,6 +7,7 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router } from 'expo-router'
 import icons from '../../constants/icons'
 import { AntDesign } from '@expo/vector-icons'
+import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator'
 
 const Camera = () => {
   const [facing, setFacing] = useState("front")
@@ -21,12 +22,22 @@ const Camera = () => {
   let camera
 
   const takePicture = async () => {
+    let rawPhotoURI
+
     if (camera && cameraReady) {
-      camera.takePictureAsync({ onPictureSaved: (data) => {
-                                                            setPhotoURI(data.uri)
-                                                            setPhotoTaken(true)
-                                                          } 
-                               });
+      camera.takePictureAsync({ onPictureSaved: async (data) => {
+        rawPhotoURI = data.uri
+        
+        console.log(rawPhotoURI)
+
+        const mirroredImage = await manipulateAsync(
+          rawPhotoURI,
+          [{ flip: FlipType.Horizontal }]
+        )
+
+        setPhotoURI(mirroredImage.uri)
+        setPhotoTaken(true)
+      }})      
     }
   }
 
@@ -45,7 +56,7 @@ const Camera = () => {
             {prompt}
           </Text>
 
-          <View className="w-[90vw] h-[60vh] rounded-2xl bg-light-gray">
+          <View className="w-[90vw] h-[60vh] rounded-2xl bg-light-gray flex items-center justify-center">
             {permission && !photoTaken && 
               <CameraView 
                 facing={facing} 
@@ -64,13 +75,13 @@ const Camera = () => {
                 />
               
                 <TouchableOpacity 
-                  className="absolute top-4 right-4"
+                  className="absolute top-3 right-3 bg-black/50 p-1 rounded-full"
                   onPress={() => {
                     setPhotoTaken(false)
                     setPhotoURI("")
                   }}
                 >
-                  <AntDesign name="close" size={24} color="black" />
+                  <AntDesign name="close" size={24} color="white" />
                 </TouchableOpacity>
               </>
             }            
