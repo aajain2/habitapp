@@ -2,6 +2,7 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import CustomButton from '../buttons/CustomButton'
 import CustomLink from '../CustomLink'
+import { router } from 'expo-router'
 
 const PictureCard = ({
   prompt,
@@ -37,6 +38,7 @@ const PictureCard = ({
               containerStyles="bg-transparent border-white border w-64 h-16 px-4 mb-4 rounded-xl"
               textStyles="text-white font-inter-regular text-center"
               title={prompt}
+              handlePress={() => router.navigate("/camera")}
             />
 
             <Text className="text-center text-sm font-inter-regular text-white w-56 mb-4">
@@ -47,6 +49,7 @@ const PictureCard = ({
               containerStyles="w-36 h-8 border-transparent bg-dark-blue "
               textStyles="text-xs text-white font-inter-regular"
               title="Complete Habit."
+              handlePress={() => router.navigate("/camera")}
             />
           </View>
         }
