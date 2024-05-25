@@ -40,7 +40,7 @@ const App = () => {
         textStyles="text-blue"
         title="Sign Up"
         handlePress={() => {
-          router.navigate("/avatar")
+          router.navigate("/name")
         }}
       />
     </SafeAreaView>
