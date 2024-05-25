@@ -6,10 +6,8 @@ const TabsSetup = () => {
   return (
     <QueryProvider>
       <Stack>
-        <Stack.Screen 
-          name="friends" 
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="friends" options={{ headerShown: false }} />
+        <Stack.Screen name="camera" options={{ headerShown: false }} />
       </Stack>
     </QueryProvider>
     

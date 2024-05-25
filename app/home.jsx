@@ -63,7 +63,7 @@ const dummyProfile = {
   profilePicture: "https://picsum.photos/200"
 }
 
-const completed = true
+const completed = false
 
 const Home = () => {
   return (
