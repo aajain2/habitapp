@@ -120,14 +120,19 @@ const Camera = () => {
                 </TouchableOpacity>
               </>
             : 
-              <View className="flex-row justify-center items-center gap-x-4">
+              <TouchableOpacity 
+                className="flex-row justify-center items-center gap-x-4"
+                onPress={() => {
+                  router.replace("/home")
+                }}
+              >
                 <Text className="text-lg font-inter-bold">COMPLETE HABIT</Text>
                 <Image
                   className="w-6 h-6"
                   resizeMode="contain"
                   source={icons.sendIcon}
                 />
-              </View>
+              </TouchableOpacity>
               
             }
           </View>
