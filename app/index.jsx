@@ -31,7 +31,7 @@ const App = () => {
       <CustomButton 
         title="Login"
         handlePress={() => {
-          router.push("/login")
+          router.navigate("/login")
         }}
       />
 
@@ -40,7 +40,7 @@ const App = () => {
         textStyles="text-blue"
         title="Sign Up"
         handlePress={() => {
-          router.push("/name")
+          router.navigate("/name")
         }}
       />
     </SafeAreaView>

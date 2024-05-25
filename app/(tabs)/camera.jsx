@@ -27,8 +27,6 @@ const Camera = () => {
     if (camera && cameraReady) {
       camera.takePictureAsync({ onPictureSaved: async (data) => {
         rawPhotoURI = data.uri
-        
-        console.log(rawPhotoURI)
 
         const mirroredImage = await manipulateAsync(
           rawPhotoURI,
@@ -123,7 +121,7 @@ const Camera = () => {
               <TouchableOpacity 
                 className="flex-row justify-center items-center gap-x-4"
                 onPress={() => {
-                  router.replace("/home")
+                  router.navigate("/home")
                 }}
               >
                 <Text className="text-lg font-inter-bold">COMPLETE HABIT</Text>

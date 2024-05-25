@@ -18,7 +18,7 @@ const HomeHeaderBar = ({
       <View className="pl-4 h-10 justify-center">
         <TouchableOpacity
           onPress={() => {
-            router.push("/friends")
+            router.navigate("/friends")
           }}
         >
           <Image 

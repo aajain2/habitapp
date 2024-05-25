@@ -38,7 +38,7 @@ const VerificationSignUp = () => {
 
             <CustomButton 
               handlePress={() => {
-                router.push("/account")
+                router.navigate("/account")
               }}
               title="Verify"
               containerStyles="mt-32"

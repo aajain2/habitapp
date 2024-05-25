@@ -44,7 +44,7 @@ const NameSignUp = () => {
             />
 
             <CustomButton
-              handlePress={() => router.push("/birthday")}
+              handlePress={() => router.navigate("/birthday")}
               title="Next"
               containerStyles="mt-32"
             />

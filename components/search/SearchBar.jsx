@@ -160,7 +160,7 @@ const SearchBar = ({
                   </View>
                 }
                 containerStyles="mt-1 w-fit ml-auto"
-                handlePress={() => router.push("friend-search")}
+                handlePress={() => router.navigate("friend-search")}
               />
             }
           </View>

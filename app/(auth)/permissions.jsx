@@ -40,7 +40,7 @@ const Permissions = () => {
           </View>
 
           <CustomButton
-            handlePress={() => router.push("/welcome")}
+            handlePress={() => router.navigate("/welcome")}
             title="Allow notifications"
             containerStyles="mt-10"
           />

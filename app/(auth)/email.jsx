@@ -17,7 +17,7 @@ const EmailSignUp = () => {
   const emailSubmit = () => {
     if (validator.isEmail(email)) {
       setError(false)
-      router.push("/verification")
+      router.navigate("/verification")
     } else {
       setError(true)
     }

@@ -37,7 +37,7 @@ const NormSetup = () => {
               <CustomButton 
                 title="Next"
                 containerStyles="bg-white/30 border-white mt-8"
-                handlePress={() => router.push("home")}
+                handlePress={() => router.replace("home")}
               />
             </View>
           </View>
