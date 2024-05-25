@@ -78,7 +78,7 @@ const BirthdaySignUp = () => {
                 }
                 
                 setAgeError(false)
-                router.push("email")
+                router.navigate("email")
               }}
               title="Next"
               containerStyles="mt-32"

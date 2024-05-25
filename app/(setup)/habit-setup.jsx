@@ -62,7 +62,7 @@ const HabitSetup = () => {
             <CustomButton 
               title="Next"
               containerStyles="bg-white/30 border-white mt-8"
-              handlePress={() => router.push("friend-setup")}
+              handlePress={() => router.navigate("friend-setup")}
             />
           </View>
         </View>

@@ -49,7 +49,7 @@ const FriendSetup = () => {
                 containerStyles="bg-white/30 border-white mt-8"
                 handlePress={() => {
                   setQuery("")
-                  router.push("norm-setup")
+                  router.navigate("norm-setup")
                 }}
               />
             </View>

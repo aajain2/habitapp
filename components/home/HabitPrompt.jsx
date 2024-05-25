@@ -20,7 +20,7 @@ const HabitPrompt = ({
         textStyles="w-32 text-center text-black"
         title="Complete your habit for today"
         handlePress={() => {
-          router.push("camera")
+          router.navigate("camera")
         }}
       />
     </View>

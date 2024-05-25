@@ -24,7 +24,12 @@ const Welcome = () => {
           <Text className="text-3xl text-orange font-alata-regular text-center mt-2">TRABIT</Text>
 
           <CustomButton
-            handlePress={() => router.replace("/habit-setup")}
+            handlePress={() => {
+              while (router.canGoBack()) {
+                router.back()
+              }
+              router.replace("/home")
+            }}
             title="Get started"
             containerStyles="mt-14"
           />
