@@ -4,6 +4,7 @@ import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import { StatusBar } from 'expo-status-bar'
 import { useLocalSearchParams } from 'expo-router'
+import CurrentPost from '../../components/home/CurrentPost'
 
 const dummyComments = [
   {
@@ -94,6 +95,10 @@ const Comments = () => {
                     <Text className="text-base">
                       {post.prompt}
                     </Text>
+
+                    <CurrentPost 
+                      picture={post.image}
+                    />
                   </View>
                 </SafeAreaView>
               </View>

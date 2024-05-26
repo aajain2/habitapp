@@ -15,7 +15,6 @@ const dummyData = [
     "habit": "Going to the gym everyday",
     "prompt": "Take a picture of you at the gym",
     "timestamp": "10:00",
-    "caption": "lets get these gains",
     "liked": false,
     "likeCount": 5
   },
@@ -27,7 +26,6 @@ const dummyData = [
     "habit": "Reading a book every night",
     "prompt": "Take a picture of you holding your book",
     "timestamp": "21:00",
-    "caption": "",
     "liked": true,
     "likeCount": 2
   },
@@ -39,7 +37,6 @@ const dummyData = [
     "habit": "Meditating every morning",
     "prompt": "Take a picture of you on the ground",
     "timestamp": "06:30",
-    "caption": "meditating",
     "liked": true,
     "likeCount": 19
   },
@@ -51,7 +48,6 @@ const dummyData = [
     "habit": "Taking a walk after lunch",
     "prompt": "This a picture of you walking",
     "timestamp": "13:00",
-    "caption": "",
     "liked": false,
     "likeCount": 0
   },
@@ -63,7 +59,6 @@ const dummyData = [
     "habit": "Journaling before bed",
     "prompt": "Take a picture of you in bed",
     "timestamp": "22:30",
-    "caption": "",
     "liked": true,
     "likeCount": 1
   }

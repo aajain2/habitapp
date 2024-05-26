@@ -22,15 +22,12 @@ const PictureCard = ({
         />
 
         {completed && 
-          <View className="absolute bottom-2 w-full flex-row items-end">
-            <Text className="text-white font-inter-regular ml-4">{post.caption}</Text>
-            <LikeButton
-              containerStyles="ml-auto mr-4"
-              likeCount={post.likeCount}
-              liked={post.liked}
-              handlePress={() => {}}
-            />
-          </View>
+          <LikeButton
+            containerStyles="ml-auto mr-4 mt-auto mb-4"
+            likeCount={post.likeCount}
+            liked={post.liked}
+            handlePress={() => {}}
+          />
         }
 
         {!completed &&
