@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import CustomButton from '../buttons/CustomButton'
 import CustomLink from '../CustomLink'
 import { router } from 'expo-router'
@@ -67,7 +67,7 @@ const PictureCard = ({
       <View className="mt-2 h-5">
         {completed && 
           <CustomLink
-            handlePress={() => console.log("Add comment")}
+            handlePress={() => router.navigate("/comments")}
             containerStyles=""
             title="Add comment..."
             textStyles="text-light-gray font-inter-medium"

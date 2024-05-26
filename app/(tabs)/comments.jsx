@@ -1,11 +1,26 @@
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
+import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
+import DismissKeyboard from '../../components/DismissKeyboard'
+import { StatusBar } from 'expo-status-bar'
 
 const Comments = () => {
   return (
-    <View>
-      <Text>Comments</Text>
-    </View>
+    <DismissKeyboard>
+      <>
+        <SafeAreaView>
+          <View>
+            <ProfileHeaderBar 
+              title="Title"
+              subtitle="Subtitle"
+            />
+            <Text>Comments</Text>
+          </View>
+        </SafeAreaView>
+
+        <StatusBar style="dark" />
+      </>
+    </DismissKeyboard>
   )
 }
 
