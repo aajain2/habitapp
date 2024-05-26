@@ -1,28 +1,48 @@
-import { View, Image } from 'react-native'
+import { View, Image, Text } from 'react-native'
 import React from 'react'
-import CustomLink from '../CustomLink'
 
 const CurrentPost = ({
-  picture
+  containerStyles,
+  picture,
+  hasLikes,
+  likeCount,
+  likers
 }) => {
-  return (
-    <View className="mt-6 flex justify-center items-center">
-      <View>
-        <Image
-          className="w-28 h-40 rounded-lg"
-          source={{
-            uri: picture
-          }}
-          resizeMode="cover"
-        />
+  const getFirstThreeLikers = (likers) => {
+    return likers.slice(0, 3);
+  }
 
-        <CustomLink
-          handlePress={() => console.log("Add comment")}
-          containerStyles="mt-1"
-          title="Add caption..."
-          textStyles="text-light-gray text-xs font-inter-medium"
-        />
-      </View>
+  return (
+    <View className={`mt-6 ${containerStyles}`}>
+      <Image
+        className="w-28 h-40 rounded-lg"
+        source={{
+          uri: picture
+        }}
+        resizeMode="cover"
+      />
+
+      {hasLikes && 
+        <View className="flex-row mt-2 items-center">
+          <View className="flex-row">
+            {getFirstThreeLikers(likers).map((item) => {
+              return (
+                <Image
+                  className="w-6 h-6 rounded-full border-2 border-[#F2F2F2] -mr-2"
+                  source={{
+                    uri: item
+                  }}
+                  resizeMode="contain"
+                />
+              )
+            })}
+          </View>
+
+          <Text className="font-inter-medium text-gray text-sm ml-auto">
+            {likeCount} Likes
+          </Text>
+        </View>
+      }
     </View>
   )
 }

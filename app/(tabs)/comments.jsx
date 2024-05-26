@@ -98,6 +98,9 @@ const Comments = () => {
 
                     <CurrentPost 
                       picture={post.image}
+                      hasLikes
+                      likeCount={post.likeCount}
+                      likers={post.likers.split(",")}
                     />
                   </View>
                 </SafeAreaView>

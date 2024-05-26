@@ -16,7 +16,13 @@ const dummyData = [
     "prompt": "Take a picture of you at the gym",
     "timestamp": "10:00",
     "liked": false,
-    "likeCount": 5
+    "likeCount": 5,
+    "likers": [
+      "https://picsum.photos/200?random=0",
+      "https://picsum.photos/200?random=1",
+      "https://picsum.photos/200?random=2",
+      "https://picsum.photos/200?random=3"
+    ]
   },
   {
     "id": 1,
@@ -27,7 +33,11 @@ const dummyData = [
     "prompt": "Take a picture of you holding your book",
     "timestamp": "21:00",
     "liked": true,
-    "likeCount": 2
+    "likeCount": 2,
+    "likers": [
+      "https://picsum.photos/200?random=0",
+      "https://picsum.photos/200?random=1"
+    ]
   },
   {
     "id": 2,
@@ -38,7 +48,13 @@ const dummyData = [
     "prompt": "Take a picture of you on the ground",
     "timestamp": "06:30",
     "liked": true,
-    "likeCount": 19
+    "likeCount": 19,
+    "likers": [
+      "https://picsum.photos/200?random=0",
+      "https://picsum.photos/200?random=1",
+      "https://picsum.photos/200?random=2",
+      "https://picsum.photos/200?random=3"
+    ]
   },
   {
     "id": 3,
@@ -49,7 +65,8 @@ const dummyData = [
     "prompt": "This a picture of you walking",
     "timestamp": "13:00",
     "liked": false,
-    "likeCount": 0
+    "likeCount": 0,
+    "likers": []
   },
   {
     "id": 4,
@@ -60,7 +77,10 @@ const dummyData = [
     "prompt": "Take a picture of you in bed",
     "timestamp": "22:30",
     "liked": true,
-    "likeCount": 1
+    "likeCount": 1,
+    "likers": [
+      "https://picsum.photos/200?random=0"
+    ]
   }
 ]  
 
@@ -91,7 +111,8 @@ const Home = () => {
               />
 
               {completed && 
-                <CurrentPost 
+                <CurrentPost
+                  containerStyles="items-center"
                   picture="https://picsum.photos/540/720"
                 />
               }
