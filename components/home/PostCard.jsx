@@ -11,7 +11,9 @@ const PostCard = ({
   habit,
   timestamp,
   prompt,
-  caption
+  caption,
+  liked,
+  likeCount
 }) => {
   return (
     <View className="mx-4 mb-6">
@@ -42,6 +44,8 @@ const PostCard = ({
         completed={completed}
         prompt={prompt}
         image={image}
+        liked={liked}
+        likeCount={likeCount}
       />
     </View>
   )

@@ -1,14 +1,17 @@
 import { View, Text, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import CustomButton from '../buttons/CustomButton'
 import CustomLink from '../CustomLink'
 import { router } from 'expo-router'
+import LikeButton from '../buttons/LikeButton'
 
 const PictureCard = ({
   prompt,
   image,
   completed,
-  caption
+  caption,
+  liked,
+  likeCount
 }) => {
   return (
     <View>
@@ -23,8 +26,14 @@ const PictureCard = ({
         />
 
         {completed && 
-          <View className="absolute bottom-2 left-2">
-            <Text className="text-white font-inter-regular">{caption}</Text>
+          <View className="absolute bottom-2 w-full flex-row items-end">
+            <Text className="text-white font-inter-regular ml-4">{caption}</Text>
+            <LikeButton
+              containerStyles="ml-auto mr-4"
+              likeCount={likeCount}
+              liked={liked}
+              handlePress={() => {}}
+            />
           </View>
         }
 

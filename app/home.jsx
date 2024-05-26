@@ -14,7 +14,9 @@ const dummyData = [
     "profilePicture": "https://picsum.photos/200",
     "habit": "Going to the gym everyday",
     "timestamp": "10:00",
-    "caption": "lets get these gains"
+    "caption": "lets get these gains",
+    "liked": false,
+    "likeCount": 5
   },
   {
     "id": 1,
@@ -23,7 +25,9 @@ const dummyData = [
     "profilePicture": "https://picsum.photos/200",
     "habit": "Reading a book every night",
     "timestamp": "21:00",
-    "caption": ""
+    "caption": "",
+    "liked": true,
+    "likeCount": 2
   },
   {
     "id": 2,
@@ -32,7 +36,9 @@ const dummyData = [
     "profilePicture": "https://picsum.photos/200",
     "habit": "Meditating every morning",
     "timestamp": "06:30",
-    "caption": "meditating"
+    "caption": "meditating",
+    "liked": true,
+    "likeCount": 19
   },
   {
     "id": 3,
@@ -41,7 +47,9 @@ const dummyData = [
     "profilePicture": "https://picsum.photos/200",
     "habit": "Taking a walk after lunch",
     "timestamp": "13:00",
-    "caption": ""
+    "caption": "",
+    "liked": false,
+    "likeCount": 0
   },
   {
     "id": 4,
@@ -50,7 +58,9 @@ const dummyData = [
     "profilePicture": "https://picsum.photos/200",
     "habit": "Journaling before bed",
     "timestamp": "22:30",
-    "caption": ""
+    "caption": "",
+    "liked": true,
+    "likeCount": 1
   }
 ]  
 
@@ -63,7 +73,7 @@ const dummyProfile = {
   profilePicture: "https://picsum.photos/200"
 }
 
-const completed = false
+const completed = true
 
 const Home = () => {
   return (
@@ -105,6 +115,8 @@ const Home = () => {
               timestamp={item.timestamp}
               prompt={prompt}
               caption={item.caption}
+              liked={item.liked}
+              likeCount={item.likeCount}
             />
           )
         }}
