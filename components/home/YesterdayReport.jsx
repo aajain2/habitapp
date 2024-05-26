@@ -6,7 +6,7 @@ const dummyData = [
     id: 0,
     name: "Joseph",
     username: "joestar",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=10",
     friends : false,
     requested: true
   },
@@ -14,7 +14,7 @@ const dummyData = [
     id: 1,
     name: "Kyle",
     username: "kylinator",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=11",
     friends : true,
     requested: false
   },
@@ -22,7 +22,7 @@ const dummyData = [
     id: 2,
     name: "Meow",
     username: "arf",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=12",
     friends : false,
     requested: true
   },
@@ -30,7 +30,7 @@ const dummyData = [
     id: 3,
     name: "Woof",
     username: "bowwow",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=13",
     friends : false,
     requested: true
   },
@@ -38,7 +38,7 @@ const dummyData = [
     id: 4,
     name: "JosHulloeph",
     username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=14",
     friends : false,
     requested: true
   },
@@ -46,7 +46,7 @@ const dummyData = [
     id: 5,
     name: "Joseph",
     username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=15",
     friends : false,
     requested: true
   },
@@ -54,7 +54,7 @@ const dummyData = [
     id: 6,
     name: "Joseph",
     username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=16",
     friends : false,
     requested: true
   },
@@ -62,7 +62,7 @@ const dummyData = [
     id: 7,
     name: "Joseph",
     username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=17",
     friends : false,
     requested: true
   },
@@ -70,7 +70,7 @@ const dummyData = [
     id: 8,
     name: "Joseph",
     username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=18",
     friends : false,
     requested: true
   },
@@ -78,7 +78,7 @@ const dummyData = [
     id: 9,
     name: "Joseph",
     username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
+    profilePicture: "https://picsum.photos/200?random=19",
     friends : false,
     requested: true
   }
