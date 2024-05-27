@@ -133,6 +133,7 @@ const Home = () => {
             />
           )
         }}
+        keyExtractor={(item) => item.key}
       />
 
       <StatusBar style="light" />

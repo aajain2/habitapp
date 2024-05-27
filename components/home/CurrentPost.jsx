@@ -25,7 +25,7 @@ const CurrentPost = ({
       {hasLikes && 
         <View className="flex-row mt-2 items-center">
           <View className="flex-row">
-            {getFirstThreeLikers(likers).map((item) => {
+            {getFirstThreeLikers(likers).map((item, index) => {
               return (
                 <Image
                   className="w-6 h-6 rounded-full border-2 border-[#F2F2F2] -mr-2"
@@ -33,6 +33,7 @@ const CurrentPost = ({
                     uri: item
                   }}
                   resizeMode="contain"
+                  key={index}
                 />
               )
             })}

@@ -5,6 +5,7 @@ import DismissKeyboard from '../../components/DismissKeyboard'
 import { StatusBar } from 'expo-status-bar'
 import { useLocalSearchParams } from 'expo-router'
 import CurrentPost from '../../components/home/CurrentPost'
+import Comment from '../../components/Comment'
 
 const dummyComments = [
   {
@@ -80,14 +81,14 @@ const Comments = () => {
           data={dummyComments}
           ListHeaderComponent={() => {
             return (
-              <View className="border h-[50vh]">
+              <View className="h-[45vh] border-b border-light-gray/50">
                 <SafeAreaView>
                   <View className="flex justify-center items-center">
                     <ProfileHeaderBar 
                       title={post.username}
                       subtitle={post.timestamp}
                     />
-                    <Text className="text-base">
+                    <Text className="text-base mt-2">
                       <Text className="font-inter-bold">Habit: </Text>
                       <Text className="font-inter-regular">{post.habit}</Text>
                     </Text>
@@ -105,14 +106,18 @@ const Comments = () => {
                   </View>
                 </SafeAreaView>
               </View>
-              
             )
           }}
           renderItem={({ item }) => {
             return (
-              <Text className="text-5xl">{item.comment}</Text>
+              <Comment 
+                profilePicture={item.profilePicture}
+                comment={item.comment}
+                username={item.username}
+              />
             )
           }}
+          keyExtractor={(item) => item.id}
         />
         <StatusBar style="dark" />
       </>
