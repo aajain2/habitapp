@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, FlatList } from 'react-native'
+import { View, Text, SafeAreaView, FlatList, Keyboard } from 'react-native'
 import React from 'react'
 import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import DismissKeyboard from '../../components/DismissKeyboard'
@@ -76,6 +76,14 @@ const emptyDummy = []
 const Comments = () => {
   const post = useLocalSearchParams()
 
+  const handleScroll = (event) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+
+    if (offsetY < 0) {
+      Keyboard.dismiss();
+    }
+  };
+
   return (
     <DismissKeyboard>
       <>
@@ -133,6 +141,7 @@ const Comments = () => {
             )
           }}
           keyExtractor={(item) => item.id}
+          onScroll={handleScroll}
         />
 
         <AddCommentInput />
