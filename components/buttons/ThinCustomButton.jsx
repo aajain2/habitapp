@@ -9,8 +9,7 @@ const ThinCustomButton = ({
   isLoading,
 }) => {
   return (
-    <TouchableOpacity 
-      activeOpacity={0.7}
+    <TouchableOpacity
       className={`bg-blue rounded-full px-2 flex justify-center items-center ${containerStyles}`}
       disabled={isLoading}
       onPress={handlePress}

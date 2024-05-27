@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar'
 import ThinCustomButton from '../../components/buttons/ThinCustomButton'
 import ProfileEditLink from '../../components/ProfileEditLink'
 import ChangeSensitiveLink from '../../components/ChangeSensitiveLink'
+import { router } from 'expo-router'
 
 const dummyProfile = {
   username: "abe",
@@ -46,24 +47,28 @@ const EditProfile = () => {
             containerStyles="mt-4"
             field="First Name"
             value={`${dummyProfile.firstName}`}
+            handlePress={() => router.navigate({ pathname: "/first-name", params: { fieldValue: dummyProfile.firstName }})}
           />
 
           <ProfileEditLink
             containerStyles="mt-2"
             field="Last Name"
             value={`${dummyProfile.lastName}`}
+            handlePress={() => router.navigate({ pathname: "/last-name", params: { fieldValue: dummyProfile.lastName }})}
           />
 
           <ProfileEditLink 
             containerStyles="mt-2"
             field="Username"
             value={`${dummyProfile.username}`}
+            handlePress={() => router.navigate({ pathname: "/username", params: { fieldValue: dummyProfile.username }})}
           />
 
           <ProfileEditLink 
             containerStyles="mt-2"
             field="Habit"
             value={`${dummyProfile.habit}`}
+            handlePress={() => router.navigate({ pathname: "/habit", params: { fieldValue: dummyProfile.habit }})}
           />
 
           <Text className="text-base font-inter-bold my-4 text-center">Manage Account</Text>
