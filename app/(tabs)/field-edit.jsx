@@ -6,31 +6,31 @@ import DismissKeyboard from '../../components/DismissKeyboard';
 import ThinCustomButton from '../../components/buttons/ThinCustomButton';
 
 const EditInfo = () => {
-  const { edit, fieldValue } = useLocalSearchParams();
+  const { field, fieldValue } = useLocalSearchParams();
   const [mode, setMode] = useState("")
   const [value, setValue] = useState("")
 
   useEffect(() => {
-    if (edit === "first-name") {
+    if (field === "first-name") {
       setMode("First Name")
     }
 
-    if (edit === "last-name") {
+    if (field === "last-name") {
       setMode("Last Name")
     }
 
-    if (edit === "username") {
+    if (field === "username") {
       setMode("Username")
     }
 
-    if (edit === "password") {
+    if (field === "password") {
       setMode("Password")
     }
 
-    if (edit === "habit") {
+    if (field === "habit") {
       setMode("Habit")
     }
-  }, [edit])
+  }, [field])
 
   useEffect(() => {
     setValue(fieldValue)

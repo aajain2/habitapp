@@ -6,9 +6,10 @@ import images from '../../constants/images';
 import HabitSelector from '../../components/habit-selector/HabitSelector';
 import { useState } from 'react';
 import CustomButton from '../../components/buttons/CustomButton';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import TrabitHeader from '../../components/TrabitHeader';
+import BackButton from '../../components/buttons/BackButton';
 
 const habitOptions = [
   {
@@ -36,6 +37,7 @@ const habitOptions = [
 
 const HabitSetup = () => {
   const [selected, setSelected] = useState(null)
+  const { field } = useLocalSearchParams();
 
   return (
     <View className="w-full h-full">
@@ -46,6 +48,14 @@ const HabitSetup = () => {
       <SafeAreaView>
         <View>
           <TrabitHeader color="white" />
+
+          {field && 
+            <BackButton 
+              containerStyles="absolute pl-4 h-10 justify-center"
+              handlePress={() => router.back()}
+              iconColor="white"
+            />
+          }
 
           <View className="flex items-center justify-center h-full">
             <View className="h-20 flex items-center">
@@ -60,9 +70,15 @@ const HabitSetup = () => {
             />
 
             <CustomButton 
-              title="Next"
+              title={field ? "Save" : "Next"}
               containerStyles="bg-white/30 border-white mt-8"
-              handlePress={() => router.navigate("friend-setup")}
+              handlePress={() => {
+                if (field) {
+                  router.navigate("edit-profile")
+                } else {
+                  router.navigate("friend-setup")
+                }
+              }}
             />
           </View>
         </View>
