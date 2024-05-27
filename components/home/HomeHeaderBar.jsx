@@ -1,7 +1,6 @@
 import { View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import TrabitHeader from '../TrabitHeader'
-import { FontAwesome5 } from '@expo/vector-icons';
 import ProfilePicture from '../ProfilePicture';
 import icons from '../../constants/icons';
 import { router } from 'expo-router';

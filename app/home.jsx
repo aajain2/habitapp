@@ -10,57 +10,77 @@ const dummyData = [
   {
     "id": 0,
     "username": "johnnyappleseed",
-    "image": "https://picsum.photos/1080/1440",
-    "profilePicture": "https://picsum.photos/200",
+    "image": "https://picsum.photos/1080/1440?random=0",
+    "profilePicture": "https://picsum.photos/200?random=0",
     "habit": "Going to the gym everyday",
+    "prompt": "Take a picture of you at the gym",
     "timestamp": "10:00",
-    "caption": "lets get these gains",
     "liked": false,
-    "likeCount": 5
+    "likeCount": 5,
+    "likers": [
+      "https://picsum.photos/200?random=0",
+      "https://picsum.photos/200?random=1",
+      "https://picsum.photos/200?random=2",
+      "https://picsum.photos/200?random=3"
+    ]
   },
   {
     "id": 1,
     "username": "janedoe",
-    "image": "https://picsum.photos/1080/1440",
-    "profilePicture": "https://picsum.photos/200",
+    "image": "https://picsum.photos/1080/1440?random=1",
+    "profilePicture": "https://picsum.photos/200?random=1",
     "habit": "Reading a book every night",
+    "prompt": "Take a picture of you holding your book",
     "timestamp": "21:00",
-    "caption": "",
     "liked": true,
-    "likeCount": 2
+    "likeCount": 2,
+    "likers": [
+      "https://picsum.photos/200?random=0",
+      "https://picsum.photos/200?random=1"
+    ]
   },
   {
     "id": 2,
     "username": "bobbuilder",
-    "image": "https://picsum.photos/1080/1440",
-    "profilePicture": "https://picsum.photos/200",
+    "image": "https://picsum.photos/1080/1440?random=2",
+    "profilePicture": "https://picsum.photos/200?random=2",
     "habit": "Meditating every morning",
+    "prompt": "Take a picture of you on the ground",
     "timestamp": "06:30",
-    "caption": "meditating",
     "liked": true,
-    "likeCount": 19
+    "likeCount": 19,
+    "likers": [
+      "https://picsum.photos/200?random=0",
+      "https://picsum.photos/200?random=1",
+      "https://picsum.photos/200?random=2",
+      "https://picsum.photos/200?random=3"
+    ]
   },
   {
     "id": 3,
     "username": "alicewonderland",
-    "image": "https://picsum.photos/1080/1440",
-    "profilePicture": "https://picsum.photos/200",
+    "image": "https://picsum.photos/1080/1440?random=3",
+    "profilePicture": "https://picsum.photos/200?random=3",
     "habit": "Taking a walk after lunch",
+    "prompt": "This a picture of you walking",
     "timestamp": "13:00",
-    "caption": "",
     "liked": false,
-    "likeCount": 0
+    "likeCount": 0,
+    "likers": []
   },
   {
     "id": 4,
     "username": "charlietuna",
-    "image": "https://picsum.photos/1080/1440",
-    "profilePicture": "https://picsum.photos/200",
+    "image": "https://picsum.photos/1080/1440?random=4",
+    "profilePicture": "https://picsum.photos/200?random=4",
     "habit": "Journaling before bed",
+    "prompt": "Take a picture of you in bed",
     "timestamp": "22:30",
-    "caption": "",
     "liked": true,
-    "likeCount": 1
+    "likeCount": 1,
+    "likers": [
+      "https://picsum.photos/200?random=0"
+    ]
   }
 ]  
 
@@ -91,7 +111,8 @@ const Home = () => {
               />
 
               {completed && 
-                <CurrentPost 
+                <CurrentPost
+                  containerStyles="items-center"
                   picture="https://picsum.photos/540/720"
                 />
               }
@@ -108,18 +129,11 @@ const Home = () => {
           return (
             <PostCard 
               completed={completed}
-              username={item.username}
-              image={item.image}
-              profilePicture={item.profilePicture}
-              habit={item.habit}
-              timestamp={item.timestamp}
-              prompt={prompt}
-              caption={item.caption}
-              liked={item.liked}
-              likeCount={item.likeCount}
+              post={item}
             />
           )
         }}
+        keyExtractor={(item) => item.id}
       />
 
       <StatusBar style="light" />

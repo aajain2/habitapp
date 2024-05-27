@@ -5,6 +5,7 @@ import SignUpInput from '../../components/SignUpInput'
 import CustomButton from '../../components/buttons/CustomButton'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import BackButton from '../../components/buttons/BackButton'
+import { router } from 'expo-router'
 
 const Login = () => {
   const [username, setUsername] = useState("")
