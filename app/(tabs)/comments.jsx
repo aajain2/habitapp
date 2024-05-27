@@ -71,6 +71,8 @@ const dummyComments = [
   }
 ]
 
+const emptyDummy = []
+
 const Comments = () => {
   const post = useLocalSearchParams()
 
@@ -80,6 +82,18 @@ const Comments = () => {
         <FlatList 
           className="h-full"
           data={dummyComments}
+          ListEmptyComponent={() => {
+            return (
+              <View className="w-full items-center mt-8">
+                <Text className="font-inter-bold text-base">
+                  No comments yet
+                </Text>
+                <Text className="font-inter-regular text-sm">
+                  Show your support!
+                </Text>
+              </View>
+            )
+          }}
           ListHeaderComponent={() => {
             return (
               <View className="h-[45vh] border-b border-light-gray/50">
