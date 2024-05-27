@@ -5,11 +5,12 @@ import MenuButton from '../buttons/MenuButton';
 import { router } from 'expo-router';
 
 const ProfileHeaderBar = ({
+  containerStyles,
   title,
   subtitle
 }) => {
   return (
-    <View className="flex-row">
+    <View className={`flex-row ${containerStyles}`}>
       <BackButton 
         containerStyles="pl-4 h-10 justify-center"
         handlePress={() => router.back()}

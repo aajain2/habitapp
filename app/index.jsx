@@ -31,12 +31,12 @@ const App = () => {
       <CustomButton 
         title="Login"
         handlePress={() => {
-          router.navigate("/login")
+          router.navigate("/home")
         }}
       />
 
       <CustomButton
-        containerStyles="mt-4 border-2 border-blue bg-white"
+        containerStyles="mt-4 border-2 border-blue bg-transparent"
         textStyles="text-blue"
         title="Sign Up"
         handlePress={() => {
