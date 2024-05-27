@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Image, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
 import BackButton from '../buttons/BackButton';
 import MenuButton from '../buttons/MenuButton';

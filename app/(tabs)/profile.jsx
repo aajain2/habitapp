@@ -4,6 +4,7 @@ import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import ProfilePicture from '../../components/ProfilePicture'
 import CustomButton from '../../components/buttons/CustomButton'
 import images from '../../constants/images'
+import { StatusBar } from 'expo-status-bar'
 
 const dummyProfile = {
   username: "abe",
@@ -19,7 +20,7 @@ const dummyProfile = {
 const Profile = () => {
   return (
     <SafeAreaView>
-      <View>
+      <View className="z-50">
         <ProfileHeaderBar
           containerStyles="absolute"
           title="Profile"
@@ -81,6 +82,8 @@ const Profile = () => {
           </View>
         </View>
       </View>
+
+      <StatusBar style="dark" />
     </SafeAreaView>
   )
 }
