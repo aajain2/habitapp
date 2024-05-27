@@ -9,6 +9,14 @@ const CurrentPost = ({
   likers
 }) => {
   const getFirstThreeLikers = (likers) => {
+    if (likers[0] === "") {
+      return [];
+    }
+
+    if (likers.length < 3) {
+      return likers
+    }
+
     return likers.slice(0, 3);
   }
 
