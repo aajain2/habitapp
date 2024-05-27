@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, FlatList, TextInput, KeyboardAvoidingView } from 'react-native'
+import { View, Text, SafeAreaView, FlatList } from 'react-native'
 import React from 'react'
 import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import DismissKeyboard from '../../components/DismissKeyboard'
@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar'
 import { useLocalSearchParams } from 'expo-router'
 import CurrentPost from '../../components/home/CurrentPost'
 import Comment from '../../components/Comment'
+import AddCommentInput from '../../components/AddCommentInput'
 
 const dummyComments = [
   {
@@ -120,17 +121,7 @@ const Comments = () => {
           keyExtractor={(item) => item.id}
         />
 
-        <KeyboardAvoidingView behavior="padding">
-          <SafeAreaView>
-              <View className="border-t border-light-gray/50">
-                <TextInput 
-                  className="font-inter-regular p-4" 
-                  placeholder="Add a comment..."
-                  placeholderTextColor="text-light-gray"
-                />
-              </View>
-          </SafeAreaView>
-        </KeyboardAvoidingView>
+        <AddCommentInput />
         
         <StatusBar style="dark" />
       </>
