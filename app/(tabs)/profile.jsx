@@ -2,9 +2,10 @@ import { View, Text, SafeAreaView, Image } from 'react-native'
 import React from 'react'
 import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import ProfilePicture from '../../components/ProfilePicture'
-import CustomButton from '../../components/buttons/CustomButton'
 import images from '../../constants/images'
 import { StatusBar } from 'expo-status-bar'
+import { router } from 'expo-router'
+import ThinCustomButton from '../../components/buttons/ThinCustomButton'
 
 const dummyProfile = {
   username: "abe",
@@ -36,10 +37,11 @@ const Profile = () => {
         <Text className="text-xl font-inter-bold mt-4">{dummyProfile.firstName} {dummyProfile.lastName}</Text>
         <Text className="text-base font-inter-regular mb-4">@{dummyProfile.username}</Text>
 
-        <CustomButton 
+        <ThinCustomButton 
           title="Edit Profile and Account"
-          containerStyles="w-44 h-6 border border-blue bg-transparent"
+          containerStyles="border border-blue bg-transparent"
           textStyles="text-blue font-inter-regular"
+          handlePress={() => router.navigate("edit-profile")}
         />
 
         <View className="bg-orange/30 h-44 w-[90vw] rounded-2xl flex items-center justify-center my-4">

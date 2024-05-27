@@ -10,6 +10,7 @@ const TabsSetup = () => {
         <Stack.Screen name="camera" options={{ headerShown: false }} />
         <Stack.Screen name="comments" options={{ headerShown: false }} />
         <Stack.Screen name="profile" options={{ headerShown: false }} />
+        <Stack.Screen name="edit-profile" options={{ headerShown: false }} />
       </Stack>
     </QueryProvider>
   )
