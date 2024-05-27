@@ -16,9 +16,7 @@ const HomeHeaderBar = ({
 
       <View className="pl-4 h-10 justify-center">
         <TouchableOpacity
-          onPress={() => {
-            router.navigate("/friends")
-          }}
+          onPress={() => router.navigate("/friends")}
         >
           <Image 
             className="h-8 w-8"
@@ -30,18 +28,10 @@ const HomeHeaderBar = ({
 
       <View className="flex-auto"></View>
 
-      <View className="h-10 pr-4 justify-center">
-        <TouchableOpacity>
-          <Image 
-            className="h-8 w-8"
-            resizeMode="contain"
-            source={icons.calendar}
-          />
-        </TouchableOpacity>
-      </View>
-
       <View className="pr-4 h-10 justify-center">
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => router.navigate("/profile")}
+        >
           <ProfilePicture
             source={profilePicture}
           />

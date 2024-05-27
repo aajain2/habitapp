@@ -1,15 +1,17 @@
-import { View, Text, Image } from 'react-native'
+import { Image } from 'react-native'
 import React from 'react'
 
 const ProfilePicture = ({
+  containerStyles,
   source
 }) => {
   return (
     <Image 
-      className="w-10 h-10 rounded-full"
+      className={`rounded-full w-10 h-10 ${containerStyles}`}
       source={{
         uri: source
       }}
+      resizeMode="contain"
     />
   )
 }

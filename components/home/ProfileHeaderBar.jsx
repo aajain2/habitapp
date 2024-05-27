@@ -1,15 +1,16 @@
-import { View, TouchableOpacity, Image, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
 import BackButton from '../buttons/BackButton';
 import MenuButton from '../buttons/MenuButton';
 import { router } from 'expo-router';
 
 const ProfileHeaderBar = ({
+  containerStyles,
   title,
   subtitle
 }) => {
   return (
-    <View className="flex-row">
+    <View className={`flex-row ${containerStyles}`}>
       <BackButton 
         containerStyles="pl-4 h-10 justify-center"
         handlePress={() => router.back()}
