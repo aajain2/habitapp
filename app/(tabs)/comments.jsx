@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, FlatList } from 'react-native'
+import { View, Text, SafeAreaView, FlatList, TextInput, KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import DismissKeyboard from '../../components/DismissKeyboard'
@@ -119,6 +119,19 @@ const Comments = () => {
           }}
           keyExtractor={(item) => item.id}
         />
+
+        <KeyboardAvoidingView behavior="padding">
+          <SafeAreaView>
+              <View className="border-t border-light-gray/50">
+                <TextInput 
+                  className="font-inter-regular p-4" 
+                  placeholder="Add a comment..."
+                  placeholderTextColor="text-light-gray"
+                />
+              </View>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
+        
         <StatusBar style="dark" />
       </>
     </DismissKeyboard>
