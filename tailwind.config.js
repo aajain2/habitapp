@@ -10,11 +10,10 @@ module.exports = {
         "orange": "#FF6B35",
         "blue": "#43A4C6",
         "beige": "#F9F0E6",
-        "searchbar-gray": "#E9F1F3",
+        "searchbar-gray": "#D5E3E7",
         "gray": "#696969",
         "dark-blue": "#004A63",
-        "light-gray": "#ABABAB",
-        "light-orange": "#FFDACC"
+        "light-gray": "#ABABAB"
       },
       fontFamily: {
         "alata-regular": ["Alata-Regular", "sans-serif"],
