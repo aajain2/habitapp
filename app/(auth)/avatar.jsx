@@ -16,12 +16,11 @@ const AvatarSelection = () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      quality: 1,
+      quality: 0.1,
     });
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      console.log("Set image");
     }
   };
 
@@ -40,17 +39,18 @@ const AvatarSelection = () => {
 
           <View className="flex items-center justify-center h-full">
             <Image 
-              className="w-16 h-16 mb-4 rounded-full"
+              className="w-[150px] h-[150px] mb-4 rounded-full"
               resizeMode="contain"
               source={image ? { uri: image } : images.avatar}
             />
 
-            <View className="h-20 flex items-center">
+            <View className="my-4 flex items-center">
               <Text className="font-inter-bold text-lg">Choose a profile picture</Text>
-              <Text className="font-inter-regular text-xs">Lorem apsum</Text>
             </View>
 
-            <CustomButton 
+            <CustomButton
+              containerStyles="bg-transparent border-2 border-blue"
+              textStyles="text-blue"
               title="Select image"
               handlePress={pickImage}
             />
@@ -58,7 +58,7 @@ const AvatarSelection = () => {
             <CustomButton
               handlePress={() => router.navigate("/permissions")}
               title="Save"
-              containerStyles="mt-32"
+              containerStyles="mt-4"
             />
           </View>
         </View>
