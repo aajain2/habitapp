@@ -1,15 +1,29 @@
 import { router } from 'expo-router'
 import { Image, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
-import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import BackButton from '../../components/buttons/BackButton';
-import { useSignUpContext } from '../../context/SignUpProvider';
 import TrabitHeader from '../../components/TrabitHeader';
 import images from '../../constants/images';
+import * as ImagePicker from 'expo-image-picker';
+import { useState } from 'react';
 
 const AvatarSelection = () => {
-  const { firstName, setFirstName, lastName, setLastName } = useSignUpContext();
+  const [image, setImage] = useState(null)
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      console.log("Set image");
+    }
+  };
 
   return (
     <DismissKeyboard>
@@ -26,9 +40,9 @@ const AvatarSelection = () => {
 
           <View className="flex items-center justify-center h-full">
             <Image 
-              className="w-16 h-16 mb-4"
+              className="w-16 h-16 mb-4 rounded-full"
               resizeMode="contain"
-              source={images.avatar}
+              source={image ? { uri: image } : images.avatar}
             />
 
             <View className="h-20 flex items-center">
@@ -36,9 +50,14 @@ const AvatarSelection = () => {
               <Text className="font-inter-regular text-xs">Lorem apsum</Text>
             </View>
 
+            <CustomButton 
+              title="Select image"
+              handlePress={pickImage}
+            />
+
             <CustomButton
               handlePress={() => router.navigate("/permissions")}
-              title="Next"
+              title="Save"
               containerStyles="mt-32"
             />
           </View>
