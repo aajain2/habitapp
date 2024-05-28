@@ -39,7 +39,10 @@ const EditProfile = () => {
           containerStyles="bg-transparent border border-blue mt-4"
           textStyles="text-blue"
           title="Edit Profile Picture"
-          handlePress={() => {}}
+          handlePress={() => router.navigate({
+            pathname: "/avatar",
+            params: { field: "profile-picture", fieldValue: dummyProfile.profilePicture }
+          })}
         />
 
         <View className="w-[90vw]">

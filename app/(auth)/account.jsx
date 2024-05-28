@@ -24,7 +24,7 @@ const Account = () => {
 
   const accountSubmit = () => {
     if ((verifyPassword === password) && validator.isStrongPassword(password)) {
-      router.navigate("permissions")
+      router.navigate("/avatar")
     }
   }
 
