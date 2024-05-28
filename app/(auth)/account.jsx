@@ -8,6 +8,8 @@ import BackButton from '../../components/buttons/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import { useState } from 'react';
 import TrabitHeader from '../../components/TrabitHeader';
+import { handleNewUserRegistration } from '../../functions/auth';
+
 const Account = () => {
   const { firstName,
           lastName,
@@ -21,11 +23,9 @@ const Account = () => {
 
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
 
-  const accountSubmit = async () => {
-    const { email, firstName, lastName, username, birthday } = useSignUpContext(); // Assuming you have these in your context
+  const accountSubmit = async (email, firstName, lastName, username, birthday) => {
     try {
-      const registerUser = firebase.functions().httpsCallable('handleNewUserRegistration');
-      const result = await registerUser({
+      const result = await handleNewUserRegistration({
         user: {
           uid: firebase.auth().currentUser.uid,
           email: email,
@@ -106,9 +106,7 @@ const Account = () => {
 
             <CustomButton
               containerStyles="mt-16"
-              handlePress={() => {
-                accountSubmit()
-              }}
+              handlePress={() => accountSubmit(email, firstName, lastName, username, birthday)}
               title="Next"
             />
           </View>

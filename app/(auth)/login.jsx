@@ -6,26 +6,10 @@ import CustomButton from '../../components/buttons/CustomButton'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import BackButton from '../../components/buttons/BackButton'
 import { router } from 'expo-router'
-import { getAuth, signInWithPopup } from 'firebase/auth'
-import { auth, provider } from '../../firebaseConfig.js'
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-
-GoogleSignin.configure({
-  webClientId: '355540549767-02iuv64ujl9fee5sls3ovshdch8vmif4.apps.googleusercontent.com'
-})
+import { getAuth, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const signInWithGoogle = async () => {
-    try {
-      const { idToken } = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      await auth().signInWithCredential(googleCredential);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <DismissKeyboard>
@@ -67,8 +51,8 @@ const Login = () => {
             />
 
             <CustomButton 
-              title="Continue with Google"
-              onPress={signInWithGoogle}
+              title="Login"
+              handlePress={() => console.log(email, password)}
             />
           </View>
         </View>

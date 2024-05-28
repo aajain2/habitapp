@@ -1,10 +1,9 @@
 // auth.js
-const { getFirestore } = require('firebase-admin/firestore');
-
+import { getFirestore } from 'firebase-admin/firestore';
 const db = getFirestore();
 
 // Registers a new user and initializes their profile in the database
-exports.handleNewUserRegistration = async (user, data) => {
+export const handleNewUserRegistration = async (user, data) => {
   const { firstName, lastName, email, birthday } = data;
   const defaultHabit = 'drinkWater'; // Default habit if not specified
   try {
