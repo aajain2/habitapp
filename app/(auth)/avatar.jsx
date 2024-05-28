@@ -62,7 +62,13 @@ const AvatarSelection = () => {
             />
 
             <CustomButton
-              handlePress={() => router.navigate("/permissions")}
+              handlePress={() => {
+                if (field) {
+                  router.navigate("/edit-profile")
+                } else {
+                  router.navigate("/permissions")
+                }
+              }}
               title="Save"
               containerStyles="mt-4"
             />
