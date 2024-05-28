@@ -1,4 +1,4 @@
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import { Image, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import DismissKeyboard from '../../components/DismissKeyboard';
@@ -6,10 +6,16 @@ import BackButton from '../../components/buttons/BackButton';
 import TrabitHeader from '../../components/TrabitHeader';
 import images from '../../constants/images';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const AvatarSelection = () => {
   const [image, setImage] = useState(null)
+  const { field, fieldValue } = useLocalSearchParams();
+
+  useEffect(() => {
+    setImage(fieldValue)
+  }, [fieldValue])
+  
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -41,7 +47,7 @@ const AvatarSelection = () => {
             <Image 
               className="w-[150px] h-[150px] mb-4 rounded-full"
               resizeMode="contain"
-              source={image ? { uri: image } : images.avatar}
+              source={field || image ? { uri: image } : images.avatar}
             />
 
             <View className="my-4 flex items-center">
