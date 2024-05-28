@@ -3,12 +3,11 @@ import React from 'react'
 import CustomButton from '../buttons/CustomButton'
 import CustomLink from '../CustomLink'
 import { router } from 'expo-router'
+import LikeButton from '../buttons/LikeButton'
 
 const PictureCard = ({
-  prompt,
-  image,
   completed,
-  caption
+  post
 }) => {
   return (
     <View>
@@ -18,14 +17,17 @@ const PictureCard = ({
           className="w-full h-[60vh] rounded-xl absolute"
           resizeMode="cover"
           source={{
-            uri: image
+            uri: post.image
           }}
         />
 
         {completed && 
-          <View className="absolute bottom-2 left-2">
-            <Text className="text-white font-inter-regular">{caption}</Text>
-          </View>
+          <LikeButton
+            containerStyles="ml-auto mr-4 mt-auto mb-4"
+            likeCount={post.likeCount}
+            liked={post.liked}
+            handlePress={() => {}}
+          />
         }
 
         {!completed &&
@@ -37,7 +39,7 @@ const PictureCard = ({
             <CustomButton
               containerStyles="bg-transparent border-white border w-64 h-16 px-4 mb-4 rounded-xl"
               textStyles="text-white font-inter-regular text-center"
-              title={prompt}
+              title={post.prompt}
               handlePress={() => router.navigate("/camera")}
             />
 
@@ -58,7 +60,7 @@ const PictureCard = ({
       <View className="mt-2 h-5">
         {completed && 
           <CustomLink
-            handlePress={() => console.log("Add comment")}
+            handlePress={() => router.navigate({ pathname: "/comments", params: post})}
             containerStyles=""
             title="Add comment..."
             textStyles="text-light-gray font-inter-medium"

@@ -5,13 +5,7 @@ import PictureCard from './PictureCard'
 
 const PostCard = ({
   completed,
-  username,
-  image,
-  profilePicture,
-  habit,
-  timestamp,
-  prompt,
-  caption
+  post
 }) => {
   return (
     <View className="mx-4 mb-6">
@@ -19,13 +13,13 @@ const PostCard = ({
         <Image 
           className="w-10 h-10 rounded-full"
           source={{
-            uri: profilePicture
+            uri: post.profilePicture
           }}      
         />
 
         <View className="flex-grow">
-          <Text className="text-sm font-inter-bold">{username}</Text>
-          <Text className="text-xs font-inter-medium text-gray">Habit: {habit}</Text>
+          <Text className="text-sm font-inter-bold">{post.username}</Text>
+          <Text className="text-xs font-inter-medium text-gray">Habit: {post.habit}</Text>
         </View>
         <View>
           <MenuButton 
@@ -33,15 +27,13 @@ const PostCard = ({
             handleClick={() => console.log("Menu clicked")}
             size={16}
           />
-          <Text className="text-xs font-inter-medium text-gray">{timestamp}</Text>
+          <Text className="text-xs font-inter-medium text-gray">{post.timestamp}</Text>
         </View>
       </View>
 
       <PictureCard 
-        caption={caption}
         completed={completed}
-        prompt={prompt}
-        image={image}
+        post={post}
       />
     </View>
   )

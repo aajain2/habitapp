@@ -8,9 +8,12 @@ const TabsSetup = () => {
       <Stack>
         <Stack.Screen name="friends" options={{ headerShown: false }} />
         <Stack.Screen name="camera" options={{ headerShown: false }} />
+        <Stack.Screen name="comments" options={{ headerShown: false }} />
+        <Stack.Screen name="profile" options={{ headerShown: false }} />
+        <Stack.Screen name="edit-profile" options={{ headerShown: false }} />
+        <Stack.Screen name="field-edit" options={{ headerShown: false }} />
       </Stack>
     </QueryProvider>
-    
   )
 }
 
