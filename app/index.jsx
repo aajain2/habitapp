@@ -31,7 +31,7 @@ const App = () => {
       <CustomButton 
         title="Login"
         handlePress={() => {
-          router.navigate("/home")
+          router.navigate("/login")
         }}
       />
 
