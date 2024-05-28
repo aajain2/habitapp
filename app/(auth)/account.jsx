@@ -21,11 +21,6 @@ const Account = () => {
 
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
 
-<<<<<<< Updated upstream
-  const accountSubmit = () => {
-    if ((verifyPassword === password) && validator.isStrongPassword(password)) {
-      router.navigate("/avatar")
-=======
   const accountSubmit = async () => {
     const { email, firstName, lastName, username, birthday } = useSignUpContext(); // Assuming you have these in your context
     try {
@@ -48,7 +43,6 @@ const Account = () => {
       router.navigate("permissions");
     } catch (error) {
       console.error('Error registering user:', error);
->>>>>>> Stashed changes
     }
   };
   
