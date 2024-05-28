@@ -3,9 +3,10 @@
 
 // Import the necessary Firebase SDK functions to initialize the services used in the application
 import { initializeApp } from "firebase/app";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
-import { getAuth, connectAuthEmulator } from "firebase/auth";
-import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getFunctions, } from "firebase/functions";
+import { GoogleAuthProvider } from "firebase/auth";
 
 // Configuration object containing the Firebase project settings
 const firebaseConfig = {
@@ -25,19 +26,7 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app); // Firestore for database operations
 const auth = getAuth(app);           // Authentication service
 const functions = getFunctions(app); // Cloud Functions
-
-// Conditionally connect to Firebase emulators based on whether the app is running in development mode
-if (__DEV__) {
-  console.log('Running in development mode. Using emulators.');
-  // Connect to Firestore emulator running on localhost
-  connectFirestoreEmulator(firestore, 'localhost', 8080);
-  // Connect to Authentication emulator running on localhost
-  connectAuthEmulator(auth, 'http://localhost:9099');
-  // Connect to Functions emulator running on localhost
-  connectFunctionsEmulator(functions, 'localhost', 5001);
-} else {
-  console.log('Running in production mode.'); // Indicate that the app is running in production
-}
+const provider = new GoogleAuthProvider();
 
 // Export initialized services for use throughout the application
-export { app, firestore, auth, functions };
+export { app, firestore, auth, functions, provider };

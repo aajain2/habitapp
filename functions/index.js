@@ -5,6 +5,8 @@
 // Using Firebase Functions v2 API
 const { onCall, onCreate, schedule } = require("firebase-functions/v2/https");
 const { onRun } = require("firebase-functions/v2/pubsub");
+const admin = require("firebase-admin");
+admin.initializeApp();
 
 // Import custom function handlers from domain-specific files
 const authHandlers = require("./auth");
@@ -13,14 +15,26 @@ const cleanupHandlers = require("./dailyCleanup");
 const habitHandlers = require("./habits");
 const socialHandlers = require("./social");
 
-// User registration function triggered on creation of a new user
-exports.registerUser = onCreate((user) => {
-  const data = {
-    firstName: user.displayName ? user.displayName.split(' ')[0] : '',
-    lastName: user.displayName ? user.displayName.split(' ')[1] : '',
-    username: user.email.split('@')[0]  // Generates a username from the user's email
-  };
-  return authHandlers.handleNewUserRegistration(user, data);
+exports.registerUser = onCall((data, context) => {
+  // Ensure that the function caller is authenticated
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'The function must be called while authenticated.');
+  }
+
+  // Data includes email, firstName, lastName, username, birthday, etc.
+  // User creation is handled on the client-side using Firebase Authentication for security reasons
+  // This function is only for storing additional user details after authentication
+  return authHandlers.handleNewUserRegistration({
+    uid: context.auth.uid, // Use the UID from the authenticated user context
+    email: context.auth.token.email || '', // Safely use email from authentication token if available
+  }, data)
+  .then(() => {
+    return { status: 'success', message: "User registered successfully" };
+  })
+  .catch(error => {
+    console.error("Registration error:", error);
+    throw new functions.https.HttpsError('unknown', 'Failed to register user', error);
+  });
 });
 
 // Post creation and management functions

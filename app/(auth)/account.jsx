@@ -8,7 +8,6 @@ import BackButton from '../../components/buttons/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import { useState } from 'react';
 import TrabitHeader from '../../components/TrabitHeader';
-
 const Account = () => {
   const { firstName,
           lastName,
@@ -22,11 +21,37 @@ const Account = () => {
 
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
 
+<<<<<<< Updated upstream
   const accountSubmit = () => {
     if ((verifyPassword === password) && validator.isStrongPassword(password)) {
       router.navigate("/avatar")
+=======
+  const accountSubmit = async () => {
+    const { email, firstName, lastName, username, birthday } = useSignUpContext(); // Assuming you have these in your context
+    try {
+      const registerUser = firebase.functions().httpsCallable('handleNewUserRegistration');
+      const result = await registerUser({
+        user: {
+          uid: firebase.auth().currentUser.uid,
+          email: email,
+          photoURL: firebase.auth().currentUser.photoURL
+        },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          username: username,
+          email: email,
+          birthday: birthday
+        }
+      });
+      console.log('User registered:', result.data);
+      router.navigate("permissions");
+    } catch (error) {
+      console.error('Error registering user:', error);
+>>>>>>> Stashed changes
     }
-  }
+  };
+  
 
   return (
     <DismissKeyboard>

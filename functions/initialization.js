@@ -27,22 +27,18 @@ async function initializeFirestore() {
   // Populate Habits and Prompts
   habitsData.forEach(habit => {
     const habitRef = db.collection('Habits').doc(habit.id);
-    batch.set(habitRef, {
-      name: habit.name
-    });
+    batch.set(habitRef, { name: habit.name });
 
     habit.prompts.forEach((prompt, index) => {
       const promptRef = habitRef.collection('Prompts').doc(`prompt${index + 1}`);
-      batch.set(promptRef, {
-        description: prompt
-      });
+      batch.set(promptRef, { description: prompt });
     });
   });
 
   // Sample Users with Friends and Habits
   const users = [
-    { id: 'user1', firstName: 'Alice', lastName: 'Smith', username: 'alice', email: 'alice@example.com', profilePicUrl: '', selectedHabit: 'drinkWater' },
-    { id: 'user2', firstName: 'Bob', lastName: 'Johnson', username: 'bob', email: 'bob@example.com', profilePicUrl: '', selectedHabit: 'readBooks' }
+    { id: 'user1', firstName: 'Alice', lastName: 'Smith', username: 'alice', email: 'alice@example.com', profilePicUrl: '', selectedHabit: 'drinkWater', birthday: '1990-01-01' },
+    { id: 'user2', firstName: 'Bob', lastName: 'Johnson', username: 'bob', email: 'bob@example.com', profilePicUrl: '', selectedHabit: 'readBooks', birthday: '1992-02-02' }
   ];
 
   users.forEach(user => {
@@ -53,7 +49,8 @@ async function initializeFirestore() {
       username: user.username,
       email: user.email,
       profilePicUrl: user.profilePicUrl,
-      selectedHabit: user.selectedHabit
+      selectedHabit: user.selectedHabit,
+      birthday: user.birthday // Including birthday in user initialization
     });
 
     // Adding friend relationships
@@ -61,7 +58,7 @@ async function initializeFirestore() {
       if (friend.id !== user.id) {
         const friendRef = userRef.collection('Friends').doc(friend.id);
         batch.set(friendRef, {
-          status: 'pending', // Initially set to pending
+          status: 'pending',
           addedOn: admin.firestore.FieldValue.serverTimestamp()
         });
       }
@@ -84,7 +81,7 @@ async function initializeFirestore() {
     await batch.commit();
     console.log('Firestore has been fully initialized with initial data.');
   } catch (error) {
-    console.error('Error initializing Firestore: ', error);
+    console.error('Error initializing Firestore:', error);
   }
 }
 

@@ -6,9 +6,10 @@ import CustomButton from '../../components/buttons/CustomButton'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import BackButton from '../../components/buttons/BackButton'
 import { router } from 'expo-router'
-
+import { getAuth, signInWithPopup } from 'firebase/auth'
+import { auth, provider } from '../../firebaseConfig.js'
 const Login = () => {
-  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   return (
@@ -34,9 +35,9 @@ const Login = () => {
               autoComplete="off"
               autoCorrect="off"
               containerStyles="mb-6"
-              handleChangeText={setUsername}
-              placeholder="Username"
-              value={username}
+              handleChangeText={setEmail}
+              placeholder="Email"
+              value={email}
             />
 
             <SignUpInput
@@ -52,7 +53,9 @@ const Login = () => {
 
             <CustomButton 
               title="Login"
-              handlePress={() => console.log(username, password)}
+              handlePress={() => {
+                signInWithPopup(auth, provider)
+              }}
             />
           </View>
         </View>
