@@ -20,33 +20,8 @@ const Account = () => {
         } = useSignUpContext()
 
   const [verifyPassword, setVerifyPassword] = useState("")
-
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
-
-  const accountSubmit = async (email, firstName, lastName, username, birthday) => {
-    try {
-      const result = await handleNewUserRegistration({
-        user: {
-          uid: firebase.auth().currentUser.uid,
-          email: email,
-          photoURL: firebase.auth().currentUser.photoURL
-        },
-        data: {
-          firstName: firstName,
-          lastName: lastName,
-          username: username,
-          email: email,
-          birthday: birthday
-        }
-      });
-      console.log('User registered:', result.data);
-      router.navigate("permissions");
-    } catch (error) {
-      console.error('Error registering user:', error);
-    }
-  };
   
-
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -106,7 +81,14 @@ const Account = () => {
 
             <CustomButton
               containerStyles="mt-16"
-              handlePress={() => accountSubmit(email, firstName, lastName, username, birthday)}
+              handlePress={() => handleNewUserRegistration({
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName, 
+                birthday: birthday,
+                username: username
+              })}
               title="Next"
             />
           </View>

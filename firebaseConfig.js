@@ -5,7 +5,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getFunctions, } from "firebase/functions";
+import { getFunctions } from "firebase/functions";
 
 // Configuration object containing the Firebase project settings
 const firebaseConfig = {
@@ -27,4 +27,4 @@ const auth = getAuth(app);           // Authentication service
 const functions = getFunctions(app); // Cloud Functions
 
 // Export initialized services for use throughout the application
-export { app, firestore, auth, functions, provider };
+export { app, firestore, auth, functions };
