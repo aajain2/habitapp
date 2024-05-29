@@ -1,28 +1,31 @@
 import { auth, firestore } from '../firebaseConfig'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
+import validator from 'validator'
 
 // Registers a new user and initializes their profile in the database
-export const handleNewUserRegistration = (data) => {
-  createUserWithEmailAndPassword(auth, data.email, data.password)
-    .then(async (userCredential) => {
-      const user = userCredential.user;
+export const handleNewUserRegistration = async (data) => {
+  if (!validator.isStrongPassword(data.password)) {
+    throw new Error("Password not strong enough")
+  }
 
-      try {
-        const docRef = await setDoc(doc(firestore, "users", user.uid), {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          birthday: data.birthday,
-          username: data.username
-        });
-      } catch (e) {
-        console.log("Error with creating document:", e)
-      }
+  try {
+    const user = await createUserWithEmailAndPassword(auth, data.email, data.password)
 
-      console.log("User registration successful for:", data.email);
+    if (!user) {
+      throw new Error("Could not create user")
+    }
+
+    await setDoc(doc(firestore, "users", user.user.uid), {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      birthday: data.birthday,
+      username: data.username,
+      avatar: "",
     })
-    .catch((error) => {
-      console.error("Error in user registration:", error);
-      throw new Error("Failed to register new user.");
-    });
+
+    return user.user.uid
+  } catch (e) {
+    throw new Error(e)
+  }
 }

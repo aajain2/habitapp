@@ -1,5 +1,5 @@
 import { router } from 'expo-router'
-import { SafeAreaView, Text, View } from 'react-native';
+import { Alert, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
@@ -22,6 +22,31 @@ const Account = () => {
   const [verifyPassword, setVerifyPassword] = useState("")
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
   
+  const handleSubmit = async () => {
+    let uid = ""
+
+    if (password === verifyPassword) {
+      try {
+        uid = await handleNewUserRegistration({
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName, 
+          birthday: birthday,
+          username: username
+        })
+
+        if (uid) {
+          router.push("/avatar")
+        }
+      } catch (e) {
+        Alert.alert("Error registering: " + e)
+      }
+    } else {
+      Alert.alert("Passwords do not match")
+    }
+  }
+
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -81,14 +106,7 @@ const Account = () => {
 
             <CustomButton
               containerStyles="mt-16"
-              handlePress={() => handleNewUserRegistration({
-                email: email,
-                password: password,
-                firstName: firstName,
-                lastName: lastName, 
-                birthday: birthday,
-                username: username
-              })}
+              handlePress={() => handleSubmit()}
               title="Next"
             />
           </View>
