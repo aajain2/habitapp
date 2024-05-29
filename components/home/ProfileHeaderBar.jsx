@@ -5,6 +5,7 @@ import MenuButton from '../buttons/MenuButton';
 import { router } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { handleLogOut } from '../../functions/auth';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const ProfileHeaderBar = ({
   containerStyles,
@@ -12,9 +13,14 @@ const ProfileHeaderBar = ({
   subtitle,
   logoutButton
 }) => {
+  const { setIsLogged, setUser } = useGlobalContext();
+
   const logout = async () => {
     try {
       await handleLogOut()
+
+      setIsLogged(false)
+      setUser(null)
 
       while (router.canGoBack()) {
         router.back()
