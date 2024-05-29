@@ -1,5 +1,5 @@
 import { auth, firestore } from '../firebaseConfig'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { setDoc, doc, getDoc } from 'firebase/firestore'
 import validator from 'validator'
 
@@ -45,6 +45,16 @@ export const getCurrentUser = async () => {
     } else {
       return null
     }
+  } catch (e) {
+    throw new Error(e)
+  }
+}
+
+export const handleLogIn = async (email, password) => {
+  try {
+    const success = await signInWithEmailAndPassword(auth, email, password)
+
+    return success
   } catch (e) {
     throw new Error(e)
   }
