@@ -1,10 +1,15 @@
-import { router } from 'expo-router'
+import { Redirect, router } from 'expo-router'
 import { Image, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../components/buttons/CustomButton';
 import images from '../constants/images';
 import TrabitHeader from '../components/TrabitHeader';
+import { useGlobalContext } from '../context/GlobalProvider';
 
 const App = () => {
+  const { loading, isLogged } = useGlobalContext();  
+
+  if (!loading && isLogged) return <Redirect href="/home" />;
+
   return (
     <SafeAreaView className="flex justify-center items-center h-full">
       <Image 

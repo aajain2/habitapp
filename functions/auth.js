@@ -1,6 +1,6 @@
 import { auth, firestore } from '../firebaseConfig'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { setDoc, doc } from 'firebase/firestore'
+import { setDoc, doc, getDoc } from 'firebase/firestore'
 import validator from 'validator'
 
 // Registers a new user and initializes their profile in the database
@@ -21,10 +21,30 @@ export const handleNewUserRegistration = async (data) => {
       lastName: data.lastName,
       birthday: data.birthday,
       username: data.username,
-      avatar: "",
+      avatar: "https://firebasestorage.googleapis.com/v0/b/trabitapp.appspot.com/o/Assets%2Favatar.png?alt=media&token=9b2d3388-8ade-48b3-9017-d319ae5cf21d",
     })
 
     return user.user.uid
+  } catch (e) {
+    throw new Error(e)
+  }
+}
+
+export const getCurrentUser = async () => {
+  try {
+    const user = auth.currentUser
+
+    if (user) {
+      const userDoc = await getDoc(doc(firestore, "users", user.uid))
+
+      return {
+        ...userDoc.data(),
+        uid: user.uid,
+        email: user.email,
+      }
+    } else {
+      return null
+    }
   } catch (e) {
     throw new Error(e)
   }

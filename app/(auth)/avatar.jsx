@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from 'expo-router'
+import { router } from 'expo-router'
 import { Image, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import DismissKeyboard from '../../components/DismissKeyboard';
@@ -7,14 +7,16 @@ import TrabitHeader from '../../components/TrabitHeader';
 import images from '../../constants/images';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const AvatarSelection = () => {
-  const [image, setImage] = useState(null)
-  const { field, fieldValue } = useLocalSearchParams();
+  const { user } = useGlobalContext();  
+
+  const [image, setImage] = useState(user.avatar)
 
   useEffect(() => {
-    setImage(fieldValue)
-  }, [fieldValue])
+    console.log(user)
+  }, [])
   
 
   const pickImage = async () => {
@@ -47,7 +49,7 @@ const AvatarSelection = () => {
             <Image 
               className="w-[150px] h-[150px] mb-4 rounded-full"
               resizeMode="contain"
-              source={field || image ? { uri: image } : images.avatar}
+              source={{ uri: image }}
             />
 
             <View className="my-4 flex items-center">
@@ -63,11 +65,7 @@ const AvatarSelection = () => {
 
             <CustomButton
               handlePress={() => {
-                if (field) {
-                  router.navigate("/edit-profile")
-                } else {
-                  router.navigate("/permissions")
-                }
+                router.navigate("/permissions")
               }}
               title="Save"
               containerStyles="mt-4"

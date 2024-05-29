@@ -8,7 +8,8 @@ import BackButton from '../../components/buttons/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import { useState } from 'react';
 import TrabitHeader from '../../components/TrabitHeader';
-import { handleNewUserRegistration } from '../../functions/auth';
+import { getCurrentUser, handleNewUserRegistration } from '../../functions/auth';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Account = () => {
   const { firstName,
@@ -18,6 +19,7 @@ const Account = () => {
           username, setUsername, 
           password, setPassword
         } = useSignUpContext()
+  const { setUser } = useGlobalContext();  
 
   const [verifyPassword, setVerifyPassword] = useState("")
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
@@ -37,6 +39,7 @@ const Account = () => {
         })
 
         if (uid) {
+          await setUser(await getCurrentUser())
           router.push("/avatar")
         }
       } catch (e) {

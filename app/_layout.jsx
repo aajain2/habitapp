@@ -4,6 +4,7 @@ import 'react-native-reanimated'
 import { useAssets } from 'expo-asset'
 
 import SignUpProvider from "../context/SignUpProvider"
+import GlobalProvider from "../context/GlobalProvider"
 
 const RootLayout = () => {
   const [assets, assetsError] = useAssets([
@@ -20,15 +21,17 @@ const RootLayout = () => {
   });
 
   return (
-    <SignUpProvider>
-      <Stack>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(setup)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="home" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-      </Stack>
-    </SignUpProvider>
+    <GlobalProvider>
+      <SignUpProvider>
+        <Stack>
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(setup)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="home" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+        </Stack>
+      </SignUpProvider>
+    </GlobalProvider>
   );
 }
 
