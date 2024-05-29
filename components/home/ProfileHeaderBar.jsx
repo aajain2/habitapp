@@ -1,14 +1,32 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import BackButton from '../buttons/BackButton';
 import MenuButton from '../buttons/MenuButton';
 import { router } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { handleLogOut } from '../../functions/auth';
 
 const ProfileHeaderBar = ({
   containerStyles,
   title,
-  subtitle
+  subtitle,
+  logoutButton
 }) => {
+  const logout = async () => {
+    try {
+      await handleLogOut()
+
+      while (router.canGoBack()) {
+        router.back()
+      }
+
+      router.replace("/")
+
+    } catch (e) {
+      Alert.alert("Error", e.message)
+    }
+  }
+
   return (
     <View className={`flex-row ${containerStyles}`}>
       <BackButton 
@@ -23,10 +41,19 @@ const ProfileHeaderBar = ({
         }
       </View>
 
-      <MenuButton
-        containerStyles="pr-4 h-10 justify-center" 
-        size={24}
-      />
+      {logoutButton ?  
+        <View className="pr-4 h-10 justify-center">
+          <TouchableOpacity 
+            onPress={() => logout()}
+          >
+            <MaterialCommunityIcons name="logout" size={24} color="red" />
+          </TouchableOpacity>
+        </View> : 
+        <MenuButton
+          containerStyles="pr-4 h-10 justify-center" 
+          size={24}
+        />
+      }
     </View>
   )
 }

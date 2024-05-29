@@ -25,6 +25,7 @@ const Profile = () => {
         <ProfileHeaderBar
           containerStyles="absolute"
           title="Profile"
+          logoutButton
         />
       </View>
 
