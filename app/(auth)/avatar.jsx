@@ -1,31 +1,59 @@
-import { router } from 'expo-router'
-import { Image, SafeAreaView, Text, View } from 'react-native';
+import { router, useLocalSearchParams } from 'expo-router'
+import { Alert, Image, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import BackButton from '../../components/buttons/BackButton';
 import TrabitHeader from '../../components/TrabitHeader';
-import images from '../../constants/images';
 import * as ImagePicker from 'expo-image-picker';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGlobalContext } from '../../context/GlobalProvider';
+import { uploadAvatar } from '../../functions/upload';
 
 const AvatarSelection = () => {
-  const { user } = useGlobalContext();  
-
+  const { field } = useLocalSearchParams()
+  const { user } = useGlobalContext()
   const [image, setImage] = useState(user.avatar)
+  const [uploading, setUploading] = useState(false)
+  const [done, setDone] = useState(false)
 
-  useEffect(() => {
-    console.log(user)
-  }, [])
-  
+  const onStart = () => {
+    setUploading(true)
+  }
+
+  const onFail = (e) => {
+    Alert.alert(e.message)
+  }
+
+  const onFinish = () => {
+    setUploading(false)
+    setDone(false)
+
+    if (field) {
+      router.navigate("/edit-profile")
+    } else {
+      router.navigate("/permissions")
+    }
+  }
+
+  const handleSave = async () => {
+    await uploadAvatar(
+      image, 
+      user.uid,
+      {
+        onStart: onStart,
+        onFail: onFail,
+        onFinish: onFinish
+      }
+    )
+  }
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 0.1,
-    });
+    })
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -64,9 +92,7 @@ const AvatarSelection = () => {
             />
 
             <CustomButton
-              handlePress={() => {
-                router.navigate("/permissions")
-              }}
+              handlePress={() => handleSave()}
               title="Save"
               containerStyles="mt-4"
             />

@@ -1,5 +1,5 @@
 import { router } from 'expo-router'
-import { SafeAreaView, Text, View } from 'react-native';
+import { Alert, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
@@ -44,7 +44,13 @@ const NameSignUp = () => {
             />
 
             <CustomButton
-              handlePress={() => router.navigate("/birthday")}
+              handlePress={() => {
+                if (firstName !== "" && lastName !== "") {
+                  router.navigate("/birthday")
+                } else {
+                  Alert.alert("Please enter a name")
+                }
+              }}
               title="Next"
               containerStyles="mt-32"
             />
