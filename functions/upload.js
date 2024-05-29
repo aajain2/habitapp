@@ -48,14 +48,13 @@ export const uploadAvatar = async (
     (error) => {
       onFail(error)
     }, 
-    () => {
+    async () => {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
         await updateAvatar(downloadURL, uid)
+        await onFinish()
         console.log('File available at', downloadURL);
       });
-
-      onFinish()
     }
   )
 }

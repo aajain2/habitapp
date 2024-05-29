@@ -7,6 +7,7 @@ import ThinCustomButton from '../../components/buttons/ThinCustomButton'
 import ProfileEditLink from '../../components/ProfileEditLink'
 import ChangeSensitiveLink from '../../components/ChangeSensitiveLink'
 import { router } from 'expo-router'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const dummyProfile = {
   username: "abe",
@@ -20,6 +21,8 @@ const dummyProfile = {
 }
 
 const EditProfile = () => {
+  const { user } = useGlobalContext()
+
   return (
     <SafeAreaView>
       <View className="z-50">
@@ -31,7 +34,7 @@ const EditProfile = () => {
 
       <View className="h-full flex-column justify-center items-center">
         <ProfilePicture 
-          source={dummyProfile.profilePicture}
+          source={user.avatar}
           containerStyles="w-[150px] h-[150px]"
         />
 

@@ -6,6 +6,7 @@ import images from '../../constants/images'
 import { StatusBar } from 'expo-status-bar'
 import { router } from 'expo-router'
 import ThinCustomButton from '../../components/buttons/ThinCustomButton'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const dummyProfile = {
   username: "abe",
@@ -19,6 +20,8 @@ const dummyProfile = {
 }
 
 const Profile = () => {
+  const { user } = useGlobalContext()
+
   return (
     <SafeAreaView>
       <View className="z-50">
@@ -31,7 +34,7 @@ const Profile = () => {
 
       <View className="h-full flex-column justify-center items-center">
         <ProfilePicture 
-          source={dummyProfile.profilePicture}
+          source={user.avatar}
           containerStyles="w-[150px] h-[150px]"
         />
 

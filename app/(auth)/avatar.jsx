@@ -8,10 +8,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import { useGlobalContext } from '../../context/GlobalProvider';
 import { uploadAvatar } from '../../functions/upload';
+import { getCurrentUser } from '../../functions/auth';
 
 const AvatarSelection = () => {
   const { field } = useLocalSearchParams()
-  const { user } = useGlobalContext()
+  const { user, setUser } = useGlobalContext()
   const [image, setImage] = useState(user.avatar)
   const [uploading, setUploading] = useState(false)
   const [done, setDone] = useState(false)
@@ -24,9 +25,13 @@ const AvatarSelection = () => {
     Alert.alert(e.message)
   }
 
-  const onFinish = () => {
+  const onFinish = async () => {
     setUploading(false)
     setDone(false)
+    
+    const user = await getCurrentUser()
+
+    setUser(user)
 
     if (field) {
       router.navigate("/edit-profile")
