@@ -12,7 +12,7 @@ import { useGlobalContext } from '../../context/GlobalProvider'
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useGlobalContext();  
+  const { setUser, setIsLogged } = useGlobalContext();  
 
   const login = async () => {
     try {
@@ -21,6 +21,7 @@ const Login = () => {
       if (success) {
         const user = await getCurrentUser()
         setUser(user)
+        setIsLogged(true)
   
         while (router.canGoBack()) {
           router.back()

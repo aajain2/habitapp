@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-
 import { getCurrentUser } from "../functions/auth";
 
 const GlobalContext = createContext();
@@ -11,22 +10,27 @@ const GlobalProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCurrentUser()
-      .then((res) => {
-        if (res) {
-          setIsLogged(true);
-          setUser(res);
-        } else {
-          setIsLogged(false);
-          setUser(null);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    // Try 10 times within 10 seconds to wait for server call
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        getCurrentUser()
+        .then((res) => {
+          if (res) {
+            setIsLogged(true);
+            setUser(res);
+          } else {
+            setIsLogged(false);
+            setUser(null);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+      }, 1000);
+    }
   }, []);
 
   return (

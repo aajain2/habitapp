@@ -6,7 +6,7 @@ import TrabitHeader from '../components/TrabitHeader';
 import { useGlobalContext } from '../context/GlobalProvider';
 
 const App = () => {
-  const { loading, isLogged } = useGlobalContext();  
+  const { loading, isLogged } = useGlobalContext();
 
   if (!loading && isLogged) return <Redirect href="/home" />;
 

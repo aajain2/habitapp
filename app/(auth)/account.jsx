@@ -19,7 +19,7 @@ const Account = () => {
           username, setUsername, 
           password, setPassword
         } = useSignUpContext()
-  const { setUser } = useGlobalContext();  
+  const { setUser, setIsLogged } = useGlobalContext();  
 
   const [verifyPassword, setVerifyPassword] = useState("")
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
@@ -39,7 +39,9 @@ const Account = () => {
         })
 
         if (uid) {
-          await setUser(await getCurrentUser())
+          const currentUser = await getCurrentUser()
+          setUser(currentUser)
+          setIsLogged(true)
           router.push("/avatar")
         }
       } catch (e) {
