@@ -7,7 +7,7 @@ import TrabitHeader from '../../components/TrabitHeader';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import { useGlobalContext } from '../../context/GlobalProvider';
-import { uploadAvatar } from '../../functions/upload';
+import { uploadAvatar } from '../../functions/avatar';
 import { getCurrentUser } from '../../functions/auth';
 
 const AvatarSelection = () => {

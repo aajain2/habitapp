@@ -4,11 +4,15 @@ import { getBlobFromURI } from '../util/getBlobFromURI';
 import { doc, updateDoc } from 'firebase/firestore';
 
 const updateAvatar = async (uri, uid) => {
-  const avatarRef = doc(firestore, "users", uid)
+  try {
+    const avatarRef = doc(firestore, "users", uid)
 
-  await updateDoc(avatarRef, {
-    avatar: uri
-  })
+    await updateDoc(avatarRef, {
+      avatar: uri
+    })
+  } catch (e) {
+    throw new Error(e)
+  }
 }
 
 export const uploadAvatar = async (

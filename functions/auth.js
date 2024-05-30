@@ -22,6 +22,8 @@ export const handleNewUserRegistration = async (data) => {
       birthday: data.birthday,
       username: data.username,
       avatar: "https://firebasestorage.googleapis.com/v0/b/trabitapp.appspot.com/o/Assets%2Favatar.png?alt=media&token=9b2d3388-8ade-48b3-9017-d319ae5cf21d",
+      friends: [],
+      habit: ""
     })
 
     return user.user.uid

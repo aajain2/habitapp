@@ -1,26 +1,35 @@
-// This file handles operations related to habit tracking within the application. It supports
-// functionality for users to mark habits as completed and manages habit-related data.
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { firestore } from "../firebaseConfig";
 
-const { getFirestore } = require('firebase-admin/firestore');
+export const getHabits = async () => {
+  try {
+    const request = await getDocs(collection(firestore, "habits"));
+    let habits = []
 
-const db = getFirestore();
+    request.forEach((doc) => {
+      const data = doc.data()
 
-// Completes a habit for the user on the specified date
-exports.completeHabit = async (data, context) => {
-  if (!context.auth) {
-    throw new Error('Authentication required.'); // Ensures the user is authenticated
+      habits.push({
+        id: doc.id,
+        description: data.description,
+        name: data.name,
+        prompts: data.prompts
+      })
+    });
+
+    return habits
+  } catch (e) {
+    throw new Error(e)
   }
-  const { habitId, promptId, completionTime } = data;
-  const userId = context.auth.uid;
-  const habitDocRef = db.collection('Users').doc(userId).collection('Habits').doc(habitId);
-  const habitDoc = await habitDocRef.get();
-  const completedToday = habitDoc.exists && habitDoc.data().completionTime && 
-                         new Date(habitDoc.data().completionTime).toDateString() === new Date(completionTime).toDateString();
+}
 
-  if (completedToday) {
-    return { message: "Habit already completed today." }; // Prevents duplicate entries for the same day
-  } else {
-    await habitDocRef.set({ completionTime }); // Marks the habit as completed for the day
-    return { message: "Habit completed successfully." };
+export const saveHabit = async (uid, habit) => {
+  try {
+    await updateDoc(doc(firestore, "users", uid), {
+      habit: habit
+    })
+  } catch (e) {
+    throw new Error(e)
   }
-};
+}
+

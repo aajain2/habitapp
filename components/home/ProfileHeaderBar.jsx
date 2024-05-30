@@ -18,9 +18,7 @@ const ProfileHeaderBar = ({
   const logout = async () => {
     try {
       await handleLogOut()
-
       setIsLogged(false)
-      setUser(null)
 
       while (router.canGoBack()) {
         router.back()
@@ -28,6 +26,7 @@ const ProfileHeaderBar = ({
 
       router.replace("/")
 
+      setUser(null)
     } catch (e) {
       Alert.alert("Error", e.message)
     }
