@@ -33,7 +33,7 @@ const EditProfile = () => {
           title="Edit Profile Picture"
           handlePress={() => router.navigate({
             pathname: "/avatar",
-            params: { field: "profile-picture" }
+            params: { field: "profilePicture" }
           })}
         />
 
@@ -44,7 +44,7 @@ const EditProfile = () => {
             value={`${user.firstName}`}
             handlePress={() => router.navigate({ 
               pathname: "/field-edit", 
-              params: { field: "first-name", fieldValue: user.firstName }
+              params: { field: "firstName", fieldValue: user.firstName }
             })}
           />
 
@@ -54,7 +54,7 @@ const EditProfile = () => {
             value={`${user.lastName}`}
             handlePress={() => router.navigate({ 
               pathname: "/field-edit", 
-              params: { field: "last-name", fieldValue: user.lastName }
+              params: { field: "lastName", fieldValue: user.lastName }
             })}
           />
 
