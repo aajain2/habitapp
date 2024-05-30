@@ -1,5 +1,5 @@
 import { View, SafeAreaView, TouchableOpacity, Image, Text } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TrabitHeader from '../../components/TrabitHeader'
 import BackButton from '../../components/buttons/BackButton'
 import { StatusBar } from 'expo-status-bar'
@@ -7,7 +7,7 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router } from 'expo-router'
 import icons from '../../constants/icons'
 import { AntDesign } from '@expo/vector-icons'
-import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator'
+import { manipulateAsync, FlipType } from 'expo-image-manipulator'
 
 const Camera = () => {
   const [facing, setFacing] = useState("front")
@@ -18,6 +18,12 @@ const Camera = () => {
   const [photoURI, setPhotoURI] = useState("")
 
   const prompt = "Take a photo of any vegetable with a fork 🥦🍴"
+
+  useEffect(() => {
+    if (permission && !permission.granted) {
+      requestPermission()
+    }
+  }, [permission])
 
   let camera
 

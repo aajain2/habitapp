@@ -33,7 +33,6 @@ const SearchBar = ({
     const searchResult = currentUsers.filter((user) => user.username.includes(query))
     setSearchResult(searchResult)
   }, [query])
-  
 
   return (
     <View className={containerStyles}>

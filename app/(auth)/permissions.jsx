@@ -4,8 +4,11 @@ import CustomButton from '../../components/buttons/CustomButton';
 import BackButton from '../../components/buttons/BackButton';
 import images from '../../constants/images';
 import TrabitHeader from '../../components/TrabitHeader';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Permissions = () => {
+  const { user } = useGlobalContext()
+
   return (
     <SafeAreaView>
       <View className="h-full">
