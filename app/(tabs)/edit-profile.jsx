@@ -9,17 +9,6 @@ import ChangeSensitiveLink from '../../components/ChangeSensitiveLink'
 import { router } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
-const dummyProfile = {
-  username: "abe",
-  firstName: "Abraham",
-  lastName: "Lincoln",
-  profilePicture: "https://picsum.photos/200",
-  streak: 5,
-  bestStreak: 23,
-  habit: "Eating more vegetables",
-  totalPosts: 149
-}
-
 const EditProfile = () => {
   const { user } = useGlobalContext()
 
@@ -44,7 +33,7 @@ const EditProfile = () => {
           title="Edit Profile Picture"
           handlePress={() => router.navigate({
             pathname: "/avatar",
-            params: { field: "profile-picture", fieldValue: dummyProfile.profilePicture }
+            params: { field: "profile-picture" }
           })}
         />
 
@@ -52,40 +41,40 @@ const EditProfile = () => {
           <ProfileEditLink
             containerStyles="mt-4"
             field="First Name"
-            value={`${dummyProfile.firstName}`}
+            value={`${user.firstName}`}
             handlePress={() => router.navigate({ 
               pathname: "/field-edit", 
-              params: { field: "first-name", fieldValue: dummyProfile.firstName }
+              params: { field: "first-name", fieldValue: user.firstName }
             })}
           />
 
           <ProfileEditLink
             containerStyles="mt-2"
             field="Last Name"
-            value={`${dummyProfile.lastName}`}
+            value={`${user.lastName}`}
             handlePress={() => router.navigate({ 
               pathname: "/field-edit", 
-              params: { field: "last-name", fieldValue: dummyProfile.lastName }
+              params: { field: "last-name", fieldValue: user.lastName }
             })}
           />
 
           <ProfileEditLink 
             containerStyles="mt-2"
             field="Username"
-            value={`${dummyProfile.username}`}
+            value={`${user.username}`}
             handlePress={() => router.navigate({ 
               pathname: "/field-edit", 
-              params: { field: "username", fieldValue: dummyProfile.username }
+              params: { field: "username", fieldValue: user.username }
             })}
           />
 
           <ProfileEditLink 
             containerStyles="mt-2"
             field="Habit"
-            value={`${dummyProfile.habit}`}
+            value={`${user.habitDescription}`}
             handlePress={() => router.navigate({ 
               pathname: "/habit-setup", 
-              params: { field: "habit", fieldValue: dummyProfile.habit }})}
+              params: { field: "habit", fieldValue: user.habitDescription }})}
           />
 
           <Text className="text-base font-inter-bold my-4 text-center">Manage Account</Text>

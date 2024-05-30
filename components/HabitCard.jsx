@@ -10,16 +10,19 @@ const HabitCard = ({
   setSelected
 }) => {
   const handlePress = (name, selected) => {
-    if (name === selected) {
+    if (name === selected.habit) {
       setSelected(null)
     } else {
-      setSelected(name)
+      setSelected({
+        habit: name,
+        habitDescription: title
+      })
     }
   }
 
   return (
     <TouchableOpacity 
-      className={`bg-white/30 rounded-lg border-2 border-transparent ${name === selected && "border-white"}`}
+      className={`bg-white/30 rounded-lg border-2 border-transparent ${name === selected.habit && "border-white"}`}
       onPress={() => handlePress(name, selected)}
     >
       <View className="flex-row w-[90vw] h-20 items-center justify-center">

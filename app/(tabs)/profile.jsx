@@ -69,7 +69,7 @@ const Profile = () => {
             </Text>
 
             <Text className="font-inter-regular w-36 text-center text-xs">
-              {user.habit}
+              {user.habitDescription}
             </Text>
           </View>
 

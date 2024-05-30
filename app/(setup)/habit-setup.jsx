@@ -16,11 +16,17 @@ const HabitSetup = () => {
   const [selected, setSelected] = useState(null)
   const [habitOptions, setHabitOptions] = useState(null)
   const { field } = useLocalSearchParams()
-  const { user } = useGlobalContext()
+  const { user, setUser } = useGlobalContext()
 
   const handleSave = () => {
     saveHabit(user.uid, selected.habit, selected.habitDescription)
-      .then(() => {
+      .then(async () => {
+        setUser({
+          ...user,
+          habit: selected.habit,
+          habitDescription: selected.habitDescription
+        })
+
         if (field) {
           router.navigate("edit-profile")
         } else {
@@ -33,7 +39,10 @@ const HabitSetup = () => {
   }
 
   useEffect(() => {
-    setSelected(user.habit)
+    setSelected({
+      habit: user.habit,
+      habitDescription: user.habitDescription
+    })
 
     getHabits()
       .then((habits) => {
