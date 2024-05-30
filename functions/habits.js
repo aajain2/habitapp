@@ -23,10 +23,11 @@ export const getHabits = async () => {
   }
 }
 
-export const saveHabit = async (uid, habit) => {
+export const saveHabit = async (uid, habit, habitDescription) => {
   try {
     await updateDoc(doc(firestore, "users", uid), {
-      habit: habit
+      habit: habit,
+      habitDescription: habitDescription
     })
   } catch (e) {
     throw new Error(e)

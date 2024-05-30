@@ -19,7 +19,7 @@ const HabitSetup = () => {
   const { user } = useGlobalContext()
 
   const handleSave = () => {
-    saveHabit(user.uid, selected)
+    saveHabit(user.uid, selected.habit, selected.habitDescription)
       .then(() => {
         if (field) {
           router.navigate("edit-profile")
