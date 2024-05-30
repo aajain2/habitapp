@@ -7,18 +7,96 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-async function initializeFirestore() {
+async function initializeHabits() {
   const habitsData = [
-    { id: 'drinkWater', name: 'Drink Water', prompts: ['Take a photo of your filled water bottle', 'Snap your glass as you drink the last sip'] },
-    { id: 'readBooks', name: 'Read Books', prompts: ['Capture your current reading spot', 'Show off the book you are currently reading'] },
-    { id: 'morningRun', name: 'Morning Run', prompts: ['Take a selfie during your morning run', 'Photo of your running shoes post-run'] },
-    { id: 'studySession', name: 'Study Session', prompts: ['Photograph your study area', 'Take a picture of your notes today'] },
-    { id: 'meditate', name: 'Meditate', prompts: ['A serene snap of your meditation space', 'Capture a calming element during meditation'] },
-    { id: 'eatFruits', name: 'Eat Fruits', prompts: ['Share a picture of today\'s fruit snack', 'Snap a shot of you eating a fruit'] },
-    { id: 'playInstrument', name: 'Play an Instrument', prompts: ['Photo of your music practice session', 'Capture your instrument setup'] },
-    { id: 'exercise', name: 'Exercise', prompts: ['Post-workout selfie', 'Take a photo of your gym gear'] },
-    { id: 'cookMeals', name: 'Cook Meals', prompts: ['Showcase your cooking process', 'Plate presentation of your meal today'] },
-    { id: 'bikeRiding', name: 'Bike Riding', prompts: ['Capture a scene from your bike ride', 'Photo with your bicycle after the ride'] }
+    { 
+      id: 'drinkWater', 
+      name: 'Drinking More Water', 
+      description: 'Let\'s get our water game on', 
+      prompts: [
+          'Take a photo of your filled water bottle', 
+          'Snap your glass as you drink the last sip',
+          'Show your daily water intake chart',
+          'Take a picture of your favorite water flavor enhancer'
+      ]
+    },
+    { 
+      id: 'readBooks', 
+      name: 'Read Books', 
+      description: 'Let\'s make that brain bigger', 
+      prompts: [
+          'Capture your current reading spot', 
+          'Show off the book you are currently reading',
+          'Share a favorite quote from today\'s reading',
+          'Take a picture of your bookshelf'
+      ]
+    },
+    { 
+      id: 'exercise', 
+      name: 'Daily Exercise', 
+      description: 'Time to get those endorphins flowing', 
+      prompts: [
+          'Show your workout gear',
+          'Snap a photo mid-workout',
+          'Capture your post-workout meal',
+          'Take a picture of your exercise tracking app'
+      ]
+    },
+    { 
+      id: 'meditate', 
+      name: 'Meditate', 
+      description: 'Find your inner peace', 
+      prompts: [
+          'Take a picture of your meditation spot',
+          'Show your meditation timer app',
+          'Capture a serene view that helps you relax',
+          'Snap a photo of your meditation journal'
+      ]
+    },
+    { 
+      id: 'eatHealthy', 
+      name: 'Eat Healthy', 
+      description: 'Nourish your body with good food', 
+      prompts: [
+          'Take a photo of your healthy meal',
+          'Show off your meal prep for the week',
+          'Capture your favorite healthy snack',
+          'Snap a picture of a new healthy recipe you\'re trying'
+      ]
+    },
+    { 
+      id: 'sleepWell', 
+      name: 'Sleep Well', 
+      description: 'Improve your sleep quality', 
+      prompts: [
+          'Take a picture of your bedtime routine',
+          'Show your sleep tracking app',
+          'Capture your cozy bed setup',
+          'Snap a photo of a relaxing pre-sleep activity'
+      ]
+    },
+    { 
+      id: 'learnNewSkill', 
+      name: 'Learn a New Skill', 
+      description: 'Expand your horizons', 
+      prompts: [
+          'Take a photo of your learning materials',
+          'Show your progress on a new skill',
+          'Capture a moment from your practice session',
+          'Snap a picture of your completed project'
+      ]
+    },
+    { 
+      id: 'journaling', 
+      name: 'Journaling', 
+      description: 'Reflect and record your thoughts', 
+      prompts: [
+          'Take a photo of your journal entry',
+          'Show your journaling setup',
+          'Capture a quote or thought that stood out today',
+          'Snap a picture of your favorite journaling tools'
+      ]
+    }
   ];
 
   // Start batch write
@@ -26,54 +104,8 @@ async function initializeFirestore() {
 
   // Populate Habits and Prompts
   habitsData.forEach(habit => {
-    const habitRef = db.collection('Habits').doc(habit.id);
-    batch.set(habitRef, { name: habit.name });
-
-    habit.prompts.forEach((prompt, index) => {
-      const promptRef = habitRef.collection('Prompts').doc(`prompt${index + 1}`);
-      batch.set(promptRef, { description: prompt });
-    });
-  });
-
-  // Sample Users with Friends and Habits
-  const users = [
-    { id: 'user1', firstName: 'Alice', lastName: 'Smith', username: 'alice', email: 'alice@example.com', profilePicUrl: '', selectedHabit: 'drinkWater', birthday: '1990-01-01' },
-    { id: 'user2', firstName: 'Bob', lastName: 'Johnson', username: 'bob', email: 'bob@example.com', profilePicUrl: '', selectedHabit: 'readBooks', birthday: '1992-02-02' }
-  ];
-
-  users.forEach(user => {
-    const userRef = db.collection('Users').doc(user.id);
-    batch.set(userRef, {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      username: user.username,
-      email: user.email,
-      profilePicUrl: user.profilePicUrl,
-      selectedHabit: user.selectedHabit,
-      birthday: user.birthday // Including birthday in user initialization
-    });
-
-    // Adding friend relationships
-    users.forEach(friend => {
-      if (friend.id !== user.id) {
-        const friendRef = userRef.collection('Friends').doc(friend.id);
-        batch.set(friendRef, {
-          status: 'pending',
-          addedOn: admin.firestore.FieldValue.serverTimestamp()
-        });
-      }
-    });
-
-    // Sample daily habit tracking
-    const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
-    const habitsTrackingRef = userRef.collection('Habits').doc(today);
-    batch.set(habitsTrackingRef, {
-      habitId: user.selectedHabit,
-      completed: false,
-      promptId: 'prompt1',
-      photoUrl: '',
-      streak: 0
-    });
+    const habitRef = db.collection('habits').doc(habit.id);
+    batch.set(habitRef, { name: habit.name, description: habit.description, prompts: habit.prompts });
   });
 
   // Execute the batch write
@@ -85,4 +117,4 @@ async function initializeFirestore() {
   }
 }
 
-initializeFirestore().catch(console.error);
+initializeHabits().catch(console.error);

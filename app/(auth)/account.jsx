@@ -1,5 +1,5 @@
 import { router } from 'expo-router'
-import { SafeAreaView, Text, View } from 'react-native';
+import { Alert, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import SignUpInput from '../../components/SignUpInput';
 import DismissKeyboard from '../../components/DismissKeyboard';
@@ -8,20 +8,53 @@ import BackButton from '../../components/buttons/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import { useState } from 'react';
 import TrabitHeader from '../../components/TrabitHeader';
-import { handleNewUserRegistration } from '../../functions/auth';
+import { getCurrentUser, handleNewUserRegistration } from '../../functions/auth';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Account = () => {
-  const { firstName,
-          lastName,
-          birthday, 
-          email, 
-          username, setUsername, 
-          password, setPassword
-        } = useSignUpContext()
+  const { 
+    firstName,
+    lastName,
+    birthday, 
+    email, 
+    username, setUsername, 
+    password, setPassword,
+    resetSignUp
+  } = useSignUpContext()
+  const { setUser, setIsLogged } = useGlobalContext();  
 
   const [verifyPassword, setVerifyPassword] = useState("")
   const [passwordStrengthError, setPasswordStrengthError] = useState(false)
   
+  const handleSubmit = async () => {
+    let uid = ""
+
+    if (password === verifyPassword) {
+      try {
+        uid = await handleNewUserRegistration({
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName, 
+          birthday: birthday,
+          username: username
+        })
+
+        if (uid) {
+          const currentUser = await getCurrentUser()
+          setUser(currentUser)
+          setIsLogged(true)
+          resetSignUp()
+          router.push("/avatar")
+        }
+      } catch (e) {
+        Alert.alert("Error registering: " + e)
+      }
+    } else {
+      Alert.alert("Passwords do not match")
+    }
+  }
+
   return (
     <DismissKeyboard>
       <SafeAreaView>
@@ -81,14 +114,7 @@ const Account = () => {
 
             <CustomButton
               containerStyles="mt-16"
-              handlePress={() => handleNewUserRegistration({
-                email: email,
-                password: password,
-                firstName: firstName,
-                lastName: lastName, 
-                birthday: birthday,
-                username: username
-              })}
+              handlePress={() => handleSubmit()}
               title="Next"
             />
           </View>

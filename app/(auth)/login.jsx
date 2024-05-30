@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, Image, View } from 'react-native'
+import { Text, SafeAreaView, Image, View, Alert } from 'react-native'
 import React, { useState } from 'react'
 import images from '../../constants/images'
 import SignUpInput from '../../components/SignUpInput'
@@ -6,10 +6,33 @@ import CustomButton from '../../components/buttons/CustomButton'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import BackButton from '../../components/buttons/BackButton'
 import { router } from 'expo-router'
-import { getAuth, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { getCurrentUser, handleLogIn } from '../../functions/auth'
+import { useGlobalContext } from '../../context/GlobalProvider'
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser, setIsLogged } = useGlobalContext();  
+
+  const login = async () => {
+    try {
+      const success = await handleLogIn(email, password)
+    
+      if (success) {
+        const user = await getCurrentUser()
+        setUser(user)
+        setIsLogged(true)
+  
+        while (router.canGoBack()) {
+          router.back()
+        }
+        router.replace("/home")
+      }
+    } catch (e) {
+      Alert.alert("Incorrect email and password")
+    }
+    
+  }
 
   return (
     <DismissKeyboard>
@@ -52,7 +75,7 @@ const Login = () => {
 
             <CustomButton 
               title="Login"
-              handlePress={() => console.log(email, password)}
+              handlePress={() => login()}
             />
           </View>
         </View>

@@ -11,6 +11,15 @@ const SignUpProvider = ({ children }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
+  const resetSignUp = () => {
+    setFirstName("")
+    setLastName("")
+    setBirthday(new Date())
+    setEmail("")
+    setUsername("")
+    setPassword("")
+  }
+
   return (
     <SignUpContext.Provider
       value={{
@@ -25,7 +34,8 @@ const SignUpProvider = ({ children }) => {
         username,
         setUsername,
         password,
-        setPassword
+        setPassword,
+        resetSignUp
       }}
     >
       {children}

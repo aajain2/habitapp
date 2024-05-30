@@ -1,43 +1,57 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList, Alert } from 'react-native'
 import videos from '../../constants/videos'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BackgroundVideo from '../../components/BackgroundVideo';
-import images from '../../constants/images';
-import HabitSelector from '../../components/habit-selector/HabitSelector';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomButton from '../../components/buttons/CustomButton';
 import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import TrabitHeader from '../../components/TrabitHeader';
 import BackButton from '../../components/buttons/BackButton';
-
-const habitOptions = [
-  {
-    name: "gym",
-    title: "Going to the Gym",
-    subtitle: "In our fitness era",
-    imageSource: images.gymWeights,
-    id: 0
-  }, 
-  {
-    name: "veggies",
-    title: "Eating More Vegetables",
-    subtitle: "A little a day goes a long way",
-    imageSource: images.carrot,
-    id: 1
-  }, 
-  {
-    name: "showering",
-    title: "Showering",
-    subtitle: "Hey, life gets busy we get it",
-    imageSource: images.shower,
-    id: 2
-  }
-]
+import HabitCard from '../../components/HabitCard';
+import { getHabits, saveHabit } from '../../functions/habits';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const HabitSetup = () => {
   const [selected, setSelected] = useState(null)
-  const { field } = useLocalSearchParams();
+  const [habitOptions, setHabitOptions] = useState(null)
+  const { field } = useLocalSearchParams()
+  const { user, setUser } = useGlobalContext()
+
+  const handleSave = () => {
+    saveHabit(user.uid, selected.habit, selected.habitDescription)
+      .then(async () => {
+        setUser({
+          ...user,
+          habit: selected.habit,
+          habitDescription: selected.habitDescription
+        })
+
+        if (field) {
+          router.navigate("edit-profile")
+        } else {
+          router.navigate("friend-setup")
+        }
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }
+
+  useEffect(() => {
+    setSelected({
+      habit: user.habit,
+      habitDescription: user.habitDescription
+    })
+
+    getHabits()
+      .then((habits) => {
+        setHabitOptions(habits)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }, [])
 
   return (
     <View className="w-full h-full">
@@ -63,22 +77,30 @@ const HabitSetup = () => {
               <Text className="text-white font-inter-regular text-xs w-52 text-center">You can change your goal as much as you would like</Text>
             </View>
 
-            <HabitSelector
-              selected={selected}
-              setSelected={setSelected}
-              habitOptions={habitOptions}
-            />
+            <View className="h-96">
+              <FlatList
+                data={habitOptions}
+                renderItem={({ item }) => (
+                  <View className="my-2">
+                    <HabitCard
+                      title={item.name}
+                      subtitle={item.description}
+                      name={item.id}
+                      selected={selected}
+                      setSelected={setSelected}
+                      key={item.id}
+                    />
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
+            
 
             <CustomButton 
               title={field ? "Save" : "Next"}
               containerStyles="bg-white/30 border-white mt-8"
-              handlePress={() => {
-                if (field) {
-                  router.navigate("edit-profile")
-                } else {
-                  router.navigate("friend-setup")
-                }
-              }}
+              handlePress={() => handleSave()}
             />
           </View>
         </View>

@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar'
 import YesterdayReport from '../components/home/YesterdayReport'
 import PostCard from '../components/home/PostCard'
 import CurrentPost from '../components/home/CurrentPost'
+import { useGlobalContext } from '../context/GlobalProvider'
 
 const dummyData = [
   {
@@ -86,16 +87,9 @@ const dummyData = [
 
 const prompt = "Take a photo of any vegetable with a fork 🥦🍴"
 
-const dummyProfile = {
-  username: "abe",
-  firstName: "Abraham",
-  lastName: "Lincoln",
-  profilePicture: "https://picsum.photos/200"
-}
-
-const completed = true
-
 const Home = () => {
+  const { user } = useGlobalContext()
+
   return (
     <View className="w-full h-full">
       <FlatList 
@@ -105,12 +99,10 @@ const Home = () => {
           return (
             <View>
               <HomeLanding
-                completed={completed}
                 prompt={prompt}
-                profile={dummyProfile}
               />
 
-              {completed && 
+              {user.completedToday && 
                 <CurrentPost
                   containerStyles="items-center"
                   picture="https://picsum.photos/540/720"
@@ -118,7 +110,7 @@ const Home = () => {
               }
               
               <YesterdayReport 
-                blurred={!completed}
+                blurred={!user.completedToday}
               />
 
               <Text className="text-xl font-inter-bold ml-4 mb-4">Today's Habit Complete</Text>
@@ -128,7 +120,7 @@ const Home = () => {
         renderItem={({ item }) => {
           return (
             <PostCard 
-              completed={completed}
+              completed={user.completedToday}
               post={item}
             />
           )

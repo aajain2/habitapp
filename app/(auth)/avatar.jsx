@@ -1,29 +1,64 @@
 import { router, useLocalSearchParams } from 'expo-router'
-import { Image, SafeAreaView, Text, View } from 'react-native';
+import { Alert, Image, SafeAreaView, Text, View } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import BackButton from '../../components/buttons/BackButton';
 import TrabitHeader from '../../components/TrabitHeader';
-import images from '../../constants/images';
 import * as ImagePicker from 'expo-image-picker';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useGlobalContext } from '../../context/GlobalProvider';
+import { uploadAvatar } from '../../functions/avatar';
+import { getCurrentUser } from '../../functions/auth';
 
 const AvatarSelection = () => {
-  const [image, setImage] = useState(null)
-  const { field, fieldValue } = useLocalSearchParams();
+  const { field } = useLocalSearchParams()
+  const { user, setUser } = useGlobalContext()
+  const [image, setImage] = useState(user.avatar)
+  const [uploading, setUploading] = useState(false)
+  const [done, setDone] = useState(false)
 
-  useEffect(() => {
-    setImage(fieldValue)
-  }, [fieldValue])
-  
+  const onStart = () => {
+    setUploading(true)
+  }
+
+  const onFail = (e) => {
+    Alert.alert(e.message)
+  }
+
+  const onFinish = async () => {
+    setUploading(false)
+    setDone(false)
+    
+    const user = await getCurrentUser()
+
+    setUser(user)
+
+    if (field) {
+      router.navigate("/edit-profile")
+    } else {
+      router.navigate("/permissions")
+    }
+  }
+
+  const handleSave = async () => {
+    await uploadAvatar(
+      image, 
+      user.uid,
+      {
+        onStart: onStart,
+        onFail: onFail,
+        onFinish: onFinish
+      }
+    )
+  }
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 0.1,
-    });
+    })
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -47,7 +82,7 @@ const AvatarSelection = () => {
             <Image 
               className="w-[150px] h-[150px] mb-4 rounded-full"
               resizeMode="contain"
-              source={field || image ? { uri: image } : images.avatar}
+              source={{ uri: image }}
             />
 
             <View className="my-4 flex items-center">
@@ -62,13 +97,7 @@ const AvatarSelection = () => {
             />
 
             <CustomButton
-              handlePress={() => {
-                if (field) {
-                  router.navigate("/edit-profile")
-                } else {
-                  router.navigate("/permissions")
-                }
-              }}
+              handlePress={() => handleSave()}
               title="Save"
               containerStyles="mt-4"
             />

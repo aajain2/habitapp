@@ -7,19 +7,11 @@ import ThinCustomButton from '../../components/buttons/ThinCustomButton'
 import ProfileEditLink from '../../components/ProfileEditLink'
 import ChangeSensitiveLink from '../../components/ChangeSensitiveLink'
 import { router } from 'expo-router'
-
-const dummyProfile = {
-  username: "abe",
-  firstName: "Abraham",
-  lastName: "Lincoln",
-  profilePicture: "https://picsum.photos/200",
-  streak: 5,
-  bestStreak: 23,
-  habit: "Eating more vegetables",
-  totalPosts: 149
-}
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const EditProfile = () => {
+  const { user } = useGlobalContext()
+
   return (
     <SafeAreaView>
       <View className="z-50">
@@ -31,7 +23,7 @@ const EditProfile = () => {
 
       <View className="h-full flex-column justify-center items-center">
         <ProfilePicture 
-          source={dummyProfile.profilePicture}
+          source={user.avatar}
           containerStyles="w-[150px] h-[150px]"
         />
 
@@ -41,7 +33,7 @@ const EditProfile = () => {
           title="Edit Profile Picture"
           handlePress={() => router.navigate({
             pathname: "/avatar",
-            params: { field: "profile-picture", fieldValue: dummyProfile.profilePicture }
+            params: { field: "profilePicture" }
           })}
         />
 
@@ -49,40 +41,40 @@ const EditProfile = () => {
           <ProfileEditLink
             containerStyles="mt-4"
             field="First Name"
-            value={`${dummyProfile.firstName}`}
+            value={`${user.firstName}`}
             handlePress={() => router.navigate({ 
               pathname: "/field-edit", 
-              params: { field: "first-name", fieldValue: dummyProfile.firstName }
+              params: { field: "firstName", fieldValue: user.firstName }
             })}
           />
 
           <ProfileEditLink
             containerStyles="mt-2"
             field="Last Name"
-            value={`${dummyProfile.lastName}`}
+            value={`${user.lastName}`}
             handlePress={() => router.navigate({ 
               pathname: "/field-edit", 
-              params: { field: "last-name", fieldValue: dummyProfile.lastName }
+              params: { field: "lastName", fieldValue: user.lastName }
             })}
           />
 
           <ProfileEditLink 
             containerStyles="mt-2"
             field="Username"
-            value={`${dummyProfile.username}`}
+            value={`${user.username}`}
             handlePress={() => router.navigate({ 
               pathname: "/field-edit", 
-              params: { field: "username", fieldValue: dummyProfile.username }
+              params: { field: "username", fieldValue: user.username }
             })}
           />
 
           <ProfileEditLink 
             containerStyles="mt-2"
             field="Habit"
-            value={`${dummyProfile.habit}`}
+            value={`${user.habitDescription}`}
             handlePress={() => router.navigate({ 
               pathname: "/habit-setup", 
-              params: { field: "habit", fieldValue: dummyProfile.habit }})}
+              params: { field: "habit", fieldValue: user.habitDescription }})}
           />
 
           <Text className="text-base font-inter-bold my-4 text-center">Manage Account</Text>

@@ -6,6 +6,7 @@ import images from '../../constants/images'
 import { StatusBar } from 'expo-status-bar'
 import { router } from 'expo-router'
 import ThinCustomButton from '../../components/buttons/ThinCustomButton'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const dummyProfile = {
   username: "abe",
@@ -19,23 +20,26 @@ const dummyProfile = {
 }
 
 const Profile = () => {
+  const { user } = useGlobalContext()
+
   return (
     <SafeAreaView>
       <View className="z-50">
         <ProfileHeaderBar
           containerStyles="absolute"
           title="Profile"
+          logoutButton
         />
       </View>
 
       <View className="h-full flex-column justify-center items-center">
         <ProfilePicture 
-          source={dummyProfile.profilePicture}
+          source={user.avatar}
           containerStyles="w-[150px] h-[150px]"
         />
 
-        <Text className="text-xl font-inter-bold mt-4">{dummyProfile.firstName} {dummyProfile.lastName}</Text>
-        <Text className="text-base font-inter-regular mb-4">@{dummyProfile.username}</Text>
+        <Text className="text-xl font-inter-bold mt-4">{user.firstName} {user.lastName}</Text>
+        <Text className="text-base font-inter-regular mb-4">@{user.username}</Text>
 
         <ThinCustomButton 
           title="Edit Profile and Account"
@@ -65,7 +69,7 @@ const Profile = () => {
             </Text>
 
             <Text className="font-inter-regular w-36 text-center text-xs">
-              {dummyProfile.habit}
+              {user.habitDescription}
             </Text>
           </View>
 
