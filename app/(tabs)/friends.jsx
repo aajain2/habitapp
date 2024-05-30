@@ -61,10 +61,11 @@ const FriendList = () => {
                       handleRemoveFriend={() => {}}
                       profilePicture={item.profilePicture}
                       hasRemoveButton
+                      uid={item.uid}
                     />
                   </TouchableOpacity>
                 }
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.uid}
               />
 
               <View className="w-[90vw] my-4">
@@ -77,16 +78,18 @@ const FriendList = () => {
                 renderItem={({ item }) => 
                   <TouchableOpacity activeOpacity={1}>
                     <ProfileCard
-                      name={`${item.firstName} ${item.lastName}`}
+                      firstName={item.firstName}
+                      lastName={item.lastName}
                       username={item.username}
                       handleRemoveFriend={() => {}}
                       profilePicture={item.avatar}
                       hasRemoveButton
                       hideActionButton
+                      uid={item.uid}
                     />
                   </TouchableOpacity>
                 }
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.uid}
               />
             </View>
           </View>

@@ -1,10 +1,13 @@
-import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native'
+import { View, TextInput, FlatList, TouchableOpacity, Text, Alert } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import ProfileCard from './ProfileCard'
 import CustomLink from '../CustomLink'
 import { router } from 'expo-router';
 import { useQueryContext } from '../../context/QueryProvider';
 import EmptyResults from './EmptyResults';
+import { useEffect, useState } from 'react';
+import { getAllUsers } from '../../functions/friends';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const dummyData = [
   {
@@ -98,6 +101,20 @@ const SearchBar = ({
   styles
 }) => {
   const {query, setQuery } = useQueryContext()
+  const [currentUsers, setCurrentUsers] = useState([])
+  const { user } = useGlobalContext()
+  
+  useEffect(() => {
+    getAllUsers()
+      .then((data) => {
+        setCurrentUsers(data)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+    
+  }, [])
+  
 
   return (
     <View className={containerStyles}>
@@ -134,19 +151,19 @@ const SearchBar = ({
 
             <FlatList 
               className={seeMore ? "h-36" : "h-full"}
-              data={dummyData}
+              data={currentUsers}
               renderItem={({ item }) => 
                 <TouchableOpacity activeOpacity={1}>
                   <ProfileCard
-                    name={item.name}
+                    firstName={item.firstName}
+                    lastName={item.lastName}
                     username={item.username}
-                    friendStatus={item.friends ? "friends" : item.requested ? "requested" : "add"}
-                    handleAdd={() => {}}
-                    profilePicture={item.profilePicture}
+                    profilePicture={item.avatar}
+                    uid={item.uid}
                   />
                 </TouchableOpacity>
               }
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.uid}
               ListEmptyComponent={
                 <EmptyResults />
               }

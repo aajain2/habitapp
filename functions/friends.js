@@ -1,5 +1,5 @@
-import { doc, getDoc, getDocs, collection, query, where, documentId } from "firebase/firestore"
-import { firestore } from "../firebaseConfig"
+import { getDocs, collection, query, where, documentId, getDoc, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
+import { auth, firestore } from "../firebaseConfig"
 
 const splitArray = (arr) => {
   const nestedArray = []
@@ -29,6 +29,62 @@ export const getFriendData = async (uidList) => {
     }
 
     return friends
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+export const getAllUsers = async () => {
+  try {
+    const users = []
+    const userRef = collection(firestore, "users")
+    const querySnapshot = await getDocs(userRef)
+    const uid = auth.currentUser.uid
+
+    querySnapshot.forEach((doc) => {
+      if (doc.id !== uid) {
+        users.push({
+          ...doc.data(),
+          uid: doc.id
+        })
+      }
+    })
+
+    return users
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+export const requestFriend = async (requesterUID, recipientUID) => {
+  try {
+    // Setting own outgoingRequests
+    await updateDoc(doc(firestore, "users", requesterUID), {
+      outgoingRequests: arrayUnion(recipientUID)
+    })
+
+    // Setting recipients incomingRequests
+    await updateDoc(doc(firestore, "users", recipientUID), {
+      incomingRequests: arrayUnion(requesterUID)
+    })
+
+    console.log("Success")
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+export const unrequestFriend = async (requesterUID, recipientUID) => {
+  try {
+    // Setting own outgoingRequests
+    await updateDoc(doc(firestore, "users", requesterUID), {
+      outgoingRequests: arrayRemove(recipientUID)
+    })
+
+    // Setting recipients incomingRequests
+    await updateDoc(doc(firestore, "users", recipientUID), {
+      incomingRequests: arrayRemove(requesterUID)
+    })
   } catch (e) {
     throw new Error(e.message)
   }
