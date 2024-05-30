@@ -137,7 +137,6 @@ const Camera = () => {
                   source={icons.sendIcon}
                 />
               </TouchableOpacity>
-              
             }
           </View>
         </View>
