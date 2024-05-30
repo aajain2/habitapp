@@ -1,95 +1,12 @@
-import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native'
+import { View, TextInput, FlatList, TouchableOpacity, Text, Alert } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import ProfileCard from './ProfileCard'
 import CustomLink from '../CustomLink'
 import { router } from 'expo-router';
 import { useQueryContext } from '../../context/QueryProvider';
 import EmptyResults from './EmptyResults';
-
-const dummyData = [
-  {
-    id: 0,
-    name: "Joseph",
-    username: "joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 1,
-    name: "Kyle",
-    username: "kylinator",
-    profilePicture: "https://picsum.photos/200",
-    friends : true,
-    requested: false
-  },
-  {
-    id: 2,
-    name: "Meow",
-    username: "arf",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 3,
-    name: "Woof",
-    username: "bowwow",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 4,
-    name: "JosHulloeph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 5,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 6,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 7,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 8,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 9,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true
-  }
-]
-
-const dummyEmpty = []
+import { useEffect, useState } from 'react';
+import { getAllUsers } from '../../functions/friends';
 
 const SearchBar = ({
   seeMore = false,
@@ -97,7 +14,25 @@ const SearchBar = ({
   containerStyles,
   styles
 }) => {
-  const {query, setQuery } = useQueryContext()
+  const { query, setQuery } = useQueryContext()
+  const [currentUsers, setCurrentUsers] = useState([])
+  const [searchResult, setSearchResult] = useState([])
+  
+  useEffect(() => {
+    getAllUsers()
+      .then((data) => {
+        setCurrentUsers(data)
+        setSearchResult(data)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }, [])
+  
+  useEffect(() => {
+    const searchResult = currentUsers.filter((user) => user.username.includes(query))
+    setSearchResult(searchResult)
+  }, [query])
 
   return (
     <View className={containerStyles}>
@@ -134,19 +69,19 @@ const SearchBar = ({
 
             <FlatList 
               className={seeMore ? "h-36" : "h-full"}
-              data={dummyData}
+              data={searchResult}
               renderItem={({ item }) => 
                 <TouchableOpacity activeOpacity={1}>
                   <ProfileCard
-                    name={item.name}
+                    firstName={item.firstName}
+                    lastName={item.lastName}
                     username={item.username}
-                    friendStatus={item.friends ? "friends" : item.requested ? "requested" : "add"}
-                    handleAdd={() => {}}
-                    profilePicture={item.profilePicture}
+                    profilePicture={item.avatar}
+                    uid={item.uid}
                   />
                 </TouchableOpacity>
               }
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.uid}
               ListEmptyComponent={
                 <EmptyResults />
               }

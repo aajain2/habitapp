@@ -26,6 +26,8 @@ export const handleNewUserRegistration = async (data) => {
       habit: "",
       completedToday: false,
       streak: 0,
+      outgoingRequests: [],
+      incomingRequests: []
     })
 
     return user.user.uid
@@ -36,7 +38,7 @@ export const handleNewUserRegistration = async (data) => {
 
 export const getCurrentUser = async () => {
   try {
-    const user = auth.currentUser
+    const user = auth.currentUser    
 
     if (user) {
       const userDoc = await getDoc(doc(firestore, "users", user.uid))

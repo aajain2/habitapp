@@ -1,5 +1,5 @@
-import { View, Text, SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import BackButton from '../../components/buttons/BackButton'
 import SearchBar from '../../components/search/SearchBar'
@@ -7,101 +7,69 @@ import { StatusBar } from 'expo-status-bar'
 import TrabitHeader from '../../components/TrabitHeader'
 import ProfileCard from '../../components/search/ProfileCard'
 import { router } from 'expo-router'
-
-const dummyData = [
-  {
-    id: 0,
-    name: "Joseph",
-    username: "joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: false,
-  },
-  {
-    id: 1,
-    name: "Kyle",
-    username: "kylinator",
-    profilePicture: "https://picsum.photos/200",
-    friends : true,
-    requested: false,
-    accepted: true,
-  },
-  {
-    id: 2,
-    name: "Meow",
-    username: "arf",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: true,
-  },
-  {
-    id: 3,
-    name: "Woof",
-    username: "bowwow",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: true,
-  },
-  {
-    id: 4,
-    name: "JosHulloeph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: true,
-  },
-  {
-    id: 5,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: true,
-  },
-  {
-    id: 6,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: true,
-  },
-  {
-    id: 7,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: true,
-  },
-  {
-    id: 8,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: true,
-  },
-  {
-    id: 9,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200",
-    friends : false,
-    requested: true,
-    accepted: true,
-  }
-]
+import { useGlobalContext } from '../../context/GlobalProvider'
+import { getFriendData, removeFriend, removeFriendRequest } from '../../functions/friends'
+import { removeElementByValue } from '../../util/removeElementByValue'
 
 const FriendList = () => {
+  const { user, setUser } = useGlobalContext()
+  const [friends, setFriends] = useState([])
+  const [incomingRequests, setIncomingRequests] = useState([])
+
+  useEffect(() => {
+    // Set current friends
+    getFriendData(user.friends)
+      .then((data) => {
+        setFriends(data)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+
+    // Set incoming requests
+    getFriendData(user.incomingRequests)
+      .then((data) => {
+        setIncomingRequests(data)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }, [])
+
+  const handleRemoveFriend = (userUID, friendUID) => {
+    removeFriend(userUID, friendUID)
+      .then(() => {
+        const newFriendArray = removeElementByValue(user.friends, friendUID)
+        setUser({
+          ...user,
+          friends: newFriendArray
+        })
+
+        const newFriends = friends.filter((friend) => friend.uid !== friendUID)
+        setFriends(newFriends)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }
+
+  const handleRemoveRequest = (userUID, friendUID) => {
+    removeFriendRequest(userUID, friendUID)
+      .then(() => {
+        const newIncomingRequestArray = removeElementByValue(user.friends, friendUID)
+        setUser({
+          ...user,
+          incomingRequests: newIncomingRequestArray
+        })
+
+        const newIncomingRequests = incomingRequests.filter((friend) => friend.uid !== friendUID)
+        setIncomingRequests(newIncomingRequests)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }
+
   return (
     <DismissKeyboard>
       <View>
@@ -126,22 +94,22 @@ const FriendList = () => {
 
               <FlatList 
                 className="h-60 w-[94vw] px-[2vw]"
-                data={dummyData}
+                data={incomingRequests}
                 renderItem={({ item }) => 
                   <TouchableOpacity activeOpacity={1}>
                     <ProfileCard
                       isAcceptRequestCard
-                      accepted={item.accepted}
-                      name={item.name}
+                      firstName={item.firstName}
+                      lastName={item.lastName}
                       username={item.username}
-                      handleAcceptFriend={() => {}}
-                      handleRemoveFriend={() => {}}
-                      profilePicture={item.profilePicture}
+                      profilePicture={item.avatar}
+                      handleRemoveRequest={handleRemoveRequest}
                       hasRemoveButton
+                      uid={item.uid}
                     />
                   </TouchableOpacity>
                 }
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.uid}
               />
 
               <View className="w-[90vw] my-4">
@@ -150,22 +118,22 @@ const FriendList = () => {
 
               <FlatList 
                 className="h-60 w-[94vw] px-[2vw]"
-                data={dummyData}
+                data={friends}
                 renderItem={({ item }) => 
                   <TouchableOpacity activeOpacity={1}>
                     <ProfileCard
-                      name={item.name}
+                      firstName={item.firstName}
+                      lastName={item.lastName}
                       username={item.username}
-                      friendStatus={item.friends ? "friends" : item.requested ? "requested" : "add"}
-                      handleAdd={() => {}}
-                      handleRemoveFriend={() => {}}
-                      profilePicture={item.profilePicture}
+                      handleRemoveFriend={handleRemoveFriend}
+                      profilePicture={item.avatar}
                       hasRemoveButton
                       hideActionButton
+                      uid={item.uid}
                     />
                   </TouchableOpacity>
                 }
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.uid}
               />
             </View>
           </View>

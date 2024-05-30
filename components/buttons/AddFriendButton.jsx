@@ -6,7 +6,8 @@ const AddFriendButton = ({
   handleAdd,
 }) => {
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
+      disabled={friendStatus === "friends"}
       className={`w-24 h-6 rounded-full justify-center items-center ${friendStatus === "add" ? "bg-blue/80" : "bg-blue"}`}
       onPress={handleAdd}
     >

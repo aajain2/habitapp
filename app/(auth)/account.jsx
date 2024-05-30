@@ -37,11 +37,13 @@ const Account = () => {
           firstName: firstName,
           lastName: lastName, 
           birthday: birthday,
-          username: username
+          username: username,
         })
 
         if (uid) {
           const currentUser = await getCurrentUser()
+          console.log(currentUser)
+
           setUser(currentUser)
           setIsLogged(true)
           resetSignUp()
