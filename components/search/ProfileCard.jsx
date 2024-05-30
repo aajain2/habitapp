@@ -80,7 +80,7 @@ const ProfileCard = ({
     if (hideActionButton) {
       handleRemoveFriend(user.uid, uid)
     } else {
-      console.log("Removing request")
+      handleRemoveRequest(user.uid, uid)
     }
   }
 

@@ -8,7 +8,7 @@ import TrabitHeader from '../../components/TrabitHeader'
 import ProfileCard from '../../components/search/ProfileCard'
 import { router } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { getFriendData, removeFriend } from '../../functions/friends'
+import { getFriendData, removeFriend, removeFriendRequest } from '../../functions/friends'
 import { removeElementByValue } from '../../util/removeElementByValue'
 
 const FriendList = () => {
@@ -53,6 +53,23 @@ const FriendList = () => {
       })
   }
 
+  const handleRemoveRequest = (userUID, friendUID) => {
+    removeFriendRequest(userUID, friendUID)
+      .then(() => {
+        const newIncomingRequestArray = removeElementByValue(user.friends, friendUID)
+        setUser({
+          ...user,
+          incomingRequests: newIncomingRequestArray
+        })
+
+        const newIncomingRequests = incomingRequests.filter((friend) => friend.uid !== friendUID)
+        setIncomingRequests(newIncomingRequests)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }
+
   return (
     <DismissKeyboard>
       <View>
@@ -86,7 +103,7 @@ const FriendList = () => {
                       lastName={item.lastName}
                       username={item.username}
                       profilePicture={item.avatar}
-                      handleRemoveFriend={(userUID, itemUID) => handleRemoveFriend(userUID, itemUID)}
+                      handleRemoveRequest={handleRemoveRequest}
                       hasRemoveButton
                       uid={item.uid}
                     />
