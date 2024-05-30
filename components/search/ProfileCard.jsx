@@ -5,24 +5,24 @@ import ProfilePicture from '../ProfilePicture'
 import { AntDesign } from '@expo/vector-icons'
 import AcceptFriendButton from '../buttons/AcceptFriendButton'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { requestFriend, unrequestFriend } from '../../functions/friends'
+import { acceptFriendRequest, requestFriend, unrequestFriend } from '../../functions/friends'
 import { removeElementByValue } from '../../util/removeElementByValue'
 
 const ProfileCard = ({
   isAcceptRequestCard,
-  accepted,
-  handleAccept,
   firstName,
   lastName,
   username,
   profilePicture,
   uid,
   hasRemoveButton,
+  hideActionButton,
   handleRemoveFriend,
-  hideActionButton
+  handleRemoveRequest
 }) => {
   const { user, setUser } = useGlobalContext()
   const [status, setStatus] = useState("add")
+  const [accepted, setAccepted] = useState(false)
 
   useEffect(() => {
     if (user.friends.includes(uid)) {
@@ -60,6 +60,30 @@ const ProfileCard = ({
     }
   }
 
+  const handleAccept = () => {
+    acceptFriendRequest(user.uid, uid)
+      .then(() => {
+        const newIncomingRequests = removeElementByValue(user.incomingRequests, uid)
+        user.friends.push(uid)
+        setUser({
+          ...user,
+          incomingRequests: newIncomingRequests
+        })
+        setAccepted(true)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }
+
+  const handleRemove = () => {
+    if (hideActionButton) {
+      handleRemoveFriend(user.uid, uid)
+    } else {
+      console.log("Removing request")
+    }
+  }
+
   return (
     <View className="flex-row my-1">
       <ProfilePicture 
@@ -80,10 +104,10 @@ const ProfileCard = ({
         </View>
       }
 
-      {hasRemoveButton && 
+      {hasRemoveButton && !accepted && 
         <TouchableOpacity 
           className="flex justify-center items-center ml-2"
-          onPress={handleRemoveFriend}
+          onPress={handleRemove}
         >
           <AntDesign name="close" size={24} color="black" />
         </TouchableOpacity>

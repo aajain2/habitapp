@@ -8,14 +8,16 @@ import TrabitHeader from '../../components/TrabitHeader'
 import ProfileCard from '../../components/search/ProfileCard'
 import { router } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { getFriendData } from '../../functions/friends'
+import { getFriendData, removeFriend } from '../../functions/friends'
+import { removeElementByValue } from '../../util/removeElementByValue'
 
 const FriendList = () => {
-  const { user } = useGlobalContext()
+  const { user, setUser } = useGlobalContext()
   const [friends, setFriends] = useState([])
   const [incomingRequests, setIncomingRequests] = useState([])
 
   useEffect(() => {
+    // Set current friends
     getFriendData(user.friends)
       .then((data) => {
         setFriends(data)
@@ -23,7 +25,33 @@ const FriendList = () => {
       .catch((e) => {
         Alert.alert(e.message)
       })
+
+    // Set incoming requests
+    getFriendData(user.incomingRequests)
+      .then((data) => {
+        setIncomingRequests(data)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
   }, [])
+
+  const handleRemoveFriend = (userUID, friendUID) => {
+    removeFriend(userUID, friendUID)
+      .then(() => {
+        const newFriendArray = removeElementByValue(user.friends, friendUID)
+        setUser({
+          ...user,
+          friends: newFriendArray
+        })
+
+        const newFriends = friends.filter((friend) => friend.uid !== friendUID)
+        setFriends(newFriends)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }
 
   return (
     <DismissKeyboard>
@@ -54,12 +82,11 @@ const FriendList = () => {
                   <TouchableOpacity activeOpacity={1}>
                     <ProfileCard
                       isAcceptRequestCard
-                      accepted={item.accepted}
-                      name={item.name}
+                      firstName={item.firstName}
+                      lastName={item.lastName}
                       username={item.username}
-                      handleAcceptFriend={() => {}}
-                      handleRemoveFriend={() => {}}
-                      profilePicture={item.profilePicture}
+                      profilePicture={item.avatar}
+                      handleRemoveFriend={(userUID, itemUID) => handleRemoveFriend(userUID, itemUID)}
                       hasRemoveButton
                       uid={item.uid}
                     />
@@ -81,7 +108,7 @@ const FriendList = () => {
                       firstName={item.firstName}
                       lastName={item.lastName}
                       username={item.username}
-                      handleRemoveFriend={() => {}}
+                      handleRemoveFriend={handleRemoveFriend}
                       profilePicture={item.avatar}
                       hasRemoveButton
                       hideActionButton

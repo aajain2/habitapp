@@ -67,8 +67,6 @@ export const requestFriend = async (requesterUID, recipientUID) => {
     await updateDoc(doc(firestore, "users", recipientUID), {
       incomingRequests: arrayUnion(requesterUID)
     })
-
-    console.log("Success")
   } catch (e) {
     throw new Error(e.message)
   }
@@ -84,6 +82,56 @@ export const unrequestFriend = async (requesterUID, recipientUID) => {
     // Setting recipients incomingRequests
     await updateDoc(doc(firestore, "users", recipientUID), {
       incomingRequests: arrayRemove(requesterUID)
+    })
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+export const acceptFriendRequest = async (accepterUID, requesterUID) => {
+  try {
+    // Set accepter's information
+    await updateDoc(doc(firestore, "users", accepterUID), {
+      incomingRequests: arrayRemove(requesterUID),
+      friends: arrayUnion(requesterUID)
+    })
+
+    // Set requester's information
+    await updateDoc(doc(firestore, "users", requesterUID), {
+      outgoingRequests: arrayRemove(accepterUID),
+      friends: arrayUnion(accepterUID)
+    })
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+export const removeFriendRequest = async (accepterUID, requesterUID) => {
+  try {
+    // Set accepter's information
+    await updateDoc(doc(firestore, "users", accepterUID), {
+      incomingRequests: arrayRemove(requesterUID)
+    })
+
+    // Set requester's information
+    await updateDoc(doc(firestore, "users", requesterUID), {
+      outgoingRequests: arrayRemove(accepterUID)
+    })
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+export const removeFriend = async (accepterUID, requesterUID) => {
+  try {
+    // Set accepter's information
+    await updateDoc(doc(firestore, "users", accepterUID), {
+      friends: arrayRemove(requesterUID)
+    })
+
+    // Set requester's information
+    await updateDoc(doc(firestore, "users", requesterUID), {
+      friends: arrayRemove(accepterUID)
     })
   } catch (e) {
     throw new Error(e.message)
