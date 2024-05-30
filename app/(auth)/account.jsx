@@ -12,13 +12,15 @@ import { getCurrentUser, handleNewUserRegistration } from '../../functions/auth'
 import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Account = () => {
-  const { firstName,
-          lastName,
-          birthday, 
-          email, 
-          username, setUsername, 
-          password, setPassword
-        } = useSignUpContext()
+  const { 
+    firstName,
+    lastName,
+    birthday, 
+    email, 
+    username, setUsername, 
+    password, setPassword,
+    resetSignUp
+  } = useSignUpContext()
   const { setUser, setIsLogged } = useGlobalContext();  
 
   const [verifyPassword, setVerifyPassword] = useState("")
@@ -42,6 +44,7 @@ const Account = () => {
           const currentUser = await getCurrentUser()
           setUser(currentUser)
           setIsLogged(true)
+          resetSignUp()
           router.push("/avatar")
         }
       } catch (e) {

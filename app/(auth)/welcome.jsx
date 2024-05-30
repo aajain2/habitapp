@@ -28,7 +28,7 @@ const Welcome = () => {
               while (router.canGoBack()) {
                 router.back()
               }
-              router.replace("/friend-setup")
+              router.replace("/habit-setup")
             }}
             title="Get started"
             containerStyles="mt-14"

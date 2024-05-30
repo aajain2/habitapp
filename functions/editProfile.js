@@ -7,8 +7,6 @@ export const saveEdit = async (uid, field, fieldValue) => {
 
     data[field] = fieldValue
 
-    console.log(data)
-
     await updateDoc(doc(firestore, "users", uid), data)
   } catch (e) {
     throw new Error(e)
