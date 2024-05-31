@@ -1,7 +1,7 @@
 import { storage, firestore, auth } from '../firebaseConfig';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { getBlobFromURI } from '../util/getBlobFromURI';
-import { collection, doc, documentId, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, documentId, getDoc, getDocs, increment, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { splitArrayByTen } from '../util/splitArrayByTen';
 
 const completePost = async (uri, habit, username, avatar) => {
@@ -9,7 +9,8 @@ const completePost = async (uri, habit, username, avatar) => {
 
   try {
     await updateDoc(doc(firestore, "users", user.uid), {
-      completedToday: true
+      completedToday: true,
+      streak: increment(1)
     })
 
     await setDoc(doc(firestore, "posts", user.uid), {
