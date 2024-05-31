@@ -5,7 +5,7 @@ import { collection, doc, documentId, getDoc, getDocs, increment, query, setDoc,
 import { splitArrayByTen } from '../util/splitArrayByTen';
 import { convertFirebaseTimestamp } from '../util/convertFirebaseTimestamp';
 
-const completePost = async (uri, habit, username, avatar) => {
+const completePost = async (uri, habit, username, avatar, prompt) => {
   const user = auth.currentUser 
 
   try {
@@ -21,7 +21,8 @@ const completePost = async (uri, habit, username, avatar) => {
       username: username,
       avatar: avatar,
       likes: 0,
-      likers: []
+      likers: [],
+      prompt: prompt
     })
   } catch (e) {
     throw new Error(e)
@@ -33,6 +34,7 @@ export const uploadPost = async (
   habit,
   username,
   avatar,
+  prompt,
   { onStart, onFinish, onFail }
 ) => {
   const user = auth.currentUser
@@ -73,7 +75,7 @@ export const uploadPost = async (
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
         try {
-          await completePost(downloadURL, habit, username, avatar)
+          await completePost(downloadURL, habit, username, avatar, prompt)
           onFinish()
           console.log('File available at', downloadURL);
         } catch (e) {
