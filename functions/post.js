@@ -3,6 +3,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { getBlobFromURI } from '../util/getBlobFromURI';
 import { collection, doc, documentId, getDoc, getDocs, increment, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { splitArrayByTen } from '../util/splitArrayByTen';
+import { convertFirebaseTimestamp } from '../util/convertFirebaseTimestamp';
 
 const completePost = async (uri, habit, username, avatar) => {
   const user = auth.currentUser 
@@ -91,8 +92,12 @@ export const getPost = async (uid) => {
     if (!postSnap.exists()) {
       throw new Error("Post not found")
     }
-  
-    return postSnap.data()
+
+    return {
+      ...postSnap.data(),
+      uid: postSnap.id,
+      timestamp: convertFirebaseTimestamp(postSnap.data().timestamp)
+    }
   } catch (e) {
     throw new Error(e.message)
   }
@@ -112,7 +117,8 @@ export const getFriendsPosts = async (uidList) => {
       querySnapshot.forEach((doc) => {
         posts.push({
           ...doc.data(),
-          uid: doc.id
+          uid: doc.id,
+          timestamp: convertFirebaseTimestamp(doc.data().timestamp)
         })
       })
     }

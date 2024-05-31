@@ -1,5 +1,5 @@
-import { View, Text, SafeAreaView, FlatList, Keyboard } from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView, FlatList, Keyboard, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import { StatusBar } from 'expo-status-bar'
@@ -7,6 +7,7 @@ import { useLocalSearchParams } from 'expo-router'
 import CurrentPost from '../../components/home/CurrentPost'
 import Comment from '../../components/Comment'
 import AddCommentInput from '../../components/AddCommentInput'
+import { getPost } from '../../functions/post'
 
 const dummyComments = [
   {
@@ -74,7 +75,19 @@ const dummyComments = [
 const emptyDummy = []
 
 const Comments = () => {
-  const post = useLocalSearchParams()
+  const { uid } = useLocalSearchParams()
+  const [post, setPost] = useState(null)
+  
+  useEffect(() => {
+    getPost(uid)
+      .then((data) => {
+        setPost(data)
+        console.log(data)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }, [uid])
 
   const handleScroll = (event) => {
     const offsetY = event.nativeEvent.contentOffset.y;
@@ -108,23 +121,23 @@ const Comments = () => {
                 <SafeAreaView>
                   <View className="flex justify-center items-center">
                     <ProfileHeaderBar 
-                      title={post.username}
-                      subtitle={post.timestamp}
+                      title={post?.username}
+                      subtitle={post?.timestamp}
                     />
                     <Text className="text-base mt-2">
                       <Text className="font-inter-bold">Habit: </Text>
-                      <Text className="font-inter-regular">{post.habit}</Text>
+                      <Text className="font-inter-regular">{post?.habit}</Text>
                     </Text>
 
                     <Text className="text-base">
-                      {post.prompt}
+                      {post?.prompt}
                     </Text>
 
                     <CurrentPost 
-                      picture={post.image}
+                      postURI={post?.postURI}
                       hasLikes
-                      likeCount={post.likeCount}
-                      likers={post.likers.split(",")}
+                      likeCount={post?.likes}
+                      likers={[]}
                     />
                   </View>
                 </SafeAreaView>

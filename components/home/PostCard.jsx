@@ -2,7 +2,6 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import MenuButton from '../buttons/MenuButton'
 import PictureCard from './PictureCard'
-import { convertFirebaseTimestamp } from '../../util/convertFirebaseTimestamp'
 
 const PostCard = ({
   completed,
@@ -28,7 +27,7 @@ const PostCard = ({
             handleClick={() => console.log("Menu clicked")}
             size={16}
           />
-          <Text className="text-xs font-inter-medium text-gray">{convertFirebaseTimestamp(post.timestamp)}</Text>
+          <Text className="text-xs font-inter-medium text-gray">{post.timestamp}</Text>
         </View>
       </View>
 

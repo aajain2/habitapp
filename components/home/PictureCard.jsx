@@ -58,7 +58,7 @@ const PictureCard = ({
       <View className="mt-2 h-5">
         {completed && 
           <CustomLink
-            handlePress={() => router.navigate({ pathname: "/comments", params: post})}
+            handlePress={() => router.navigate({ pathname: "/comments", params: { uid: post.uid}})}
             containerStyles=""
             title="Add comment..."
             textStyles="text-light-gray font-inter-medium"
