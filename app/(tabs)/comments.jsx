@@ -77,11 +77,13 @@ const emptyDummy = []
 const Comments = () => {
   const { uid } = useLocalSearchParams()
   const [post, setPost] = useState(null)
-  
+  const [comments, setComments] = useState([])
+
   useEffect(() => {
     getPost(uid)
       .then((data) => {
         setPost(data)
+        setComments(data.comments)
       })
       .catch((e) => {
         Alert.alert(e.message)
@@ -101,7 +103,7 @@ const Comments = () => {
       <>
         <FlatList 
           className="h-full"
-          data={dummyComments}
+          data={comments}
           ListEmptyComponent={() => {
             return (
               <View className="w-full items-center mt-8">
@@ -146,17 +148,20 @@ const Comments = () => {
           renderItem={({ item }) => {
             return (
               <Comment 
-                profilePicture={item.profilePicture}
+                profilePicture={item.avatar}
                 comment={item.comment}
                 username={item.username}
               />
             )
           }}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index}
           onScroll={handleScroll}
         />
 
-        <AddCommentInput />
+        <AddCommentInput 
+          setComments={setComments}
+          postId={post?.uid}
+        />
         
         <StatusBar style="dark" />
       </>

@@ -1,9 +1,27 @@
-import { Image, KeyboardAvoidingView, SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, Keyboard, KeyboardAvoidingView, SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import icons from '../constants/icons'
+import { useGlobalContext } from '../context/GlobalProvider'
+import { addComment } from '../firebase/comments'
 
-const AddCommentInput = () => {
+const AddCommentInput = ({
+  setComments,
+  postId
+}) => {
+  const { user } = useGlobalContext()
   const [comment, setComment] = useState("")
+
+  const handleComment = () => {
+    addComment(user.uid, user.username, user.avatar, comment, postId)
+      .then((comments) => {
+        setComments(comments)
+        Keyboard.dismiss()
+        setComment("")
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }
 
   return (
     <KeyboardAvoidingView behavior="padding">
@@ -19,7 +37,7 @@ const AddCommentInput = () => {
 
             <TouchableOpacity
               disabled={comment === ""}
-              onPress={() => console.log("Added comment:", comment)}
+              onPress={handleComment}
             >
               <Image 
                 className={`w-8 h-8 mr-4 ${comment === "" && "opacity-20"}`}

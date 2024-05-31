@@ -22,7 +22,8 @@ const completePost = async (uri, habit, username, avatar, prompt) => {
       avatar: avatar,
       likes: 0,
       likers: [],
-      prompt: prompt
+      prompt: prompt,
+      comments: [],
     })
   } catch (e) {
     throw new Error(e)
