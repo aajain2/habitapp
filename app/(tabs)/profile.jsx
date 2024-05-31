@@ -55,7 +55,7 @@ const Profile = () => {
             resizeMode="contain"
           />
           <Text className="text-orange font-inter-medium text-2xl">
-            {dummyProfile.streak} Days Streak
+            {user.streak} Days Streak
           </Text>
           <Text className="font-inter-regular">
             Your best is {dummyProfile.bestStreak} days
