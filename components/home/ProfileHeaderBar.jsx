@@ -4,7 +4,7 @@ import BackButton from '../buttons/BackButton';
 import MenuButton from '../buttons/MenuButton';
 import { router } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { handleLogOut } from '../../functions/auth';
+import { handleLogOut } from '../../firebase/auth';
 import { useGlobalContext } from '../../context/GlobalProvider';
 
 const ProfileHeaderBar = ({

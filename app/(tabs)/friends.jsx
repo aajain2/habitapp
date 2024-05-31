@@ -8,7 +8,7 @@ import TrabitHeader from '../../components/TrabitHeader'
 import ProfileCard from '../../components/search/ProfileCard'
 import { router } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { getFriendData, removeFriend, removeFriendRequest } from '../../functions/friends'
+import { getFriendData, removeFriend, removeFriendRequest } from '../../firebase/friends'
 import { removeElementByValue } from '../../util/removeElementByValue'
 
 const FriendList = () => {

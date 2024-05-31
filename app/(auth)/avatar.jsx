@@ -7,8 +7,8 @@ import TrabitHeader from '../../components/TrabitHeader';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import { useGlobalContext } from '../../context/GlobalProvider';
-import { uploadAvatar } from '../../functions/avatar';
-import { getCurrentUser } from '../../functions/auth';
+import { uploadAvatar } from '../../firebase/avatar';
+import { getCurrentUser } from '../../firebase/auth';
 
 const AvatarSelection = () => {
   const { field } = useLocalSearchParams()

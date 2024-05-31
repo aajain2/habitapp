@@ -9,7 +9,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 // Import custom function handlers from domain-specific files
-const authHandlers = require("./auth");
+const authHandlers = require("../firebase/auth");
 const postHandlers = require("./posts");
 const cleanupHandlers = require("./dailyCleanup");
 const habitHandlers = require("./habits");
