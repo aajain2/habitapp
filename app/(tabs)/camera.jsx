@@ -44,7 +44,7 @@ const Camera = () => {
           [{ flip: FlipType.Horizontal }]
         )
 
-        setPhotoURI(mirroredImage.uri)
+        setPhotoURI(facing === "front" ? mirroredImage.uri : rawPhotoURI)
         setPhotoTaken(true)
       }})      
     }
@@ -66,8 +66,6 @@ const Camera = () => {
       completedToday: true
     })
 
-    console.log("Finished")
-
     router.navigate("/home")
   }
 
@@ -75,7 +73,7 @@ const Camera = () => {
     await uploadPost(
       photoURI, 
       user.uid, 
-      user.habit, 
+      user.habitDescription, 
       {
         onStart: onStart,
         onFail: onFail,

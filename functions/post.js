@@ -1,7 +1,7 @@
 import { storage, firestore } from '../firebaseConfig';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { getBlobFromURI } from '../util/getBlobFromURI';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 const completePost = async (uri, uid, habit) => {
   try {
@@ -9,16 +9,11 @@ const completePost = async (uri, uid, habit) => {
       completedToday: true
     })
 
-    console.log("Updated doc")
-
-    await setDoc(doc(firestore, "posts"), {
-      uid: uid,
+    await setDoc(doc(firestore, "posts", uid), {
       postURI: uri,
       habit: habit,
-      timestamp: new Date()
+      timestamp: "test"
     })
-
-    console.log("Updated posts")
   } catch (e) {
     throw new Error(e)
   }
@@ -65,19 +60,21 @@ export const uploadPost = async (
     async () => {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-
-        console.log("Test before")
-
         await completePost(downloadURL, uid, habit)
-
-        console.log("Test")
-
-
         onFinish()
-
-        console.log("Finished")
         console.log('File available at', downloadURL);
       });
     }
   )
+}
+
+export const getPost = async (uid) => {
+  const postRef = doc(firestore, "posts", uid)
+  const postSnap = await getDoc(postRef)
+
+  if (!postSnap.exists()) {
+    throw new Error("Post not found")
+  }
+
+  return postSnap.data()
 }

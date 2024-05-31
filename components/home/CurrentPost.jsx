@@ -1,9 +1,9 @@
 import { View, Image, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const CurrentPost = ({
+  postURI,
   containerStyles,
-  picture,
   hasLikes,
   likeCount,
   likers
@@ -25,7 +25,7 @@ const CurrentPost = ({
       <Image
         className="w-28 h-40 rounded-lg"
         source={{
-          uri: picture
+          uri: postURI
         }}
         resizeMode="cover"
       />

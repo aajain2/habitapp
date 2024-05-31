@@ -1,11 +1,12 @@
 import { View, Text, FlatList } from 'react-native'
-import React from 'react'
 import HomeLanding from '../components/home/HomeLanding'
 import { StatusBar } from 'expo-status-bar'
 import YesterdayReport from '../components/home/YesterdayReport'
 import PostCard from '../components/home/PostCard'
 import CurrentPost from '../components/home/CurrentPost'
 import { useGlobalContext } from '../context/GlobalProvider'
+import { useEffect, useState } from 'react'
+import { getPost } from '../functions/post'
 
 const dummyData = [
   {
@@ -89,6 +90,16 @@ const prompt = "Take a photo of any vegetable with a fork 🥦🍴"
 
 const Home = () => {
   const { user } = useGlobalContext()
+  const [currentPost, setCurrentPost] = useState(null)
+
+  useEffect(() => {
+    if (user.completedToday) {
+      getPost(user.uid)
+        .then((post) => {
+          setCurrentPost(post)
+        })
+    }
+  }, [user])
 
   return (
     <View className="w-full h-full">
@@ -105,7 +116,7 @@ const Home = () => {
               {user.completedToday && 
                 <CurrentPost
                   containerStyles="items-center"
-                  picture="https://picsum.photos/540/720"
+                  postURI={currentPost?.postURI}
                 />
               }
               
