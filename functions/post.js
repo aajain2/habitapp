@@ -1,23 +1,33 @@
 import { storage, firestore } from '../firebaseConfig';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { getBlobFromURI } from '../util/getBlobFromURI';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 
-const updateAvatar = async (uri, uid) => {
+const completePost = async (uri, uid, habit) => {
   try {
-    const avatarRef = doc(firestore, "users", uid)
-
-    await updateDoc(avatarRef, {
-      avatar: uri
+    await updateDoc(doc(firestore, "users", uid), {
+      completedToday: true
     })
+
+    console.log("Updated doc")
+
+    await setDoc(doc(firestore, "posts"), {
+      uid: uid,
+      postURI: uri,
+      habit: habit,
+      timestamp: new Date()
+    })
+
+    console.log("Updated posts")
   } catch (e) {
     throw new Error(e)
   }
 }
 
-export const uploadAvatar = async (
+export const uploadPost = async (
   uri, 
-  uid, 
+  uid,
+  habit,
   { onStart, onFinish, onFail }
 ) => {
   if (!uid) {
@@ -30,7 +40,7 @@ export const uploadAvatar = async (
 
   const blob = await getBlobFromURI(uri)
 
-  const storageRef = ref(storage, 'avatars/' + uid + '.jpg');
+  const storageRef = ref(storage, 'posts/' + uid + '.jpg');
   const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
 
   onStart()
@@ -55,13 +65,17 @@ export const uploadAvatar = async (
     async () => {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-        try {
-          await updateAvatar(downloadURL, uid)
-          await onFinish()
-        } catch (e) {
-          throw new Error(e)
-        }
-        
+
+        console.log("Test before")
+
+        await completePost(downloadURL, uid, habit)
+
+        console.log("Test")
+
+
+        onFinish()
+
+        console.log("Finished")
         console.log('File available at', downloadURL);
       });
     }

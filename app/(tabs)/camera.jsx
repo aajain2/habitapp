@@ -1,4 +1,4 @@
-import { View, SafeAreaView, TouchableOpacity, Image, Text } from 'react-native'
+import { View, SafeAreaView, TouchableOpacity, Image, Text, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import TrabitHeader from '../../components/TrabitHeader'
 import BackButton from '../../components/buttons/BackButton'
@@ -8,6 +8,8 @@ import { router } from 'expo-router'
 import icons from '../../constants/icons'
 import { AntDesign } from '@expo/vector-icons'
 import { manipulateAsync, FlipType } from 'expo-image-manipulator'
+import { uploadPost } from '../../functions/post'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Camera = () => {
   const [facing, setFacing] = useState("front")
@@ -16,6 +18,9 @@ const Camera = () => {
   const [cameraReady, setCameraReady] = useState(false)
   const [photoTaken, setPhotoTaken] = useState(false)
   const [photoURI, setPhotoURI] = useState("")
+  const { user, setUser } = useGlobalContext()
+  const [uploading, setUploading] = useState(false)
+  const [done, setDone] = useState(false)
 
   const prompt = "Take a photo of any vegetable with a fork 🥦🍴"
 
@@ -43,6 +48,40 @@ const Camera = () => {
         setPhotoTaken(true)
       }})      
     }
+  }
+
+  const onStart = () => {
+    setUploading(true)
+  }
+
+  const onFail = (e) => {
+    Alert.alert(e.message)
+  }
+
+  const onFinish = () => {
+    setUploading(false)
+    setDone(true)
+    setUser({
+      ...user,
+      completedToday: true
+    })
+
+    console.log("Finished")
+
+    router.navigate("/home")
+  }
+
+  const handleUpload = async () => {
+    await uploadPost(
+      photoURI, 
+      user.uid, 
+      user.habit, 
+      {
+        onStart: onStart,
+        onFail: onFail,
+        onFinish: onFinish
+      }
+    )
   }
 
   return (
@@ -126,9 +165,7 @@ const Camera = () => {
             : 
               <TouchableOpacity 
                 className="flex-row justify-center items-center gap-x-4"
-                onPress={() => {
-                  router.navigate("/home")
-                }}
+                onPress={handleUpload}
               >
                 <Text className="text-lg font-inter-bold">COMPLETE HABIT</Text>
                 <Image
