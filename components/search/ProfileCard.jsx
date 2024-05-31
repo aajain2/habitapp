@@ -5,7 +5,7 @@ import ProfilePicture from '../ProfilePicture'
 import { AntDesign } from '@expo/vector-icons'
 import AcceptFriendButton from '../buttons/AcceptFriendButton'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { acceptFriendRequest, requestFriend, unrequestFriend } from '../../functions/friends'
+import { acceptFriendRequest, requestFriend, unrequestFriend } from '../../firebase/friends'
 import { removeElementByValue } from '../../util/removeElementByValue'
 
 const ProfileCard = ({

@@ -4,7 +4,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import ProfileHeaderBar from '../../components/home/ProfileHeaderBar';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import ThinCustomButton from '../../components/buttons/ThinCustomButton';
-import { saveEdit } from '../../functions/editProfile';
+import { saveEdit } from '../../firebase/editProfile';
 import { useGlobalContext } from '../../context/GlobalProvider';
 
 const EditInfo = () => {

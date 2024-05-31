@@ -6,7 +6,7 @@ import CustomButton from '../../components/buttons/CustomButton'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import BackButton from '../../components/buttons/BackButton'
 import { router } from 'expo-router'
-import { getCurrentUser, handleLogIn } from '../../functions/auth'
+import { getCurrentUser, handleLogIn } from '../../firebase/auth'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Login = () => {

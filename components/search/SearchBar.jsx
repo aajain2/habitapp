@@ -6,7 +6,7 @@ import { router } from 'expo-router';
 import { useQueryContext } from '../../context/QueryProvider';
 import EmptyResults from './EmptyResults';
 import { useEffect, useState } from 'react';
-import { getAllUsers } from '../../functions/friends';
+import { getAllUsers } from '../../firebase/friends';
 
 const SearchBar = ({
   seeMore = false,

@@ -8,7 +8,7 @@ import BackButton from '../../components/buttons/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import { useState } from 'react';
 import TrabitHeader from '../../components/TrabitHeader';
-import { getCurrentUser, handleNewUserRegistration } from '../../functions/auth';
+import { getCurrentUser, handleNewUserRegistration } from '../../firebase/auth';
 import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Account = () => {

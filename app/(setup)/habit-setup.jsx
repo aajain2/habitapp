@@ -9,7 +9,7 @@ import { StatusBar } from 'expo-status-bar';
 import TrabitHeader from '../../components/TrabitHeader';
 import BackButton from '../../components/buttons/BackButton';
 import HabitCard from '../../components/HabitCard';
-import { getHabits, saveHabit } from '../../functions/habits';
+import { getHabits, saveHabit } from '../../firebase/habits';
 import { useGlobalContext } from '../../context/GlobalProvider';
 
 const HabitSetup = () => {
