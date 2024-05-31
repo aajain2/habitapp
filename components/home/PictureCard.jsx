@@ -17,14 +17,14 @@ const PictureCard = ({
           className="w-full h-[60vh] rounded-xl absolute"
           resizeMode="cover"
           source={{
-            uri: post.image
+            uri: post.postURI
           }}
         />
 
         {completed && 
           <LikeButton
             containerStyles="ml-auto mr-4 mt-auto mb-4"
-            likeCount={post.likeCount}
+            likeCount={post.likes}
             liked={post.liked}
             handlePress={() => {}}
           />

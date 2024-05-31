@@ -15,8 +15,8 @@ const HomeLanding = ({
   const { user } = useGlobalContext()
 
   return (
-    <View className={`w-full ${user.completed ? "h-[30vh]" : "h-[100vh]"}`}>
-      <View className={`absolute z-10 w-full ${user.completed ? "h-[30vh]" : "h-[100vh]"}`}>
+    <View className={`w-full ${user.completedToday ? "h-[30vh]" : "h-[100vh]"}`}>
+      <View className={`absolute z-10 w-full ${user.completedToday ? "h-[30vh]" : "h-[100vh]"}`}>
         <SafeAreaView>
           <View className="h-full flex justify-center">
             <View className="absolute w-full top-0">
@@ -27,18 +27,18 @@ const HomeLanding = ({
 
             <View className={`flex-row mt-2 absolute top-14`}>
               <Countdown
-                smaller={user.completed}
-                completed={user.completed}
+                smaller={user.completedToday}
+                completed={user.completedToday}
                 containerStyles="ml-4"
               />
               <Streak
-                smaller={user.completed}
+                smaller={user.completedToday}
                 containerStyles="flex-grow mr-4"
                 days={user.streak}
               />
             </View>
 
-            {user.completed ? 
+            {user.completedToday ? 
               <View className="absolute bottom-0 w-full items-center">
                 <Text className="text-white font-inter-bold text-lg">
                   You completed your habit today.
@@ -54,7 +54,7 @@ const HomeLanding = ({
 
       <Video
         className="w-full h-full"
-        source={user.completed ? videos.greenBackground : videos.blueOrangeBackground}
+        source={user.completedToday ? videos.greenBackground : videos.blueOrangeBackground}
         useNativeControls
         resizeMode={ResizeMode.COVER}
         isLooping

@@ -1,11 +1,12 @@
-import { View, Text, FlatList } from 'react-native'
-import React from 'react'
+import { View, Text, FlatList, Alert } from 'react-native'
 import HomeLanding from '../components/home/HomeLanding'
 import { StatusBar } from 'expo-status-bar'
 import YesterdayReport from '../components/home/YesterdayReport'
 import PostCard from '../components/home/PostCard'
 import CurrentPost from '../components/home/CurrentPost'
 import { useGlobalContext } from '../context/GlobalProvider'
+import { useEffect, useState } from 'react'
+import { getFriendsPosts, getPost } from '../functions/post'
 
 const dummyData = [
   {
@@ -89,12 +90,38 @@ const prompt = "Take a photo of any vegetable with a fork 🥦🍴"
 
 const Home = () => {
   const { user } = useGlobalContext()
+  const [currentPost, setCurrentPost] = useState(null)
+  const [friendsPosts, setFriendsPosts] = useState([])
+
+  useEffect(() => {
+    if (user.completedToday) {
+      getPost(user.uid)
+        .then((post) => {
+          setCurrentPost(post)
+        })
+        .catch((e) => {
+          Alert.alert(e.message)
+        })
+    }
+  }, [user])
+
+  useEffect(() => {
+    getFriendsPosts(user.friends)
+      .then((posts) => {
+        setFriendsPosts(posts)
+        console.log(posts)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }, [])
+  
 
   return (
     <View className="w-full h-full">
       <FlatList 
         className="h-full"
-        data={dummyData}
+        data={friendsPosts}
         ListHeaderComponent={() => {
           return (
             <View>
@@ -105,7 +132,7 @@ const Home = () => {
               {user.completedToday && 
                 <CurrentPost
                   containerStyles="items-center"
-                  picture="https://picsum.photos/540/720"
+                  postURI={currentPost?.postURI}
                 />
               }
               
@@ -125,7 +152,7 @@ const Home = () => {
             />
           )
         }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
       />
 
       <StatusBar style="light" />

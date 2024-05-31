@@ -1,4 +1,4 @@
-import { View, SafeAreaView, TouchableOpacity, Image, Text } from 'react-native'
+import { View, SafeAreaView, TouchableOpacity, Image, Text, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import TrabitHeader from '../../components/TrabitHeader'
 import BackButton from '../../components/buttons/BackButton'
@@ -8,6 +8,8 @@ import { router } from 'expo-router'
 import icons from '../../constants/icons'
 import { AntDesign } from '@expo/vector-icons'
 import { manipulateAsync, FlipType } from 'expo-image-manipulator'
+import { uploadPost } from '../../functions/post'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Camera = () => {
   const [facing, setFacing] = useState("front")
@@ -16,6 +18,10 @@ const Camera = () => {
   const [cameraReady, setCameraReady] = useState(false)
   const [photoTaken, setPhotoTaken] = useState(false)
   const [photoURI, setPhotoURI] = useState("")
+  const { user, setUser } = useGlobalContext()
+  const [uploading, setUploading] = useState(false)
+  const [done, setDone] = useState(false)
+  const [takingPhoto, setTakingPhoto] = useState(false)
 
   const prompt = "Take a photo of any vegetable with a fork 🥦🍴"
 
@@ -29,6 +35,7 @@ const Camera = () => {
 
   const takePicture = async () => {
     let rawPhotoURI
+    setTakingPhoto(true)
 
     if (camera && cameraReady) {
       camera.takePictureAsync({ onPictureSaved: async (data) => {
@@ -39,10 +46,45 @@ const Camera = () => {
           [{ flip: FlipType.Horizontal }]
         )
 
-        setPhotoURI(mirroredImage.uri)
+        setPhotoURI(facing === "front" ? mirroredImage.uri : rawPhotoURI)
         setPhotoTaken(true)
+        setTakingPhoto(false)
       }})      
     }
+  }
+
+  const onStart = () => {
+    setUploading(true)
+  }
+
+  const onFail = (e) => {
+    Alert.alert(e.message)
+  }
+
+  const onFinish = () => {
+    setUploading(false)
+    setDone(true)
+    setUser({
+      ...user,
+      completedToday: true,
+      streak: user.streak + 1
+    })
+
+    router.navigate("/home")
+  }
+
+  const handleUpload = async () => {
+    await uploadPost(
+      photoURI, 
+      user.habitDescription,
+      user.username,
+      user.avatar,
+      {
+        onStart: onStart,
+        onFail: onFail,
+        onFinish: onFinish
+      }
+    )
   }
 
   return (
@@ -94,7 +136,10 @@ const Camera = () => {
           <View className="flex-row justify-center items-center w-full h-24 gap-x-8 mt-8">
             {!photoTaken ? 
               <>
-                <TouchableOpacity onPress={() => setFlash(!flash)}>
+                <TouchableOpacity 
+                  disabled={takingPhoto}
+                  onPress={() => setFlash(!flash)}
+                >
                   <Image 
                     className="w-14 h-14"
                     source={flash ? icons.flashOn : icons.flashOff}
@@ -102,12 +147,14 @@ const Camera = () => {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity 
+                <TouchableOpacity
+                  disabled={takingPhoto}
                   className="w-24 h-24 border-[10px] rounded-full"
                   onPress={() => takePicture()}
                 />
 
                 <TouchableOpacity 
+                  disabled={takingPhoto}
                   onPress={() => {
                     if (facing === "front") {
                       setFacing("back")
@@ -126,9 +173,7 @@ const Camera = () => {
             : 
               <TouchableOpacity 
                 className="flex-row justify-center items-center gap-x-4"
-                onPress={() => {
-                  router.navigate("/home")
-                }}
+                onPress={handleUpload}
               >
                 <Text className="text-lg font-inter-bold">COMPLETE HABIT</Text>
                 <Image
