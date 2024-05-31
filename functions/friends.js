@@ -1,18 +1,11 @@
 import { getDocs, collection, query, where, documentId, getDoc, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { auth, firestore } from "../firebaseConfig"
-
-const splitArray = (arr) => {
-  const nestedArray = []
-  for (let i = 0; i < arr.length; i += 10) {
-    nestedArray.push(arr.slice(i, i + 10))
-  }
-  return nestedArray
-}
+import { splitArrayByTen } from "../util/splitArrayByTen"
 
 export const getFriendData = async (uidList) => {
   try {
     const friends = []
-    const nestedUID = splitArray(uidList)
+    const nestedUID = splitArrayByTen(uidList)
 
     for (array in nestedUID) {
       const userRef = collection(firestore, "users")
@@ -37,8 +30,7 @@ export const getFriendData = async (uidList) => {
 export const getAllUsers = async () => {
   try {
     const users = []
-    const userRef = collection(firestore, "users")
-    const querySnapshot = await getDocs(userRef)
+    const querySnapshot = await getDocs(collection(firestore, "users"))
     const uid = auth.currentUser.uid
 
     querySnapshot.forEach((doc) => {

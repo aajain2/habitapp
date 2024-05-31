@@ -1,18 +1,24 @@
-import { storage, firestore } from '../firebaseConfig';
+import { storage, firestore, auth } from '../firebaseConfig';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { getBlobFromURI } from '../util/getBlobFromURI';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, documentId, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { splitArrayByTen } from '../util/splitArrayByTen';
 
-const completePost = async (uri, uid, habit) => {
+const completePost = async (uri, habit, username, avatar) => {
+  const user = auth.currentUser 
+
   try {
-    await updateDoc(doc(firestore, "users", uid), {
+    await updateDoc(doc(firestore, "users", user.uid), {
       completedToday: true
     })
 
-    await setDoc(doc(firestore, "posts", uid), {
+    await setDoc(doc(firestore, "posts", user.uid), {
       postURI: uri,
       habit: habit,
-      timestamp: "test"
+      timestamp: new Date(),
+      username: username,
+      avatar: avatar,
+      likes: 0
     })
   } catch (e) {
     throw new Error(e)
@@ -20,12 +26,15 @@ const completePost = async (uri, uid, habit) => {
 }
 
 export const uploadPost = async (
-  uri, 
-  uid,
+  uri,
   habit,
+  username,
+  avatar,
   { onStart, onFinish, onFail }
 ) => {
-  if (!uid) {
+  const user = auth.currentUser
+
+  if (!user.uid) {
     throw new Error("Error with user ID")
   }
 
@@ -35,7 +44,7 @@ export const uploadPost = async (
 
   const blob = await getBlobFromURI(uri)
 
-  const storageRef = ref(storage, 'posts/' + uid + '.jpg');
+  const storageRef = ref(storage, 'posts/' + user.uid + '.jpg');
   const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
 
   onStart()
@@ -60,21 +69,54 @@ export const uploadPost = async (
     async () => {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-        await completePost(downloadURL, uid, habit)
-        onFinish()
-        console.log('File available at', downloadURL);
+        try {
+          await completePost(downloadURL, habit, username, avatar)
+          onFinish()
+          console.log('File available at', downloadURL);
+        } catch (e) {
+          throw new Error(e)
+        }
       });
     }
   )
 }
 
 export const getPost = async (uid) => {
-  const postRef = doc(firestore, "posts", uid)
-  const postSnap = await getDoc(postRef)
-
-  if (!postSnap.exists()) {
-    throw new Error("Post not found")
+  try {
+    const postRef = doc(firestore, "posts", uid)
+    const postSnap = await getDoc(postRef)
+  
+    if (!postSnap.exists()) {
+      throw new Error("Post not found")
+    }
+  
+    return postSnap.data()
+  } catch (e) {
+    throw new Error(e.message)
   }
+}
 
-  return postSnap.data()
+export const getFriendsPosts = async (uidList) => {
+  try {
+    const posts = []
+    const nestedUID = splitArrayByTen(uidList)
+
+    for (array in nestedUID) {
+      const userRef = collection(firestore, "posts")
+
+      const q = query(userRef, where(documentId(), "in", uidList))
+      const querySnapshot = await getDocs(q)
+  
+      querySnapshot.forEach((doc) => {
+        posts.push({
+          ...doc.data(),
+          uid: doc.id
+        })
+      })
+    }
+
+    return posts
+  } catch (e) {
+    throw new Error(e.message)
+  } 
 }

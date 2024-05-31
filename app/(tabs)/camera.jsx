@@ -72,8 +72,9 @@ const Camera = () => {
   const handleUpload = async () => {
     await uploadPost(
       photoURI, 
-      user.uid, 
-      user.habitDescription, 
+      user.habitDescription,
+      user.username,
+      user.avatar,
       {
         onStart: onStart,
         onFail: onFail,
