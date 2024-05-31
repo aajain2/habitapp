@@ -19,7 +19,8 @@ const completePost = async (uri, habit, username, avatar) => {
       timestamp: new Date(),
       username: username,
       avatar: avatar,
-      likes: 0
+      likes: 0,
+      likers: []
     })
   } catch (e) {
     throw new Error(e)

@@ -24,9 +24,7 @@ const PictureCard = ({
         {completed && 
           <LikeButton
             containerStyles="ml-auto mr-4 mt-auto mb-4"
-            likeCount={post.likes}
-            liked={post.liked}
-            handlePress={() => {}}
+            post={post}
           />
         }
 
