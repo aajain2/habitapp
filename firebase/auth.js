@@ -27,7 +27,8 @@ export const handleNewUserRegistration = async (data) => {
       completedToday: false,
       streak: 0,
       outgoingRequests: [],
-      incomingRequests: []
+      incomingRequests: [],
+      todaysPrompt: "Please select a habit first",
     })
 
     return user.user.uid

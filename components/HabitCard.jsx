@@ -7,7 +7,8 @@ const HabitCard = ({
   subtitle,
   imageSource,
   selected,
-  setSelected
+  setSelected,
+  prompts
 }) => {
   const handlePress = (name, selected) => {
     if (name === selected.habit) {
@@ -15,7 +16,8 @@ const HabitCard = ({
     } else {
       setSelected({
         habit: name,
-        habitDescription: title
+        habitDescription: title,
+        prompts: prompts
       })
     }
   }
