@@ -82,7 +82,6 @@ const Comments = () => {
     getPost(uid)
       .then((data) => {
         setPost(data)
-        console.log(data)
       })
       .catch((e) => {
         Alert.alert(e.message)
@@ -137,7 +136,7 @@ const Comments = () => {
                       postURI={post?.postURI}
                       hasLikes
                       likeCount={post?.likes}
-                      likers={[]}
+                      likers={post?.likers}
                     />
                   </View>
                 </SafeAreaView>

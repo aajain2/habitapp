@@ -1,4 +1,6 @@
-import { View, Image, Text } from 'react-native'
+import { useEffect, useState } from 'react'
+import { View, Image, Text, Alert } from 'react-native'
+import { getAvatars } from '../../firebase/avatar'
 
 const CurrentPost = ({
   postURI,
@@ -7,6 +9,22 @@ const CurrentPost = ({
   likeCount,
   likers
 }) => {
+  const [avatars, setAvatars] = useState([])
+
+  useEffect(() => {
+    if (hasLikes) {
+      const firstThree = getFirstThreeLikers(likers)
+
+      getAvatars(firstThree)
+        .then((avatars) => {
+          setAvatars(avatars)
+        })
+        .catch((e) => {
+          Alert.alert(e.message)
+        })
+    }
+  }, [likers])
+
   const getFirstThreeLikers = (likers) => {
     if (likers[0] === "") {
       return [];
@@ -32,7 +50,7 @@ const CurrentPost = ({
       {hasLikes && 
         <View className="flex-row mt-2 items-center">
           <View className="flex-row">
-            {getFirstThreeLikers(likers).map((item, index) => {
+            {avatars.map((item, index) => {
               return (
                 <Image
                   className="w-6 h-6 rounded-full border-2 border-[#F2F2F2] -mr-2"

@@ -1,7 +1,7 @@
 import { storage, firestore } from '../firebaseConfig';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { getBlobFromURI } from '../util/getBlobFromURI';
-import { doc, updateDoc } from 'firebase/firestore';
+import { collection, doc, documentId, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
 const updateAvatar = async (uri, uid) => {
   try {
@@ -66,4 +66,30 @@ export const uploadAvatar = async (
       });
     }
   )
+}
+
+// uidArray should always be less than 3
+export const getAvatars = async (uidArray) => {
+  if (uidArray.length > 3) {
+    throw new Error("Too many UIDs")
+  }
+
+  if (uidArray.length > 0) {
+    try {
+      const avatars = []
+  
+      const userRef = collection(firestore, "users")
+
+      const q = query(userRef, where(documentId(), "in", uidArray))
+      const querySnapshot = await getDocs(q)
+  
+      querySnapshot.forEach((doc) => {
+        avatars.push(doc.data().avatar)
+      })
+
+      return avatars
+    } catch (e) {
+      throw new Error(e.message)
+    }
+  }
 }
