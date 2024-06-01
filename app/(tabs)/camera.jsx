@@ -79,6 +79,7 @@ const Camera = () => {
       user.habitDescription,
       user.username,
       user.avatar,
+      user.todaysPrompt,
       {
         onStart: onStart,
         onFail: onFail,

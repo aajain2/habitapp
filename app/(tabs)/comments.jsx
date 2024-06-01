@@ -1,5 +1,5 @@
-import { View, Text, SafeAreaView, FlatList, Keyboard } from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView, FlatList, Keyboard, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import DismissKeyboard from '../../components/DismissKeyboard'
 import { StatusBar } from 'expo-status-bar'
@@ -7,6 +7,8 @@ import { useLocalSearchParams } from 'expo-router'
 import CurrentPost from '../../components/home/CurrentPost'
 import Comment from '../../components/Comment'
 import AddCommentInput from '../../components/AddCommentInput'
+import { getPost } from '../../functions/post'
+import { convertFirebaseTimestamp } from '../../util/convertFirebaseTimestamp'
 
 const dummyComments = [
   {
@@ -74,7 +76,20 @@ const dummyComments = [
 const emptyDummy = []
 
 const Comments = () => {
-  const post = useLocalSearchParams()
+  const { uid } = useLocalSearchParams()
+  const [post, setPost] = useState(null)
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    getPost(uid)
+      .then((data) => {
+        setPost(data)
+        setComments(data.comments)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }, [uid])
 
   const handleScroll = (event) => {
     const offsetY = event.nativeEvent.contentOffset.y;
@@ -89,7 +104,7 @@ const Comments = () => {
       <>
         <FlatList 
           className="h-full"
-          data={dummyComments}
+          data={comments}
           ListEmptyComponent={() => {
             return (
               <View className="w-full items-center mt-8">
@@ -108,23 +123,23 @@ const Comments = () => {
                 <SafeAreaView>
                   <View className="flex justify-center items-center">
                     <ProfileHeaderBar 
-                      title={post.username}
-                      subtitle={post.timestamp}
+                      title={post?.username}
+                      subtitle={post?.timestamp}
                     />
                     <Text className="text-base mt-2">
                       <Text className="font-inter-bold">Habit: </Text>
-                      <Text className="font-inter-regular">{post.habit}</Text>
+                      <Text className="font-inter-regular">{post?.habit}</Text>
                     </Text>
 
                     <Text className="text-base">
-                      {post.prompt}
+                      {post?.prompt}
                     </Text>
 
                     <CurrentPost 
-                      picture={post.image}
+                      postURI={post?.postURI}
                       hasLikes
-                      likeCount={post.likeCount}
-                      likers={post.likers.split(",")}
+                      likeCount={post?.likes}
+                      likers={post?.likers}
                     />
                   </View>
                 </SafeAreaView>
@@ -134,17 +149,21 @@ const Comments = () => {
           renderItem={({ item }) => {
             return (
               <Comment 
-                profilePicture={item.profilePicture}
+                profilePicture={item.avatar}
                 comment={item.comment}
                 username={item.username}
+                timestamp={convertFirebaseTimestamp(item.timestamp)}
               />
             )
           }}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index}
           onScroll={handleScroll}
         />
 
-        <AddCommentInput />
+        <AddCommentInput 
+          setComments={setComments}
+          postId={post?.uid}
+        />
         
         <StatusBar style="dark" />
       </>

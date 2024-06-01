@@ -9,8 +9,9 @@ import { StatusBar } from 'expo-status-bar';
 import TrabitHeader from '../../components/TrabitHeader';
 import BackButton from '../../components/buttons/BackButton';
 import HabitCard from '../../components/HabitCard';
-import { getHabits, saveHabit } from '../../firebase/habits';
+import { getHabit, getHabits, saveHabit } from '../../firebase/habits';
 import { useGlobalContext } from '../../context/GlobalProvider';
+import { pickRandomItem } from '../../util/pickRandomItem';
 
 const HabitSetup = () => {
   const [selected, setSelected] = useState(null)
@@ -19,12 +20,15 @@ const HabitSetup = () => {
   const { user, setUser } = useGlobalContext()
 
   const handleSave = () => {
-    saveHabit(user.uid, selected.habit, selected.habitDescription)
+    const randomPrompt = pickRandomItem(selected.prompts)
+
+    saveHabit(user.uid, selected.habit, selected.habitDescription, randomPrompt)
       .then(async () => {
         setUser({
           ...user,
           habit: selected.habit,
-          habitDescription: selected.habitDescription
+          habitDescription: selected.habitDescription,
+          todaysPrompt: randomPrompt
         })
 
         if (field) {
@@ -39,17 +43,24 @@ const HabitSetup = () => {
   }
 
   useEffect(() => {
-    setSelected({
-      habit: user.habit,
-      habitDescription: user.habitDescription
-    })
+    getHabit(user.habit)
+      .then((habit) => {
+        setSelected({
+          habit: user.habit,
+          habitDescription: user.habitDescription,
+          prompts: habit.prompts
+        })
 
-    getHabits()
-      .then((habits) => {
-        setHabitOptions(habits)
-      })
-      .catch((e) => {
-        Alert.alert(e.message)
+        getHabits()
+          .then((habits) => {
+            setHabitOptions(habits)
+          })
+          .catch((e) => {
+            Alert.alert(e.message)
+          })
+        .catch((e) => {
+          Alert.alert(e.message)
+        })
       })
   }, [])
 
@@ -86,6 +97,7 @@ const HabitSetup = () => {
                       title={item.name}
                       subtitle={item.description}
                       name={item.id}
+                      prompts={item.prompts}
                       selected={selected}
                       setSelected={setSelected}
                       key={item.id}

@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { firestore } from "../firebaseConfig";
 
 export const getHabits = async () => {
@@ -23,14 +23,31 @@ export const getHabits = async () => {
   }
 }
 
-export const saveHabit = async (uid, habit, habitDescription) => {
+export const saveHabit = async (uid, habit, habitDescription, prompt) => {
   try {
     await updateDoc(doc(firestore, "users", uid), {
       habit: habit,
-      habitDescription: habitDescription
+      habitDescription: habitDescription,
+      todaysPrompt: prompt
     })
   } catch (e) {
     throw new Error(e)
   }
 }
 
+export const getHabit = async (habitId) => {
+  try {
+    const postSnap = await getDoc(doc(firestore, "habits", habitId))
+  
+    if (!postSnap.exists()) {
+      throw new Error("Habit not found")
+    }
+
+    return {
+      ...postSnap.data(),
+      id: postSnap.id
+    }
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}

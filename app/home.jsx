@@ -109,7 +109,6 @@ const Home = () => {
     getFriendsPosts(user.friends)
       .then((posts) => {
         setFriendsPosts(posts)
-        console.log(posts)
       })
       .catch((e) => {
         Alert.alert(e.message)

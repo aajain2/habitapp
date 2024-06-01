@@ -1,4 +1,4 @@
-import { getDocs, collection, query, where, documentId, getDoc, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
+import { getDocs, collection, query, where, documentId, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { auth, firestore } from "../firebaseConfig"
 import { splitArrayByTen } from "../util/splitArrayByTen"
 

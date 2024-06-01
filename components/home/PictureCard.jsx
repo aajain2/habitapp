@@ -24,9 +24,7 @@ const PictureCard = ({
         {completed && 
           <LikeButton
             containerStyles="ml-auto mr-4 mt-auto mb-4"
-            likeCount={post.likes}
-            liked={post.liked}
-            handlePress={() => {}}
+            post={post}
           />
         }
 
@@ -60,7 +58,7 @@ const PictureCard = ({
       <View className="mt-2 h-5">
         {completed && 
           <CustomLink
-            handlePress={() => router.navigate({ pathname: "/comments", params: post})}
+            handlePress={() => router.navigate({ pathname: "/comments", params: { uid: post.uid}})}
             containerStyles=""
             title="Add comment..."
             textStyles="text-light-gray font-inter-medium"

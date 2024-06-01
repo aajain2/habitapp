@@ -3,8 +3,9 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { getBlobFromURI } from '../util/getBlobFromURI';
 import { collection, doc, documentId, getDoc, getDocs, increment, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { splitArrayByTen } from '../util/splitArrayByTen';
+import { convertFirebaseTimestamp } from '../util/convertFirebaseTimestamp';
 
-const completePost = async (uri, habit, username, avatar) => {
+const completePost = async (uri, habit, username, avatar, prompt) => {
   const user = auth.currentUser 
 
   try {
@@ -19,7 +20,10 @@ const completePost = async (uri, habit, username, avatar) => {
       timestamp: new Date(),
       username: username,
       avatar: avatar,
-      likes: 0
+      likes: 0,
+      likers: [],
+      prompt: prompt,
+      comments: [],
     })
   } catch (e) {
     throw new Error(e)
@@ -31,6 +35,7 @@ export const uploadPost = async (
   habit,
   username,
   avatar,
+  prompt,
   { onStart, onFinish, onFail }
 ) => {
   const user = auth.currentUser
@@ -71,7 +76,7 @@ export const uploadPost = async (
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
         try {
-          await completePost(downloadURL, habit, username, avatar)
+          await completePost(downloadURL, habit, username, avatar, prompt)
           onFinish()
           console.log('File available at', downloadURL);
         } catch (e) {
@@ -88,10 +93,14 @@ export const getPost = async (uid) => {
     const postSnap = await getDoc(postRef)
   
     if (!postSnap.exists()) {
-      throw new Error("Post not found")
+      throw new Error("Post not found, please restart app")
     }
-  
-    return postSnap.data()
+
+    return {
+      ...postSnap.data(),
+      uid: postSnap.id,
+      timestamp: convertFirebaseTimestamp(postSnap.data().timestamp)
+    }
   } catch (e) {
     throw new Error(e.message)
   }
@@ -111,7 +120,8 @@ export const getFriendsPosts = async (uidList) => {
       querySnapshot.forEach((doc) => {
         posts.push({
           ...doc.data(),
-          uid: doc.id
+          uid: doc.id,
+          timestamp: convertFirebaseTimestamp(doc.data().timestamp)
         })
       })
     }

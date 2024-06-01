@@ -42,8 +42,6 @@ const Account = () => {
 
         if (uid) {
           const currentUser = await getCurrentUser()
-          console.log(currentUser)
-
           setUser(currentUser)
           setIsLogged(true)
           resetSignUp()

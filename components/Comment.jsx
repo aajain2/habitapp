@@ -4,7 +4,8 @@ import React from 'react'
 const Comment = ({
   profilePicture,
   comment,
-  username
+  username,
+  timestamp,
 }) => {
   return (
     <View className="w-full flex items-center justify-center my-2">
@@ -18,9 +19,13 @@ const Comment = ({
         />
 
         <View className="ml-2 w-72">
-          <Text className="font-inter-bold text-sm">
-            {username}
-          </Text>
+          <View className="flex-row items-center">
+            <Text className="font-inter-bold text-sm">
+              {username}
+            </Text>
+
+            <Text className="text-sm font-inter-regular text-gray ml-auto">{timestamp}</Text>
+          </View>
 
           <Text className="font-inter-regular text-sm">
             {comment}
