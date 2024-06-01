@@ -57,9 +57,6 @@ const Profile = () => {
           <Text className="text-orange font-inter-medium text-2xl">
             {user.streak} Days Streak
           </Text>
-          <Text className="font-inter-regular">
-            Your best is {dummyProfile.bestStreak} days
-          </Text>
         </View>
 
         <View className="h-44 w-[90vw] flex-row">
