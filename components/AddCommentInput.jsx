@@ -12,15 +12,20 @@ const AddCommentInput = ({
   const [comment, setComment] = useState("")
 
   const handleComment = () => {
-    addComment(user.uid, user.username, user.avatar, comment, postId)
-      .then((comments) => {
-        setComments(comments)
-        Keyboard.dismiss()
-        setComment("")
-      })
-      .catch((e) => {
-        Alert.alert(e.message)
-      })
+    if (comment !== "") {
+      addComment(user.uid, user.username, user.avatar, comment, postId)
+        .then((comments) => {
+          setComments(comments)
+          Keyboard.dismiss()
+          setComment("")
+        })
+        .catch((e) => {
+          Alert.alert(e.message)
+        })
+    } else {
+      Alert.alert("Please include text in your comment")
+    }
+    
   }
 
   return (
