@@ -51,7 +51,6 @@ const SearchBar = ({
             autoComplete={false}
             className="flex-grow"
             placeholder={placeholder}
-            onSubmitEditing={() => console.log(search)}
             value={query}
             onChangeText={(e) => setQuery(e)}
           />

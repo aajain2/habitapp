@@ -8,6 +8,7 @@ import CurrentPost from '../../components/home/CurrentPost'
 import Comment from '../../components/Comment'
 import AddCommentInput from '../../components/AddCommentInput'
 import { getPost } from '../../functions/post'
+import { convertFirebaseTimestamp } from '../../util/convertFirebaseTimestamp'
 
 const dummyComments = [
   {
@@ -151,6 +152,7 @@ const Comments = () => {
                 profilePicture={item.avatar}
                 comment={item.comment}
                 username={item.username}
+                timestamp={convertFirebaseTimestamp(item.timestamp)}
               />
             )
           }}

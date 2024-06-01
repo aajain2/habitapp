@@ -93,7 +93,7 @@ export const getPost = async (uid) => {
     const postSnap = await getDoc(postRef)
   
     if (!postSnap.exists()) {
-      throw new Error("Post not found")
+      throw new Error("Post not found, please restart app")
     }
 
     return {

@@ -1,4 +1,4 @@
-import { getDocs, collection, query, where, documentId, doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore"
+import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore"
 import { firestore } from "../firebaseConfig"
 
 // Adds a comment and then returns the updated comments
@@ -10,14 +10,14 @@ export const addComment = async (uid, username, avatar, comment, postID) => {
         username: username,
         avatar: avatar,
         comment: comment,
-        createdAt: new Date()
+        timestamp: new Date()
       })
     })
 
     const postSnap = await getDoc(doc(firestore, "posts", postID))
   
     if (!postSnap.exists()) {
-      throw new Error("Post not found")
+      throw new Error("Post not found, please restart app")
     }
 
     return postSnap.data().comments
