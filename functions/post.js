@@ -11,7 +11,8 @@ const completePost = async (uri, habit, username, avatar, prompt) => {
   try {
     await updateDoc(doc(firestore, "users", user.uid), {
       completedToday: true,
-      streak: increment(1)
+      streak: increment(1),
+      completedCount: increment(1)
     })
 
     await setDoc(doc(firestore, "posts", user.uid), {
@@ -24,6 +25,7 @@ const completePost = async (uri, habit, username, avatar, prompt) => {
       likers: [],
       prompt: prompt,
       comments: [],
+      reported: false
     })
   } catch (e) {
     throw new Error(e)
@@ -130,4 +132,14 @@ export const getFriendsPosts = async (uidList) => {
   } catch (e) {
     throw new Error(e.message)
   } 
+}
+
+export const reportPost = async (postId) => {
+  try {
+    await updateDoc(doc(firestore, "posts", postId), {
+      reported: true
+    })
+  } catch (e) {
+    throw new Error(e.message)
+  }
 }
