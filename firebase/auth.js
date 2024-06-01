@@ -29,6 +29,7 @@ export const handleNewUserRegistration = async (data) => {
       outgoingRequests: [],
       incomingRequests: [],
       todaysPrompt: "Please select a habit first",
+      completedCount: 0
     })
 
     return user.user.uid

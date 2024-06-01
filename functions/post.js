@@ -11,7 +11,8 @@ const completePost = async (uri, habit, username, avatar, prompt) => {
   try {
     await updateDoc(doc(firestore, "users", user.uid), {
       completedToday: true,
-      streak: increment(1)
+      streak: increment(1),
+      completedCount: increment(1)
     })
 
     await setDoc(doc(firestore, "posts", user.uid), {

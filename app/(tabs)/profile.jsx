@@ -8,17 +8,6 @@ import { router } from 'expo-router'
 import ThinCustomButton from '../../components/buttons/ThinCustomButton'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
-const dummyProfile = {
-  username: "abe",
-  firstName: "Abraham",
-  lastName: "Lincoln",
-  profilePicture: "https://picsum.photos/200",
-  streak: 5,
-  bestStreak: 23,
-  habit: "Eating more vegetables",
-  totalPosts: 149
-}
-
 const Profile = () => {
   const { user } = useGlobalContext()
 
@@ -77,7 +66,7 @@ const Profile = () => {
               You have completed:
             </Text>
 
-            <Text className="font-inter-bold text-4xl">{dummyProfile.totalPosts}</Text>
+            <Text className="font-inter-bold text-4xl">{user.completedCount}</Text>
 
             <Text className="font-inter-regular w-36 text-center text-xs">
               Days of your habit
