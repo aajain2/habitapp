@@ -1,92 +1,50 @@
 import { View, Text, FlatList, Image } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
-const dummyData = [
-  {
-    id: 0,
-    name: "Joseph",
-    username: "joestar",
-    profilePicture: "https://picsum.photos/200?random=10",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 1,
-    name: "Kyle",
-    username: "kylinator",
-    profilePicture: "https://picsum.photos/200?random=11",
-    friends : true,
-    requested: false
-  },
-  {
-    id: 2,
-    name: "Meow",
-    username: "arf",
-    profilePicture: "https://picsum.photos/200?random=12",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 3,
-    name: "Woof",
-    username: "bowwow",
-    profilePicture: "https://picsum.photos/200?random=13",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 4,
-    name: "JosHulloeph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200?random=14",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 5,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200?random=15",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 6,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200?random=16",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 7,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200?random=17",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 8,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200?random=18",
-    friends : false,
-    requested: true
-  },
-  {
-    id: 9,
-    name: "Joseph",
-    username: "Joestar",
-    profilePicture: "https://picsum.photos/200?random=19",
-    friends : false,
-    requested: true
-  }
-]
+// for avoiding double initialization
+if (!firebase.apps.length) {
+  firebase.initializeApp({});
+} else {
+  firebase.app();
+}
 
-const YesterdayReport = ({
-  blurred
-}) => {
+const YesterdayReport = ({ blurred }) => {
+  const [nonCompleters, setNonCompleters] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const db = firebase.firestore();
+      const nonCompletersRef = db.collection('nonCompleters');
+      const today = new Date();
+      const yesterday = new Date(today.setDate(today.getDate() - 1));
+      const dateString = yesterday.toISOString().split('T')[0];
+
+      const querySnapshot = await nonCompletersRef.where('date', '==', dateString).get();
+      const usersData = await Promise.all(querySnapshot.docs.map(async (doc) => {
+        const userId = doc.data().userId;
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+
+        if (userDoc.exists) {
+          const userData = userDoc.data();
+          return {
+            id: userDoc.id,
+            username: userData.firstName,
+            profilePicture: userData.avatar || 'https://picsum.photos/200',
+            name: userData.firstName
+          };
+        }
+        return null;
+      }));
+
+      setNonCompleters(usersData.filter(user => user!== null));
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <View className="my-4 mx-4">
       <Text className="text-xl font-inter-bold">
@@ -97,7 +55,7 @@ const YesterdayReport = ({
       </Text>
 
       <FlatList 
-        data={dummyData}
+        data={nonCompleters}
         className="py-4"
         keyExtractor={(item) => item.id}
         horizontal
@@ -120,4 +78,4 @@ const YesterdayReport = ({
   )
 }
 
-export default YesterdayReport
+export default YesterdayReport;
