@@ -54,8 +54,3 @@ export const scheduledDailyCleanupAndPrompts = onSchedule("59 6 * * *", async ()
       logger.error("Error generating daily prompts:", error);
     }
 });
-
-// basic test function
-export const basicScheduledFunction = onSchedule("every 24 hours", async () => {
-    logger.log("Scheduled function executed successfully.");
-});
