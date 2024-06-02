@@ -30,7 +30,7 @@ const App = () => {
         </Text>
 
         <Text className="font-inter-regular text-sm w-72 text-center mt-2">
-          Welcome to Trabit, where you can keep track of your daily habits with you friends.
+          Welcome to Trabit, where you can keep track of your daily habits with your friends.
         </Text>
       </View>
 
