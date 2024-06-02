@@ -18,6 +18,7 @@ const EditProfile = () => {
         <ProfileHeaderBar
           containerStyles="absolute"
           title="Edit Profile and Account"
+          logoutButton
         />
       </View>
 
