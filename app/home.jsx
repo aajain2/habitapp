@@ -74,12 +74,17 @@ const Home = () => {
               <HomeLanding />
 
               {user.completedToday && 
-                <CurrentPost
-                  clickable
-                  handleClick={() => router.navigate({ pathname: "/comments", params: { uid: currentPost.uid}})}
-                  containerStyles="items-center"
-                  postURI={currentPost?.postURI}
-                />
+                <View className="items-center w-full">
+                  <CurrentPost
+                    clickable
+                    handleClick={() => router.navigate({ pathname: "/comments", params: { uid: currentPost.uid}})}
+                    containerStyles=""
+                    postURI={currentPost?.postURI}
+                    hasLikes
+                    likeCount={currentPost?.likes}
+                    likers={currentPost?.likers}
+                  />
+                </View>
               }
               
               <YesterdayReport
