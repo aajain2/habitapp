@@ -16,8 +16,8 @@
   "main": "dailyCleanup.js",
   "type": "module",
   "dependencies": {
-    "firebase-admin": "^12.1.0",
-    "firebase-functions": "^5.0.0"
+    "firebase-admin": "^12.1.1",
+    "firebase-functions": "^5.0.1"
   },
   "devDependencies": {
     "eslint": "^8.15.0",

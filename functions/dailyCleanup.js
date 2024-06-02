@@ -7,7 +7,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 // Scheduled function to reset daily user flags and manage non-completions
-export const resetDailyFlagsAndHandleNonCompletions = onSchedule("45 3 * * *", { timeZone: "America/Los_Angeles" }, async (context) => {
+export const resetDailyFlagsAndHandleNonCompletions = onSchedule("0 0 * * *", {timeZone: "America/Los_Angeles" }, async (context) => {
     const usersRef = db.collection('users');
     const nonCompletersRef = db.collection('nonCompleters');
     const dateStr = new Date().toISOString().split('T')[0];  // e.g., '2024-01-01'
@@ -31,28 +31,25 @@ export const resetDailyFlagsAndHandleNonCompletions = onSchedule("45 3 * * *", {
 });
 
 // Scheduled function for deleting all posts and generating daily prompts
-export const scheduledDailyCleanupAndPrompts = onSchedule("45 3 * * *", { timeZone: "America/Los_Angeles" }, async (context) => {
+export const scheduledDailyCleanupAndPrompts = onSchedule("59 23 * * *", {timeZone: "America/Los_Angeles" }, async (context) => {
     try {
-        const postsSnapshot = await db.collection('posts').get();
-        const deletePromises = postsSnapshot.docs.map((doc) => doc.ref.delete());
-        await Promise.all(deletePromises);
-        logger.log("All posts deleted successfully.");
+      const postsSnapshot = await db.collection('posts').get();
+      const deletePromises = postsSnapshot.docs.map((doc) => doc.ref.delete());
+      await Promise.all(deletePromises);
+      logger.log("All posts deleted successfully.");
 
-        const usersRef = db.collection('users');
-        const usersSnapshot = await usersRef.get();
-        const promptPromises = usersSnapshot.docs.map(async (doc) => {
-            const userHabit = doc.data().habit;
-            const habitDoc = await db.collection('habits').doc(userHabit).get();
-            if (habitDoc.exists) {
-                const habitData = habitDoc.data();
-                const allPrompts = habitData.prompts; // Assuming prompts are an array of strings
-                const randomPrompt = allPrompts[Math.floor(Math.random() * allPrompts.length)];
-                await db.collection('users').doc(doc.id).update({ todaysPrompt: randomPrompt });
-                logger.log("Daily prompts generated and updated for user:", doc.id);
-            }
-        });
-        await Promise.all(promptPromises);
+      const usersRef = db.collection('users');
+      const usersSnapshot = await usersRef.get();
+      const promptPromises = usersSnapshot.docs.map(async (doc) => {
+        const userHabit = doc.data().habit;
+        const prompts = await db.collection('habits').doc(userHabit).collection('Prompts').get();
+        const allPrompts = prompts.docs.map(doc => doc.data());
+        const randomPrompt = allPrompts[Math.floor(Math.random() * allPrompts.length)];
+        await db.collection('users').doc(doc.id).update({ todaysPrompt: randomPrompt });
+        logger.log("Daily prompts generated and updated for user:", doc.id);
+      });
+      await Promise.all(promptPromises);
     } catch (error) {
-        logger.error("Error generating daily prompts:", error);
+      logger.error("Error generating daily prompts:", error);
     }
 });
