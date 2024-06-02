@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { getReport } from '../../firebase/report'
 import images from '../../constants/images'
+import { BlurView } from 'expo-blur';
 
 const YesterdayReport = ({
   blurred
@@ -48,6 +49,7 @@ const YesterdayReport = ({
             <Text className="text-center mt-2 text-xs font-inter-bold">
               {item.username}
             </Text>
+            <BlurView className="h-10 -top-6" intensity={blurred ? 10 : 0} />
           </View>
         }
         ListEmptyComponent={() => {
