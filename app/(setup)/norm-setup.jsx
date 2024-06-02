@@ -1,6 +1,5 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
-import DismissKeyboard from '../../components/DismissKeyboard'
 import BackgroundVideo from '../../components/BackgroundVideo'
 import videos from '../../constants/videos'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -36,8 +35,6 @@ const NormSetup = () => {
                 />
               </View>
             </View>
-              
-            
 
             <CustomButton 
               title="Next"
