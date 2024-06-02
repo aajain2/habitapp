@@ -96,7 +96,7 @@ const Camera = () => {
 
         <View className="flex items-center justify-center h-full">
           <Text className="font-inter-regular my-2">
-            {prompt}
+            {user.todaysPrompt}
           </Text>
 
           <View className="w-[90vw] h-[60vh] rounded-2xl bg-light-gray flex items-center justify-center">

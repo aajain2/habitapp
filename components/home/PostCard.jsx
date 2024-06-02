@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import MenuButton from '../buttons/MenuButton'
 import PictureCard from './PictureCard'
 import ReportModal from '../ReportModal'
+import { BlurView } from 'expo-blur'
 
 const PostCard = ({
   completed,
@@ -35,9 +36,11 @@ const PostCard = ({
             containerStyles="h-5"
             handleClick={() => setShowModal(true)}
             size={16}
+            disabled={!completed}
           />
           <Text className="text-xs font-inter-medium text-gray">{post.timestamp}</Text>
         </View>
+        <BlurView className="absolute w-[100vw] -left-[5vw] -top-4 h-20" intensity={!completed ? 10 : 0} />
       </View>
 
       <PictureCard 
