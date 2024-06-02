@@ -97,6 +97,10 @@ export const getPost = async (uid) => {
     const userRef = doc(firestore, "users", uid)
     const userSnap = await getDoc(userRef)
 
+    if (!userSnap.exists()) {
+      throw new Error("User not found, please restart app")
+    }
+
     return {
       ...postSnap.data(),
       avatar: userSnap.data().avatar,
@@ -117,7 +121,7 @@ export const getFriendsPosts = async (uidList) => {
     for (const array of nestedUID) {
       const userRef = collection(firestore, "posts")
 
-      const q = query(userRef, where(documentId(), "in", uidList))
+      const q = query(userRef, where(documentId(), "in", array))
       const querySnapshot = await getDocs(q)
   
       querySnapshot.forEach((doc) => {
