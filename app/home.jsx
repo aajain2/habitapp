@@ -13,6 +13,7 @@ const Home = () => {
   const { user, refreshUser, loading, setLoading } = useGlobalContext()
   const [currentPost, setCurrentPost] = useState(null)
   const [friendsPosts, setFriendsPosts] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
 
   useEffect(() => {
     if (user.completedToday) {
@@ -27,9 +28,12 @@ const Home = () => {
   }, [user])
 
   useEffect(() => {
+    setLoading(true)
+
     getFriendsPosts(user.friends)
       .then((posts) => {
         setFriendsPosts(posts)
+        setLoading(false)
       })
       .catch((e) => {
         Alert.alert(e.message)
@@ -37,7 +41,7 @@ const Home = () => {
   }, [])
 
   const handleRefresh = async () => {
-    setLoading(true)
+    setRefreshing(true)
 
     try {
       if (user.completedToday) {
@@ -50,7 +54,7 @@ const Home = () => {
       const friendsPosts = await getFriendsPosts(user.friends)
       setFriendsPosts(friendsPosts)
 
-      setLoading(false)
+      setRefreshing(false)
     } catch (e) {
       Alert.alert(e.message)
     }
@@ -61,7 +65,7 @@ const Home = () => {
       <FlatList 
         className="h-full"
         data={friendsPosts}
-        refreshing={loading}
+        refreshing={refreshing}
         onRefresh={handleRefresh}
         ListHeaderComponent={() => {
           return (
@@ -96,10 +100,12 @@ const Home = () => {
           return (
             <View className="flex justify-center items-center mb-8">
               <View className="w-[90vw] h-[20vh] flex justify-center items-center">
-                <EmptyResults 
-                  message="None of your friends have completed their habits yet"
-                  textStyles="w-44 mt-2"
-                />
+                {loading && 
+                  <EmptyResults 
+                    message="None of your friends have completed their habits yet"
+                    textStyles="w-44 mt-2"
+                  />
+                }
               </View>
             </View>
           )

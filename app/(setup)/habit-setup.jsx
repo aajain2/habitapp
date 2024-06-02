@@ -64,8 +64,6 @@ const HabitSetup = () => {
       .catch((e) => {
         Alert.alert(e.message)
       })
-
-    console.log(selected)
   }, [])
 
   return (

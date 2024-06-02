@@ -13,7 +13,6 @@ const YesterdayReport = ({
     getReport(user.friends)
       .then((slackers) => {
         setSlackers(slackers)
-        console.log(slackers)
       })
       .catch((e) => {
         Alert.alert(e.message)

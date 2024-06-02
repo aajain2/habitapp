@@ -4,6 +4,7 @@ import CustomButton from '../components/buttons/CustomButton';
 import images from '../constants/images';
 import TrabitHeader from '../components/TrabitHeader';
 import { useGlobalContext } from '../context/GlobalProvider';
+import LandingPage from '../components/LandingPage';
 
 const App = () => {
   const { loading, isLogged } = useGlobalContext();
@@ -48,6 +49,8 @@ const App = () => {
           router.navigate("/name")
         }}
       />
+
+      {loading && !isLogged && <LandingPage />}
     </SafeAreaView>
   )
 }
