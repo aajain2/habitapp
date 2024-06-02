@@ -16,10 +16,11 @@ const GlobalProvider = ({ children }) => {
     const unregisterAuthObserver = onAuthStateChanged(auth, () =>
       getCurrentUser()
         .then((res) => {
+          setLoading(false)
+
           if (res) {
             setIsLogged(true)
             setUser(res)
-            setLoading(false)
           }
         })
         .catch((error) => {
