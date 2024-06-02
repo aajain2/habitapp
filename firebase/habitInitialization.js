@@ -122,7 +122,7 @@ async function initializeHabits() {
   // Populate Habits and Prompts
   habitsData.forEach(habit => {
     const habitRef = db.collection('habits').doc(habit.id);
-    batch.set(habitRef, { name: habit.name, description: habit.description, prompts: habit.prompts });
+    batch.set(habitRef, { ...habit });
   });
 
   // Execute the batch write

@@ -103,6 +103,7 @@ const HabitSetup = () => {
                       selected={selected}
                       setSelected={setSelected}
                       key={item.id}
+                      imageURI={item.picture}
                     />
                   </View>
                 )}

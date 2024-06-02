@@ -8,13 +8,7 @@ export const getHabits = async () => {
 
     request.forEach((doc) => {
       const data = doc.data()
-
-      habits.push({
-        id: doc.id,
-        description: data.description,
-        name: data.name,
-        prompts: data.prompts
-      })
+      habits.push(data)
     });
 
     return habits
@@ -42,15 +36,11 @@ export const getHabit = async (habitId) => {
     if (!postSnap.exists()) {
       const defaultSnap = await getDoc(doc(firestore, "habits", "gym"))
 
-      console.log(defaultSnap)
-
       return {
         ...defaultSnap.data(),
         id: defaultSnap.id
       }
     }
-
-    console.log("Ran")
 
     return {
       ...postSnap.data(),

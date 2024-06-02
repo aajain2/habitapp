@@ -5,7 +5,7 @@ const HabitCard = ({
   name,
   title,
   subtitle,
-  imageSource,
+  imageURI,
   selected,
   setSelected,
   prompts
@@ -35,7 +35,9 @@ const HabitCard = ({
 
         <Image 
           className="w-[76px] h-[50px]"
-          source={imageSource}
+          source={{
+            uri: imageURI
+          }}
           resizeMode="contain"
         />
       </View>
