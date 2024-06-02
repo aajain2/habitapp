@@ -2,7 +2,10 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import images from '../../constants/images'
 
-const EmptyResults = () => {
+const EmptyResults = ({
+  message,
+  textStyles
+}) => {
   return (
     <View className="flex justify-center items-center h-32">
       <Image 
@@ -12,7 +15,7 @@ const EmptyResults = () => {
       />
 
       <Text className="font-inter-bold text-base">Uh oh!</Text>
-      <Text className="font-inter-regular text-sm">No search result found</Text>
+      <Text className={`font-inter-regular text-sm ${textStyles}`}>{message}</Text>
     </View>
   )
 }

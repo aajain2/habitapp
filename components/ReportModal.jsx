@@ -1,6 +1,6 @@
 import { View, Text, Alert, Modal, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { reportPost } from '../functions/post'
+import { reportPost } from '../firebase/post'
 import { AntDesign } from '@expo/vector-icons'
 import ThinCustomButton from './buttons/ThinCustomButton'
 import images from '../constants/images'

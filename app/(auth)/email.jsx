@@ -17,7 +17,7 @@ const EmailSignUp = () => {
   const emailSubmit = () => {
     if (validator.isEmail(email)) {
       setError(false)
-      router.navigate("/verification")
+      router.navigate("/account")
     } else {
       setError(true)
     }
@@ -58,7 +58,7 @@ const EmailSignUp = () => {
 
             <CustomButton 
               handlePress={() => emailSubmit()}
-              title="Send Verification Code"
+              title="Next"
               containerStyles="mt-32"
             />
           </View>

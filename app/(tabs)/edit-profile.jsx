@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, Alert } from 'react-native'
 import React from 'react'
 import ProfileHeaderBar from '../../components/home/ProfileHeaderBar'
 import ProfilePicture from '../../components/ProfilePicture'
@@ -18,6 +18,7 @@ const EditProfile = () => {
         <ProfileHeaderBar
           containerStyles="absolute"
           title="Edit Profile and Account"
+          logoutButton
         />
       </View>
 
@@ -82,10 +83,12 @@ const EditProfile = () => {
           <ChangeSensitiveLink
             containerStyles="mb-2"
             title="Change Email"
+            handlePress={() => Alert.alert("Sorry! We didn't have time to implement this :( Please contact us to change email")}
           />
 
           <ChangeSensitiveLink
             title="Change Password"
+            handlePress={() => Alert.alert("Sorry! We didn't have time to implement this :( Please contact us to change password")}
           />
         </View>
       </View>

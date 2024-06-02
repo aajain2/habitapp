@@ -9,10 +9,8 @@ import Streak from './Streak'
 import HabitPrompt from './HabitPrompt'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
-const HomeLanding = ({
-  prompt
-}) => {
-  const { user } = useGlobalContext()
+const HomeLanding = () => {
+  const { user, loading } = useGlobalContext()
 
   return (
     <View className={`w-full ${user.completedToday ? "h-[30vh]" : "h-[100vh]"}`}>
@@ -45,22 +43,23 @@ const HomeLanding = ({
                 </Text> 
               </View> : 
               <HabitPrompt 
-                prompt={prompt}
+                prompt={user.todaysPrompt}
               />
             }
           </View>
         </SafeAreaView>
       </View>
 
-      <Video
-        className="w-full h-full"
-        source={user.completedToday ? videos.greenBackground : videos.blueOrangeBackground}
-        useNativeControls
-        resizeMode={ResizeMode.COVER}
-        isLooping
-        isMuted
-        shouldPlay
-      />
+      {!loading && 
+        <Video
+          className="w-full h-full"
+          source={user.completedToday ? videos.greenBackground : videos.blueOrangeBackground}
+          resizeMode={ResizeMode.COVER}
+          isLooping
+          isMuted
+          shouldPlay
+        />
+      }
     </View>
   )
 }

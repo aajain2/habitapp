@@ -1,49 +1,24 @@
-import { View, Text, FlatList, Image } from 'react-native'
-import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import { View, Text, FlatList, Image, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { useGlobalContext } from '../../context/GlobalProvider'
+import { getReport } from '../../firebase/report'
+import images from '../../constants/images'
 
-// for avoiding double initialization
-if (!firebase.apps.length) {
-  firebase.initializeApp({});
-} else {
-  firebase.app();
-}
-
-const YesterdayReport = ({ blurred }) => {
-  const [nonCompleters, setNonCompleters] = useState([]);
+const YesterdayReport = ({
+  blurred
+}) => {
+  const { user } = useGlobalContext()
+  const [slackers, setSlackers] = useState([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const db = firebase.firestore();
-      const nonCompletersRef = db.collection('nonCompleters');
-      const today = new Date();
-      const yesterday = new Date(today.setDate(today.getDate() - 1));
-      const dateString = yesterday.toISOString().split('T')[0];
-
-      const querySnapshot = await nonCompletersRef.where('date', '==', dateString).get();
-      const usersData = await Promise.all(querySnapshot.docs.map(async (doc) => {
-        const userId = doc.data().userId;
-        const userRef = db.collection('users').doc(userId);
-        const userDoc = await userRef.get();
-
-        if (userDoc.exists) {
-          const userData = userDoc.data();
-          return {
-            id: userDoc.id,
-            username: userData.firstName,
-            profilePicture: userData.avatar || 'https://picsum.photos/200',
-            name: userData.firstName
-          };
-        }
-        return null;
-      }));
-
-      setNonCompleters(usersData.filter(user => user!== null));
-    };
-
-    fetchData();
-  }, []);
+    getReport(user.friends)
+      .then((slackers) => {
+        setSlackers(slackers)
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+  }, [])
 
   return (
     <View className="my-4 mx-4">
@@ -55,27 +30,33 @@ const YesterdayReport = ({ blurred }) => {
       </Text>
 
       <FlatList 
-        data={nonCompleters}
-        className="py-4"
-        keyExtractor={(item) => item.id}
+        data={slackers}
+        className="pt-4"
+        keyExtractor={(item) => item.uid}
         horizontal
         renderItem={({ item }) => 
-          <View className="mx-2">
+          <View className="mx-2 h-24">
             <Image 
               blurRadius={blurred ? 20 : 0}
               className="w-16 h-16 rounded-full"
-              source={{
-                uri: item.profilePicture
-              }}
+              source={item.avatar ? { uri: item.avatar} : images.avatar}
             />
             <Text className="text-center mt-2 text-xs font-inter-bold">
               {item.username}
             </Text>
           </View>
         }
+        ListEmptyComponent={() => {
+          return (
+            <View className="h-24 w-[90vw] flex items-center justify-center">
+              <Text className="font-inter-bold text-base">Good going!</Text>
+              <Text className="font-inter-bold text-sm">All your friends completed their habit yesterday.</Text>
+            </View>
+          )
+        }}
       />
     </View>
   )
 }
 
-export default YesterdayReport;
+export default YesterdayReport

@@ -82,7 +82,9 @@ const SearchBar = ({
               }
               keyExtractor={(item) => item.uid}
               ListEmptyComponent={
-                <EmptyResults />
+                <EmptyResults 
+                  message="No search result found"
+                />
               }
             />
 

@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 const CustomButton = ({
@@ -15,9 +15,14 @@ const CustomButton = ({
       disabled={isLoading}
       onPress={handlePress}
     >
-      <Text className={`font-inter-bold text-sm text-white ${textStyles}`}>
-        {title}
-      </Text>
+      {isLoading ? 
+        <ActivityIndicator 
+          color="white"
+        /> : 
+        <Text className={`font-inter-bold text-sm text-white ${textStyles}`}>
+          {title}
+        </Text>
+      }
     </TouchableOpacity>
   )
 }
