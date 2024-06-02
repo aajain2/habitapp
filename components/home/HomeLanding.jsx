@@ -9,9 +9,7 @@ import Streak from './Streak'
 import HabitPrompt from './HabitPrompt'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
-const HomeLanding = ({
-  prompt
-}) => {
+const HomeLanding = () => {
   const { user } = useGlobalContext()
 
   return (
@@ -45,7 +43,7 @@ const HomeLanding = ({
                 </Text> 
               </View> : 
               <HabitPrompt 
-                prompt={prompt}
+                prompt={user.todaysPrompt}
               />
             }
           </View>

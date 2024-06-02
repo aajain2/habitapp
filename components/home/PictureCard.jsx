@@ -4,11 +4,14 @@ import CustomButton from '../buttons/CustomButton'
 import CustomLink from '../CustomLink'
 import { router } from 'expo-router'
 import LikeButton from '../buttons/LikeButton'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const PictureCard = ({
   completed,
   post
 }) => {
+  const { user } = useGlobalContext()
+
   return (
     <View>
       <View className="w-full h-[60vh] flex justify-center">
@@ -37,7 +40,7 @@ const PictureCard = ({
             <CustomButton
               containerStyles="bg-transparent border-white border w-64 h-16 px-4 mb-4 rounded-xl"
               textStyles="text-white font-inter-regular text-center"
-              title={post.prompt}
+              title={user.todaysPrompt}
               handlePress={() => router.navigate("/camera")}
             />
 
