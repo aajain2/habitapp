@@ -34,7 +34,7 @@ const AvatarSelection = () => {
     if (field) {
       router.navigate("/edit-profile")
     } else {
-      router.navigate("/permissions")
+      router.navigate("/welcome")
     }
   }
 

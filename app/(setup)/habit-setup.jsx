@@ -43,25 +43,29 @@ const HabitSetup = () => {
   }
 
   useEffect(() => {
-    getHabit(user.habit)
-      .then((habit) => {
-        setSelected({
-          habit: user.habit,
-          habitDescription: user.habitDescription,
-          prompts: habit.prompts
-        })
-
-        getHabits()
-          .then((habits) => {
-            setHabitOptions(habits)
+    if (user.habit) {
+      getHabit(user.habit)
+        .then((habit) => {
+          setSelected({
+            habit: user.habit,
+            habitDescription: user.habitDescription,
+            prompts: habit.prompts
           })
           .catch((e) => {
             Alert.alert(e.message)
           })
-        .catch((e) => {
-          Alert.alert(e.message)
         })
+    }
+
+    getHabits()
+      .then((habits) => {
+        setHabitOptions(habits)
       })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
+
+    console.log(selected)
   }, [])
 
   return (
