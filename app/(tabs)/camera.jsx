@@ -77,8 +77,6 @@ const Camera = () => {
     await uploadPost(
       photoURI, 
       user.habitDescription,
-      user.username,
-      user.avatar,
       user.todaysPrompt,
       {
         onStart: onStart,

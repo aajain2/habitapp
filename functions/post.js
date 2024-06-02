@@ -5,7 +5,7 @@ import { collection, doc, documentId, getDoc, getDocs, increment, query, setDoc,
 import { splitArrayByTen } from '../util/splitArrayByTen';
 import { convertFirebaseTimestamp } from '../util/convertFirebaseTimestamp';
 
-const completePost = async (uri, habit, username, avatar, prompt) => {
+const completePost = async (uri, habit, prompt) => {
   const user = auth.currentUser 
 
   try {
@@ -19,8 +19,6 @@ const completePost = async (uri, habit, username, avatar, prompt) => {
       postURI: uri,
       habit: habit,
       timestamp: new Date(),
-      username: username,
-      avatar: avatar,
       likes: 0,
       likers: [],
       prompt: prompt,
@@ -35,8 +33,6 @@ const completePost = async (uri, habit, username, avatar, prompt) => {
 export const uploadPost = async (
   uri,
   habit,
-  username,
-  avatar,
   prompt,
   { onStart, onFinish, onFail }
 ) => {
@@ -78,7 +74,7 @@ export const uploadPost = async (
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
         try {
-          await completePost(downloadURL, habit, username, avatar, prompt)
+          await completePost(downloadURL, habit, prompt)
           onFinish()
           console.log('File available at', downloadURL);
         } catch (e) {
@@ -98,8 +94,13 @@ export const getPost = async (uid) => {
       throw new Error("Post not found, please restart app")
     }
 
+    const userRef = doc(firestore, "users", uid)
+    const userSnap = await getDoc(userRef)
+
     return {
       ...postSnap.data(),
+      avatar: userSnap.data().avatar,
+      username: userSnap.data().username,
       uid: postSnap.id,
       timestamp: convertFirebaseTimestamp(postSnap.data().timestamp)
     }
@@ -110,22 +111,25 @@ export const getPost = async (uid) => {
 
 export const getFriendsPosts = async (uidList) => {
   try {
-    const posts = []
+    const postsUID = []
     const nestedUID = splitArrayByTen(uidList)
 
-    for (array in nestedUID) {
+    for (const array of nestedUID) {
       const userRef = collection(firestore, "posts")
 
       const q = query(userRef, where(documentId(), "in", uidList))
       const querySnapshot = await getDocs(q)
   
       querySnapshot.forEach((doc) => {
-        posts.push({
-          ...doc.data(),
-          uid: doc.id,
-          timestamp: convertFirebaseTimestamp(doc.data().timestamp)
-        })
+        postsUID.push(doc.id)
       })
+    }
+
+    const posts = []
+
+    for (const uid of postsUID) {
+      const post = await getPost(uid)
+      posts.push(post)
     }
 
     return posts

@@ -7,7 +7,7 @@ export const getFriendData = async (uidList) => {
     const friends = []
     const nestedUID = splitArrayByTen(uidList)
 
-    for (const array in nestedUID) {
+    for (const array of nestedUID) {
       const userRef = collection(firestore, "users")
 
       const q = query(userRef, where(documentId(), "in", uidList))
