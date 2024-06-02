@@ -47,13 +47,13 @@ const HabitSetup = () => {
       getHabit(user.habit)
         .then((habit) => {
           setSelected({
-            habit: user.habit,
-            habitDescription: user.habitDescription,
+            habit: habit.id,
+            habitDescription: habit.name,
             prompts: habit.prompts
           })
-          .catch((e) => {
-            Alert.alert(e.message)
-          })
+        })
+        .catch((e) => {
+          Alert.alert(e.message)
         })
     }
 

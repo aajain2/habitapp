@@ -40,8 +40,17 @@ export const getHabit = async (habitId) => {
     const postSnap = await getDoc(doc(firestore, "habits", habitId))
   
     if (!postSnap.exists()) {
-      throw new Error("Habit not found")
+      const defaultSnap = await getDoc(doc(firestore, "habits", "gym"))
+
+      console.log(defaultSnap)
+
+      return {
+        ...defaultSnap.data(),
+        id: defaultSnap.id
+      }
     }
+
+    console.log("Ran")
 
     return {
       ...postSnap.data(),
