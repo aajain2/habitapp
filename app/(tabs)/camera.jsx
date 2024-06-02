@@ -8,7 +8,7 @@ import { router } from 'expo-router'
 import icons from '../../constants/icons'
 import { AntDesign } from '@expo/vector-icons'
 import { manipulateAsync, FlipType } from 'expo-image-manipulator'
-import { uploadPost } from '../../functions/post'
+import { uploadPost } from '../../firebase/post'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Camera = () => {

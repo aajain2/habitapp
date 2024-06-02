@@ -6,7 +6,7 @@ import PostCard from '../components/home/PostCard'
 import CurrentPost from '../components/home/CurrentPost'
 import { useGlobalContext } from '../context/GlobalProvider'
 import { useEffect, useState } from 'react'
-import { getFriendsPosts, getPost } from '../functions/post'
+import { getFriendsPosts, getPost } from '../firebase/post'
 import EmptyResults from '../components/search/EmptyResults'
 
 const Home = () => {

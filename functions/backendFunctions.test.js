@@ -45,7 +45,7 @@ jest.mock('firebase-functions/v2/pubsub', () => ({
 
 // Import function handlers from other files
 const { handleNewUserRegistration } = require('../firebase/auth');
-const { createPost, flagPost } = require('../functions/posts');
+const { createPost, flagPost } = require('../firebase/posts');
 const { addFriend, removeFriend } = require('../functions/social');
 const { completeHabit } = require('../firebase/habits');
 const { scheduledDailyCleanup } = require('../functions/dailyCleanup');

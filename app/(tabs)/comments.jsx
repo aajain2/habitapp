@@ -7,7 +7,7 @@ import { useLocalSearchParams } from 'expo-router'
 import CurrentPost from '../../components/home/CurrentPost'
 import Comment from '../../components/Comment'
 import AddCommentInput from '../../components/AddCommentInput'
-import { getPost } from '../../functions/post'
+import { getPost } from '../../firebase/post'
 import { convertFirebaseTimestamp } from '../../util/convertFirebaseTimestamp'
 import { getCommentData } from '../../firebase/comments'
 
