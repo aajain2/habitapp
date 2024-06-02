@@ -7,7 +7,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 // Scheduled function to reset daily user flags and manage non-completions
-export const resetDailyFlagsAndHandleNonCompletions = onSchedule("0 0 * * *", {timeZone: "America/Los_Angeles" }, async (context) => {
+export const resetDailyFlagsAndHandleNonCompletions = onSchedule("0 0 * * *", async () => {
     const usersRef = db.collection('users');
     const nonCompletersRef = db.collection('nonCompleters');
     const dateStr = new Date().toISOString().split('T')[0];  // e.g., '2024-01-01'
@@ -31,7 +31,7 @@ export const resetDailyFlagsAndHandleNonCompletions = onSchedule("0 0 * * *", {t
 });
 
 // Scheduled function for deleting all posts and generating daily prompts
-export const scheduledDailyCleanupAndPrompts = onSchedule("59 23 * * *", {timeZone: "America/Los_Angeles" }, async (context) => {
+export const scheduledDailyCleanupAndPrompts = onSchedule("59 23 * * *", async () => {
     try {
       const postsSnapshot = await db.collection('posts').get();
       const deletePromises = postsSnapshot.docs.map((doc) => doc.ref.delete());
@@ -52,4 +52,9 @@ export const scheduledDailyCleanupAndPrompts = onSchedule("59 23 * * *", {timeZo
     } catch (error) {
       logger.error("Error generating daily prompts:", error);
     }
+});
+
+// basic test function
+export const basicScheduledFunction = onSchedule("every 24 hours", async () => {
+    logger.log("Scheduled function executed successfully.");
 });
