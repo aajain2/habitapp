@@ -2,6 +2,7 @@ import { View, Text, FlatList, Image, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { getReport } from '../../firebase/report'
+import images from '../../constants/images'
 
 const YesterdayReport = ({
   blurred
@@ -38,9 +39,7 @@ const YesterdayReport = ({
             <Image 
               blurRadius={blurred ? 20 : 0}
               className="w-16 h-16 rounded-full"
-              source={{
-                uri: item.avatar
-              }}
+              source={item.avatar ? { uri: item.avatar} : images.avatar}
             />
             <Text className="text-center mt-2 text-xs font-inter-bold">
               {item.username}

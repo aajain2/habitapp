@@ -1,8 +1,6 @@
-import { storage, firestore, auth } from '../firebaseConfig';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { collection, doc, documentId, getDoc, getDocs, increment, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { firestore } from '../firebaseConfig';
+import { collection, doc, documentId, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { splitArrayByTen } from '../util/splitArrayByTen';
-import { convertFirebaseTimestamp } from '../util/convertFirebaseTimestamp';
 
 export const getReport = async (uidList) => {
   try {
@@ -30,7 +28,10 @@ export const getReport = async (uidList) => {
         throw new Error("User not found, please restart app")
       }
 
-      slackers.push(userSnap.data())
+      slackers.push({
+        ...userSnap.data(),
+        uid: userSnap.id
+      })
     }
 
     return slackers
