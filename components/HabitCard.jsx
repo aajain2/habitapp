@@ -11,7 +11,7 @@ const HabitCard = ({
   prompts
 }) => {
   const handlePress = (name, selected) => {
-    if (name === selected.habit) {
+    if (selected && name === selected.habit) {
       setSelected(null)
     } else {
       setSelected({
@@ -24,7 +24,7 @@ const HabitCard = ({
 
   return (
     <TouchableOpacity 
-      className={`bg-white/30 rounded-lg border-2 border-transparent ${name === selected.habit && "border-white"}`}
+      className={`bg-white/30 rounded-lg border-2 border-transparent ${name === selected?.habit && "border-white"}`}
       onPress={() => handlePress(name, selected)}
     >
       <View className="flex-row w-[90vw] h-20 items-center justify-center">

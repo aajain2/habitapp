@@ -8,7 +8,10 @@ const ChangeSensitiveLink = ({
   containerStyles,
 }) => {
   return (
-    <TouchableOpacity className={`w-full flex-row items-center ${containerStyles}`}>
+    <TouchableOpacity 
+      className={`w-full flex-row items-center ${containerStyles}`}
+      onPress={handlePress}
+    >
       <View className="w-8">
         <MaterialIcons name="lock-open" size={16} color="black" />
       </View>

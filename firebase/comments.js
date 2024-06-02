@@ -1,8 +1,8 @@
-import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore"
+import { doc, updateDoc, arrayUnion, getDoc, getDocs, where, documentId, collection } from "firebase/firestore"
 import { firestore } from "../firebaseConfig"
 
 // Adds a comment and then returns the updated comments
-export const addComment = async (uid, username, avatar, comment, postID) => {
+export const addComment = async (uid, comment, postID) => {
   try {
     if (comment === "") {
       throw new Error("Please include text in comment")
@@ -11,8 +11,6 @@ export const addComment = async (uid, username, avatar, comment, postID) => {
     await updateDoc(doc(firestore, "posts", postID), {
       comments: arrayUnion({
         uid: uid,
-        username: username,
-        avatar: avatar,
         comment: comment,
         timestamp: new Date()
       })
@@ -24,7 +22,31 @@ export const addComment = async (uid, username, avatar, comment, postID) => {
       throw new Error("Post not found, please restart app")
     }
 
-    return postSnap.data().comments
+    return getCommentData(postSnap.data().comments)
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+export const getCommentData = async (comments) => {
+  const returnComments = []
+
+  try {
+    for (const comment of comments) {
+      const commentSnap = await getDoc(doc(firestore, "users", comment.uid))
+    
+      if (!commentSnap.exists()) {
+        throw new Error("Comment not found, please restart app")
+      }
+
+      returnComments.push({
+        ...comment,
+        avatar: commentSnap.data().avatar,
+        username: commentSnap.data().username
+      })
+    }
+
+    return returnComments
   } catch (e) {
     throw new Error(e.message)
   }

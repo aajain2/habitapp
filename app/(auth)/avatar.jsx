@@ -15,7 +15,6 @@ const AvatarSelection = () => {
   const { user, setUser } = useGlobalContext()
   const [image, setImage] = useState(user.avatar)
   const [uploading, setUploading] = useState(false)
-  const [done, setDone] = useState(false)
 
   const onStart = () => {
     setUploading(true)
@@ -27,7 +26,6 @@ const AvatarSelection = () => {
 
   const onFinish = async () => {
     setUploading(false)
-    setDone(false)
     
     const user = await getCurrentUser()
 
@@ -36,7 +34,7 @@ const AvatarSelection = () => {
     if (field) {
       router.navigate("/edit-profile")
     } else {
-      router.navigate("/permissions")
+      router.navigate("/welcome")
     }
   }
 
@@ -97,6 +95,7 @@ const AvatarSelection = () => {
             />
 
             <CustomButton
+              isLoading={uploading}
               handlePress={() => handleSave()}
               title="Save"
               containerStyles="mt-4"

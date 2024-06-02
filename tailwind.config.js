@@ -13,7 +13,8 @@ module.exports = {
         "searchbar-gray": "#D5E3E7",
         "gray": "#696969",
         "dark-blue": "#004A63",
-        "light-gray": "#ABABAB"
+        "light-gray": "#ABABAB",
+        "background-gray": "#F2F2F2"
       },
       fontFamily: {
         "alata-regular": ["Alata-Regular", "sans-serif"],

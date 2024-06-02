@@ -29,6 +29,11 @@ const Account = () => {
   const handleSubmit = async () => {
     let uid = ""
 
+    if (username === "" || password.includes(" ")) {
+      Alert.alert("Invalid username. Empty spaces are not allowed")
+      return
+    }
+
     if (password === verifyPassword) {
       try {
         uid = await handleNewUserRegistration({
@@ -48,7 +53,7 @@ const Account = () => {
           router.push("/avatar")
         }
       } catch (e) {
-        Alert.alert("Error registering: " + e)
+        Alert.alert("Error registering. Please make sure your password is strong enough and you have a valid username without any spaces")
       }
     } else {
       Alert.alert("Passwords do not match")

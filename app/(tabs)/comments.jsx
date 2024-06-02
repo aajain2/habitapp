@@ -7,73 +7,9 @@ import { useLocalSearchParams } from 'expo-router'
 import CurrentPost from '../../components/home/CurrentPost'
 import Comment from '../../components/Comment'
 import AddCommentInput from '../../components/AddCommentInput'
-import { getPost } from '../../functions/post'
+import { getPost } from '../../firebase/post'
 import { convertFirebaseTimestamp } from '../../util/convertFirebaseTimestamp'
-
-const dummyComments = [
-  {
-    id: 0,
-    username: "johnnyappleseed",
-    comment: "nice gains bro",
-    profilePicture: "https://picsum.photos/200",
-  },
-  {
-    id: 1,
-    username: "techguru99",
-    comment: "This is really insightful, thank you!",
-    profilePicture: "https://picsum.photos/200?random=1",
-  },
-  {
-    id: 2,
-    username: "naturelover",
-    comment: "Beautiful pictures! Where were they taken?",
-    profilePicture: "https://picsum.photos/200?random=2",
-  },
-  {
-    id: 3,
-    username: "foodie123",
-    comment: "Yum, that recipe looks delicious. Can't wait to try it!",
-    profilePicture: "https://picsum.photos/200?random=3",
-  },
-  {
-    id: 4,
-    username: "bookworm",
-    comment: "Amazing book review, added to my reading list.",
-    profilePicture: "https://picsum.photos/200?random=4",
-  },
-  {
-    id: 5,
-    username: "travelbug",
-    comment: "Such a fantastic travel guide, it’s very helpful.",
-    profilePicture: "https://picsum.photos/200?random=5",
-  },
-  {
-    id: 6,
-    username: "gamerzrule",
-    comment: "Great gameplay tips, really helped me out!",
-    profilePicture: "https://picsum.photos/200?random=6",
-  },
-  {
-    id: 7,
-    username: "fitnessfreak",
-    comment: "Awesome workout routine, thanks for sharing!",
-    profilePicture: "https://picsum.photos/200?random=7",
-  },
-  {
-    id: 8,
-    username: "musiclover",
-    comment: "Loved this song, thanks for recommending it!",
-    profilePicture: "https://picsum.photos/200?random=8",
-  },
-  {
-    id: 9,
-    username: "moviebuff",
-    comment: "Fantastic movie review, definitely going to watch it.",
-    profilePicture: "https://picsum.photos/200?random=9",
-  }
-]
-
-const emptyDummy = []
+import { getCommentData } from '../../firebase/comments'
 
 const Comments = () => {
   const { uid } = useLocalSearchParams()
@@ -84,7 +20,13 @@ const Comments = () => {
     getPost(uid)
       .then((data) => {
         setPost(data)
-        setComments(data.comments)
+        getCommentData(data.comments)
+          .then((commentData) => {
+            setComments(commentData)
+          })
+          .catch((e) => {
+            Alert.alert(e.message)
+          })
       })
       .catch((e) => {
         Alert.alert(e.message)

@@ -9,7 +9,8 @@ import GlobalProvider from "../context/GlobalProvider"
 const RootLayout = () => {
   const [assets, assetsError] = useAssets([
                                             require("../assets/videos/blue-orange-background.mov"),
-                                            require("../assets/videos/green-background.mov")
+                                            require("../assets/videos/green-background.mov"),
+                                            require("../assets/gifs/rainbow-rabbit.gif")
                                           ]);
 
   const[fontsLoaded, fontsError] = useFonts({

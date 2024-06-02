@@ -49,7 +49,7 @@ const CurrentPost = ({
             {avatars?.map((item, index) => {
               return (
                 <Image
-                  className="w-6 h-6 rounded-full border-2 border-[#F2F2F2] -mr-2"
+                  className="w-6 h-6 rounded-full border-2 border-background-gray -mr-2"
                   source={{
                     uri: item
                   }}
