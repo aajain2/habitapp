@@ -1,4 +1,4 @@
-import { View, SafeAreaView, TouchableOpacity, Image, Text, Alert } from 'react-native'
+import { View, SafeAreaView, TouchableOpacity, Image, Text, Alert, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import TrabitHeader from '../../components/TrabitHeader'
 import BackButton from '../../components/buttons/BackButton'
@@ -20,7 +20,6 @@ const Camera = () => {
   const [photoURI, setPhotoURI] = useState("")
   const { user, setUser } = useGlobalContext()
   const [uploading, setUploading] = useState(false)
-  const [done, setDone] = useState(false)
   const [takingPhoto, setTakingPhoto] = useState(false)
 
   const prompt = "Take a photo of any vegetable with a fork 🥦🍴"
@@ -63,7 +62,6 @@ const Camera = () => {
 
   const onFinish = () => {
     setUploading(false)
-    setDone(true)
     setUser({
       ...user,
       completedToday: true,
@@ -173,13 +171,21 @@ const Camera = () => {
               <TouchableOpacity 
                 className="flex-row justify-center items-center gap-x-4"
                 onPress={handleUpload}
+                disabled={uploading}
               >
                 <Text className="text-lg font-inter-bold">COMPLETE HABIT</Text>
-                <Image
-                  className="w-6 h-6"
-                  resizeMode="contain"
-                  source={icons.sendIcon}
-                />
+                {uploading ? 
+                  <ActivityIndicator 
+                    color="black"
+                  />
+                : 
+                  <Image
+                    className="w-6 h-6"
+                    resizeMode="contain"
+                    source={icons.sendIcon}
+                  />
+                }
+                
               </TouchableOpacity>
             }
           </View>
