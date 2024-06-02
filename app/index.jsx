@@ -36,7 +36,7 @@ const App = () => {
       <CustomButton 
         title="Login"
         handlePress={() => {
-          router.navigate("/norm-setup")
+          router.navigate("/login")
         }}
       />
 
