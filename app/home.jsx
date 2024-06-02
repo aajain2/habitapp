@@ -10,7 +10,7 @@ import { getFriendsPosts, getPost } from '../functions/post'
 import EmptyResults from '../components/search/EmptyResults'
 
 const Home = () => {
-  const { user } = useGlobalContext()
+  const { user, refreshUser, loading, setLoading } = useGlobalContext()
   const [currentPost, setCurrentPost] = useState(null)
   const [friendsPosts, setFriendsPosts] = useState([])
 
@@ -35,13 +35,34 @@ const Home = () => {
         Alert.alert(e.message)
       })
   }, [])
-  
+
+  const handleRefresh = async () => {
+    setLoading(true)
+
+    try {
+      if (user.completedToday) {
+        const userPost = await getPost(user.uid)
+        setCurrentPost(userPost)
+      }
+
+      await refreshUser()
+
+      const friendsPosts = await getFriendsPosts(user.friends)
+      setFriendsPosts(friendsPosts)
+
+      setLoading(false)
+    } catch (e) {
+      Alert.alert(e.message)
+    }
+  }
 
   return (
     <View className="w-full h-full">
       <FlatList 
         className="h-full"
         data={friendsPosts}
+        refreshing={loading}
+        onRefresh={handleRefresh}
         ListHeaderComponent={() => {
           return (
             <View>

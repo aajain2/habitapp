@@ -30,6 +30,16 @@ const GlobalProvider = ({ children }) => {
     return () => unregisterAuthObserver()
   }, []);
 
+  const refreshUser = async () => {
+    try {
+      const currentUser = await getCurrentUser()
+
+      setUser(currentUser)
+    } catch (e) {
+      Alert.alert(e.message)
+    }
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -38,6 +48,8 @@ const GlobalProvider = ({ children }) => {
         user,
         setUser,
         loading,
+        setLoading,
+        refreshUser
       }}
     >
       {children}
