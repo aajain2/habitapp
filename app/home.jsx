@@ -8,6 +8,7 @@ import { useGlobalContext } from '../context/GlobalProvider'
 import { useEffect, useState } from 'react'
 import { getFriendsPosts, getPost } from '../firebase/post'
 import EmptyResults from '../components/search/EmptyResults'
+import { router } from 'expo-router'
 
 const Home = () => {
   const { user, refreshUser, loading, setLoading } = useGlobalContext()
@@ -74,12 +75,14 @@ const Home = () => {
 
               {user.completedToday && 
                 <CurrentPost
+                  clickable
+                  handleClick={() => router.navigate({ pathname: "/comments", params: { uid: currentPost.uid}})}
                   containerStyles="items-center"
                   postURI={currentPost?.postURI}
                 />
               }
               
-              <YesterdayReport 
+              <YesterdayReport
                 blurred={!user.completedToday}
               />
 
