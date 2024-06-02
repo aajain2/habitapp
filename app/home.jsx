@@ -7,6 +7,7 @@ import CurrentPost from '../components/home/CurrentPost'
 import { useGlobalContext } from '../context/GlobalProvider'
 import { useEffect, useState } from 'react'
 import { getFriendsPosts, getPost } from '../functions/post'
+import EmptyResults from '../components/search/EmptyResults'
 
 const Home = () => {
   const { user } = useGlobalContext()
@@ -70,6 +71,18 @@ const Home = () => {
           )
         }}
         keyExtractor={(item) => item.uid}
+        ListEmptyComponent={() => {
+          return (
+            <View className="flex justify-center items-center mb-8">
+              <View className="w-[90vw] h-[20vh] flex justify-center items-center">
+                <EmptyResults 
+                  message="None of your friends have completed their habits yet"
+                  textStyles="w-44 mt-2"
+                />
+              </View>
+            </View>
+          )
+        }}
       />
 
       <StatusBar style="light" />

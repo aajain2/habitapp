@@ -12,7 +12,6 @@ const PostCard = ({
 
   return (
     <View className="mx-4 mb-6">
-
       <ReportModal 
         showModal={showModal} 
         setShowModal={setShowModal}
