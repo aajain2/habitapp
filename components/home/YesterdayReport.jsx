@@ -9,11 +9,15 @@ const YesterdayReport = ({
 }) => {
   const { user } = useGlobalContext()
   const [slackers, setSlackers] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
 
   useEffect(() => {
+    setRefreshing(true)
+
     getReport(user.friends)
       .then((slackers) => {
         setSlackers(slackers)
+        setRefreshing(false)
       })
       .catch((e) => {
         Alert.alert(e.message)
@@ -49,8 +53,12 @@ const YesterdayReport = ({
         ListEmptyComponent={() => {
           return (
             <View className="h-24 w-[90vw] flex items-center justify-center">
-              <Text className="font-inter-bold text-base">Good going!</Text>
-              <Text className="font-inter-bold text-sm">All your friends completed their habit yesterday.</Text>
+              {!refreshing &&
+                <>
+                  <Text className="font-inter-bold text-base">Good going!</Text>
+                  <Text className="font-inter-bold text-sm">All your friends completed their habit yesterday.</Text>
+                </>
+              }
             </View>
           )
         }}
