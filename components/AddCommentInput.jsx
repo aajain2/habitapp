@@ -13,7 +13,7 @@ const AddCommentInput = ({
 
   const handleComment = () => {
     if (comment !== "") {
-      addComment(user.uid, user.username, user.avatar, comment, postId)
+      addComment(user.uid, comment, postId)
         .then((comments) => {
           setComments(comments)
           Keyboard.dismiss()
