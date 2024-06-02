@@ -8,13 +8,7 @@ export const getHabits = async () => {
 
     request.forEach((doc) => {
       const data = doc.data()
-
-      habits.push({
-        id: doc.id,
-        description: data.description,
-        name: data.name,
-        prompts: data.prompts
-      })
+      habits.push(data)
     });
 
     return habits
@@ -40,7 +34,12 @@ export const getHabit = async (habitId) => {
     const postSnap = await getDoc(doc(firestore, "habits", habitId))
   
     if (!postSnap.exists()) {
-      throw new Error("Habit not found")
+      const defaultSnap = await getDoc(doc(firestore, "habits", "gym"))
+
+      return {
+        ...defaultSnap.data(),
+        id: defaultSnap.id
+      }
     }
 
     return {
