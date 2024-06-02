@@ -1,55 +1,58 @@
-// This file contains scheduled functions for daily maintenance tasks using Firebase functions.
-// It includes cleanup of old posts and resetting user streaks based on activity logs.
-const { getFirestore } = require('firebase-admin/firestore');
-const { schedule } = require('firebase-functions/v2/pubsub');
+import { onSchedule } from 'firebase-functions/v2/scheduler';
+import admin from 'firebase-admin';
+import { logger } from 'firebase-functions';
 
-const db = getFirestore();
+admin.initializeApp();
 
-// Performs daily cleanup tasks such as deleting old posts and checking user streaks
-exports.scheduledDailyCleanup = async (context) => {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayStr = yesterday.toISOString().split('T')[0];
+const db = admin.firestore();
 
-  try {
-    const postsSnapshot = await db.collection('Posts').where('createdAt', '<', yesterday).get();
-    postsSnapshot.forEach((doc) => {
-      doc.ref.delete();
-    });
-    console.log("Daily cleanup executed successfully.");
-  } catch (error) {
-    console.error("Error during daily cleanup:", error);
-  }
+// Scheduled function to reset daily user flags and manage non-completions
+export const resetDailyFlagsAndHandleNonCompletions = onSchedule("15 3 * * *", { timeZone: "America/Los_Angeles" }, async (context) => {
+    const usersRef = db.collection('users');
+    const nonCompletersRef = db.collection('nonCompleters');
+    const dateStr = new Date().toISOString().split('T')[0];  // e.g., '2024-01-01'
 
-  try {
-    const usersSnapshot = await db.collection('Users').get();
-    usersSnapshot.forEach(async (userDoc) => {
-      const userId = userDoc.id;
-      const habitDoc = await db.collection('Users').doc(userId).collection('Habits').doc(yesterdayStr).get();
-      if (!habitDoc.exists || !habitDoc.data().completed) {
-        await db.collection('Users').doc(userId).update({ streak: 0 });
-      }
-    });
-    console.log("Streaks checked and updated successfully.");
-  } catch (error) {
-    console.error("Error checking and updating streaks:", error);
-  }
-};
+    try {
+        const batch = db.batch();
+        const usersSnapshot = await usersRef.get();
+        usersSnapshot.forEach((doc) => {
+            const userData = doc.data();
+            if (!userData.completedToday) {
+                batch.update(doc.ref, { streak: 0 });
+                batch.set(nonCompletersRef.doc(doc.id), { date: dateStr, userId: doc.id });
+            }
+            batch.update(doc.ref, { completedToday: false });
+        });
+        await batch.commit();
+        logger.log("Reset completedToday and handled non-completions successfully.");
+    } catch (error) {
+        logger.error("Error resetting daily flags and handling non-completions:", error);
+    }
+});
 
-// Generates daily prompts for users based on their selected habits
-exports.generateDailyPrompts = schedule('every 24 hours').onRun(async (context) => {
-  const usersRef = db.collection('Users');
-  try {
-    const usersSnapshot = await usersRef.get();
-    usersSnapshot.forEach(async (doc) => {
-      const userHabit = doc.data().selectedHabit;
-      const prompts = await db.collection('Habits').doc(userHabit).collection('Prompts').get();
-      const allPrompts = prompts.docs.map(doc => doc.data());
-      const randomPrompt = allPrompts[Math.floor(Math.random() * allPrompts.length)];
-      await db.collection('Users').doc(doc.id).collection('DailyPrompts').add(randomPrompt);
-      console.log("Daily prompts generated for user:", doc.id);
-    });
-  } catch (error) {
-    console.error("Error generating daily prompts:", error);
-  }
+// Scheduled function for deleting all posts and generating daily prompts
+export const scheduledDailyCleanupAndPrompts = onSchedule("15 3 * * *", { timeZone: "America/Los_Angeles" }, async (context) => {
+    try {
+        const postsSnapshot = await db.collection('posts').get();
+        const deletePromises = postsSnapshot.docs.map((doc) => doc.ref.delete());
+        await Promise.all(deletePromises);
+        logger.log("All posts deleted successfully.");
+
+        const usersRef = db.collection('users');
+        const usersSnapshot = await usersRef.get();
+        const promptPromises = usersSnapshot.docs.map(async (doc) => {
+            const userHabit = doc.data().habit;
+            const habitDoc = await db.collection('habits').doc(userHabit).get();
+            if (habitDoc.exists) {
+                const habitData = habitDoc.data();
+                const allPrompts = habitData.prompts; // Assuming prompts are an array of strings
+                const randomPrompt = allPrompts[Math.floor(Math.random() * allPrompts.length)];
+                await db.collection('users').doc(doc.id).update({ todaysPrompt: randomPrompt });
+                logger.log("Daily prompts generated and updated for user:", doc.id);
+            }
+        });
+        await Promise.all(promptPromises);
+    } catch (error) {
+        logger.error("Error generating daily prompts:", error);
+    }
 });
