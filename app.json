@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "habitapp",
-    "scheme": "habitapp",
-    "slug": "habitapp",
+    "name": "trabit",
+    "scheme": "trabi",
+    "slug": "trabit",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,7 +22,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,6 +42,15 @@
           "recordAudioAndroid": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "654071a0-b87b-4669-be66-489595901d14"
+      }
+    },
+    "owner": "williamzhu17"
   }
 }
