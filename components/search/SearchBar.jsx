@@ -30,7 +30,11 @@ const SearchBar = ({
   }, [])
   
   useEffect(() => {
-    const searchResult = currentUsers.filter((user) => user.username.includes(query))
+    const searchResult = currentUsers.filter((user) => 
+      user.username.toLowerCase().includes(query.toLowerCase()) ||
+      user.firstName.toLowerCase().includes(query.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(query.toLowerCase())
+    );
     setSearchResult(searchResult)
   }, [query])
 
