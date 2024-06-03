@@ -53,7 +53,7 @@ const Account = () => {
           router.push("/avatar")
         }
       } catch (e) {
-        Alert.alert("Error registering. Please make sure your password is strong enough and you have a valid username without any spaces")
+        Alert.alert("Error registering. Please make sure your password is strong enough, you have a valid username without any spaces, and email is not already being used", e.message)
       }
     } else {
       Alert.alert("Passwords do not match")
