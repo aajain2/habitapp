@@ -115,7 +115,13 @@ const HabitSetup = () => {
             <CustomButton 
               title={field ? "Save" : "Next"}
               containerStyles="bg-white/30 border-white mt-8"
-              handlePress={() => handleSave()}
+              handlePress={() => {
+                if (selected) {
+                  handleSave()
+                } else {
+                  Alert.alert("Please select a habit")
+                }
+              }}
             />
           </View>
         </View>

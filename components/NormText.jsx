@@ -51,7 +51,7 @@ const NormText = ({
         />
       </View>
       
-      <Text className="font-inter-regular text-white text-base">
+      <Text className="font-inter-regular text-white text-base text-center">
         Failure to complete your habit within 24 hours will result in your profile being displayed on your friends’ feeds, indicating the incomplete task.
       </Text>
       
