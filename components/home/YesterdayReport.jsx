@@ -58,7 +58,7 @@ const YesterdayReport = ({
               {!refreshing &&
                 <>
                   <Text className="font-inter-bold text-base">Good going!</Text>
-                  <Text className="font-inter-bold text-sm">All your friends completed their habit yesterday.</Text>
+                  <Text className="font-inter-regular text-sm">All your friends completed their habit yesterday.</Text>
                 </>
               }
             </View>
