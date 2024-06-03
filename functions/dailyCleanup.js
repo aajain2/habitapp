@@ -39,13 +39,14 @@ export const scheduledDailyCleanupAndPrompts = onSchedule("59 6 * * *", async ()
       await Promise.all(deletePromises);
       logger.log("All posts deleted successfully.");
 
+      // Generate daily prompts for each user
       const usersRef = db.collection('users');
       const usersSnapshot = await usersRef.get();
       const promptPromises = usersSnapshot.docs.map(async (doc) => {
         const userHabit = doc.data().habit;
-        const prompts = await db.collection('habits').doc(userHabit).collection('Prompts').get();
-        const allPrompts = prompts.docs.map(doc => doc.data());
-        const randomPrompt = allPrompts[Math.floor(Math.random() * allPrompts.length)];
+        const habitDoc = await db.collection('habits').doc(userHabit).get();
+        const prompts = habitDoc.data().prompts;
+        const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
         await db.collection('users').doc(doc.id).update({ todaysPrompt: randomPrompt });
         logger.log("Daily prompts generated and updated for user:", doc.id);
       });
