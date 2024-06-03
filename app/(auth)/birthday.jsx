@@ -20,8 +20,6 @@ const BirthdaySignUp = () => {
   const [ageError, setAgeError] = useState(false)
   const colorScheme = useColorScheme()
 
-  console.log(colorScheme)
-
   return (
     <DismissKeyboard>
       <SafeAreaView>
