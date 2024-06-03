@@ -1,5 +1,5 @@
 import { router } from 'expo-router'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -7,7 +7,7 @@ import BackButton from '../../components/buttons/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import TrabitHeader from '../../components/TrabitHeader';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const isOver18YearsOld = (birthday) => {
   const currentDate = new Date();
@@ -19,6 +19,7 @@ const BirthdaySignUp = () => {
   const { birthday, setBirthday } = useSignUpContext();
   const [showBirthdayPicker, setShowBirthdayPicker] = useState(false)
   const [ageError, setAgeError] = useState(false)
+  const colorScheme = useColorScheme()
 
   return (
     <DismissKeyboard>
@@ -68,7 +69,7 @@ const BirthdaySignUp = () => {
               onCancel={() => {
                 setShowBirthdayPicker(false)
               }}
-              isDarkModeEnabled
+              isDarkModeEnabled={colorScheme === "dark"}
             />
 
             <CustomButton 
