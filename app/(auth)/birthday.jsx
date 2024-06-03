@@ -68,6 +68,7 @@ const BirthdaySignUp = () => {
               onCancel={() => {
                 setShowBirthdayPicker(false)
               }}
+              isDarkModeEnabled
             />
 
             <CustomButton 
