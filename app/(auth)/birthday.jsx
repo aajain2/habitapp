@@ -6,8 +6,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import BackButton from '../../components/buttons/BackButton';
 import { useSignUpContext } from '../../context/SignUpProvider';
 import TrabitHeader from '../../components/TrabitHeader';
-
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const isOver18YearsOld = (birthday) => {
   const currentDate = new Date();
@@ -20,6 +19,8 @@ const BirthdaySignUp = () => {
   const [showBirthdayPicker, setShowBirthdayPicker] = useState(false)
   const [ageError, setAgeError] = useState(false)
   const colorScheme = useColorScheme()
+
+  console.log(colorScheme)
 
   return (
     <DismissKeyboard>
@@ -69,7 +70,7 @@ const BirthdaySignUp = () => {
               onCancel={() => {
                 setShowBirthdayPicker(false)
               }}
-              isDarkModeEnabled={colorScheme === "dark"}
+              isDarkModeEnabled
             />
 
             <CustomButton 
