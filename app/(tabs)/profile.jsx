@@ -51,7 +51,7 @@ const Profile = () => {
         <View className="h-44 w-[90vw] flex-row">
           <View className="bg-searchbar-gray flex-grow rounded-2xl flex items-center justify-center">
             <Text className="text-sm font-inter-bold">
-              You are tracking:
+              You are tracking: TESTTEST
             </Text>
 
             <Text className="font-inter-regular w-36 text-center text-xs">
