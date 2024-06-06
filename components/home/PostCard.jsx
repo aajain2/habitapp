@@ -40,7 +40,12 @@ const PostCard = ({
           />
           <Text className="text-xs font-inter-medium text-gray">{post.timestamp}</Text>
         </View>
-        <BlurView className="absolute w-[100vw] -left-[5vw] -top-4 h-20" intensity={!completed ? 10 : 0} />
+
+        {!completed && 
+          <BlurView className="absolute w-[100vw] -left-[5vw] -top-4 h-20" intensity={10} />
+        }
+
+        
       </View>
 
       <PictureCard 
